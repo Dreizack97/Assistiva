@@ -75,5 +75,24 @@ namespace AppUI.Controllers
 
             return View(user);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _userService.SetRecoveryCodeAsync(user.Email);
+                    TempData["success"] = "Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.";
+                }
+                catch (Exception ex)
+                {
+                    TempData["info"] = ex.Message;
+                }
+            }
+
+            return View(user);
+        }
     }
 }

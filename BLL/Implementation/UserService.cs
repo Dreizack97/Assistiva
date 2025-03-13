@@ -108,6 +108,22 @@ namespace BLL.Implementation
                 throw new TaskCanceledException("La contraseña es incorrecta.");
         }
 
+        // TODO: Documentar
+        public async Task<bool> SetRecoveryCodeAsync(string username)
+        {
+            User user = await _repository.GetByFilterAsync(u => u.Username == username || u.Email == username)
+                ?? throw new TaskCanceledException("No se encontró un usuario que coincida con la información proporcionada.");
+
+            string recoveryCode = Guid.NewGuid().ToString("N").Substring(0, 16);
+
+            user.RecoveryCode = recoveryCode;
+            user.ExpirationCode = DateTime.Now.AddHours(1);
+            user.IsPasswordReset = true;
+            user.LastPasswordReset = DateTime.Now;
+
+            return await _repository.UpdateAsync(user);
+        }
+
         /// <inheritdoc/>
         public async Task<bool> IsUsernameOrEmailAvailable(string username, string email, int? userId = null)
         {

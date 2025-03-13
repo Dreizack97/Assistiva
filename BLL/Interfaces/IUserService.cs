@@ -60,6 +60,9 @@ namespace BLL.Interfaces
         /// </exception>
         Task<User> SignInAsync(string username, string password);
 
+        // TODO: Documentar
+        Task<bool> SetRecoveryCodeAsync(string username);
+
         /// <summary>
         /// Verifica si un nombre de usuario o correo electrónico están disponibles.
         /// </summary>
