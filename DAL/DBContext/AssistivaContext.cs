@@ -27,6 +27,8 @@ public partial class AssistivaContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
+            entity.HasIndex(e => e.Email, "UQ_Users_Email").IsUnique();
+
             entity.HasIndex(e => e.Username, "UQ_Users_Username").IsUnique();
 
             entity.Property(e => e.CreatedAt)

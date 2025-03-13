@@ -19,7 +19,7 @@ CREATE TABLE Users(
     Username NVARCHAR(50) CONSTRAINT UQ_Users_Username UNIQUE NOT NULL, --No permite datos duplicados
     Salt VARBINARY(32) NOT NULL,
     [Password] VARBINARY(32) NOT NULL,
-    Email NVARCHAR(100) NULL,
+    Email NVARCHAR(100) CONSTRAINT UQ_Users_Email NOT NULL, --No permite datos duplicados
     UrlPicture NVARCHAR(200) NULL,
     RecoveryCode NVARCHAR(16) NULL,
     ExpirationCode DATETIME NULL,
