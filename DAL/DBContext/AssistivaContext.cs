@@ -22,6 +22,8 @@ public partial class AssistivaContext : DbContext
     {
         modelBuilder.Entity<Role>(entity =>
         {
+            entity.HasIndex(e => e.Name, "UQ_Roles_Name").IsUnique();
+
             entity.Property(e => e.Name).HasMaxLength(25);
         });
 
