@@ -32,7 +32,7 @@ namespace BLL.Implementation
         public async Task<User> CreateAsync(User user)
         {
             // Validación de disponibilidad de nombre de usuario y correo electrónico
-            if (!await IsUsernameOrEmailAvailable(user.Username, user.Email))
+            if (!await IsUsernameOrEmailAvailableAsync(user.Username, user.Email))
                 throw new TaskCanceledException("El nombre de usuario o correo electrónico no está disponible.");
 
             // Generación de contraseña segura
@@ -69,7 +69,7 @@ namespace BLL.Implementation
         public async Task<bool> UpdateAsync(User user)
         {
             // Validación de disponibilidad excluyendo el usuario actual
-            if (!await IsUsernameOrEmailAvailable(user.Username, user.Email, user.UserId))
+            if (!await IsUsernameOrEmailAvailableAsync(user.Username, user.Email, user.UserId))
                 throw new TaskCanceledException("El nombre de usuario o correo electrónico no está disponible.");
 
             // Obtención del usuario existente
@@ -109,6 +109,26 @@ namespace BLL.Implementation
         }
 
         // TODO: Documentar
+        public async Task<bool> ChangePasswordAsync(int userId, string newPassword)
+        {
+            User? user = await GetByIdAsync(userId)
+                ?? throw new TaskCanceledException("El usuario no existe.");
+
+            byte[] salt = PasswordUtility.GenerateSalt();
+            byte[] encryptedPassword = PasswordUtility.EncryptPassword(salt, newPassword);
+
+            user.Salt = salt;
+            user.Password = encryptedPassword;
+            user.RecoveryCode = null;
+            user.ExpirationCode = null;
+            user.IsPasswordReset = false;
+            user.IsPasswordDefect = false;
+            user.LastPasswordReset = DateTime.Now;
+
+            return await _repository.UpdateAsync(user);
+        }
+
+        // TODO: Documentar
         public async Task<bool> SetRecoveryCodeAsync(string username)
         {
             User user = await _repository.GetByFilterAsync(u => u.Username == username || u.Email == username)
@@ -125,12 +145,21 @@ namespace BLL.Implementation
         }
 
         /// <inheritdoc/>
-        public async Task<bool> IsUsernameOrEmailAvailable(string username, string email, int? userId = null)
+        public async Task<bool> IsUsernameOrEmailAvailableAsync(string username, string email, int? userId = null)
         {
             // Consulta que excluye el usuario actual en actualizaciones
             User? user = await _repository.GetByFilterAsync(u => (u.Username == username || u.Email == (email ?? username)) && (!userId.HasValue || u.UserId != userId.Value));
 
             return user == null;
+        }
+
+        // TODO: Documentar
+        public async Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword)
+        {
+            User? user = await _repository.GetByFilterAsync(u => u.RecoveryCode == recoveryCode && u.ExpirationCode > DateTime.Now)
+                ?? throw new TaskCanceledException("El código de recuperación es inválido o ha expirado.");
+
+            return await ChangePasswordAsync(user.UserId, newPassword);
         }
     }
 }
