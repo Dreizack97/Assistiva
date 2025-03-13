@@ -1,4 +1,6 @@
-﻿using DAL.DBContext;
+﻿using BLL.Implementation;
+using BLL.Interfaces;
+using DAL.DBContext;
 using DAL.Implementation;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +54,8 @@ namespace IoC
             });
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }
