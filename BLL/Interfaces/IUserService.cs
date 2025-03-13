@@ -60,6 +60,12 @@ namespace BLL.Interfaces
         /// </exception>
         Task<User> SignInAsync(string username, string password);
 
+        // TODO: Documentar
+        Task<bool> ChangePasswordAsync(int userId, string newPassword);
+
+        // TODO: Documentar
+        Task<bool> SetRecoveryCodeAsync(string username);
+
         /// <summary>
         /// Verifica si un nombre de usuario o correo electrónico están disponibles.
         /// </summary>
@@ -67,6 +73,9 @@ namespace BLL.Interfaces
         /// <param name="email">Correo electrónico a verificar.</param>
         /// <param name="userId">ID opcional del usuario (para excluirlo en actualizaciones).</param>
         /// <returns><c>true</c> si el nombre y correo están disponibles; de lo contrario, <c>false</c>.</returns>
-        Task<bool> IsUsernameOrEmailAvailable(string username, string email, int? userId = null);
+        Task<bool> IsUsernameOrEmailAvailableAsync(string username, string email, int? userId = null);
+
+        // TODO: Documentar
+        Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword);
     }
 }
