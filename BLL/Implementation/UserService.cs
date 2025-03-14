@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using BLL.Properties;
 using BLL.Utilities;
 using DAL.Interfaces;
 using Entity;
@@ -17,14 +18,17 @@ namespace BLL.Implementation
     public class UserService : IUserService
     {
         private readonly IGenericRepository<User> _repository;
+        private readonly IEmailService _emailService;
 
         /// <summary>
         /// Inicializa una nueva instancia del servicio de usuarios.
         /// </summary>
         /// <param name="repository">Repositorio genérico para operaciones CRUD.</param>
-        public UserService(IGenericRepository<User> repository)
+        /// <param name="emailService">Servicio de envío de correos electrónicos.</param>
+        public UserService(IGenericRepository<User> repository, IEmailService emailService)
         {
             _repository = repository;
+            _emailService = emailService;
         }
 
         #region CRUD
@@ -49,6 +53,10 @@ namespace BLL.Implementation
 
             if (_user.UserId == 0)
                 throw new TaskCanceledException("Ocurrió un error al intentar crear el usuario.");
+
+            // Envío de correo electrónico de bienvenida
+            string messageBody = Resources.Welcome.Replace("{Username}", _user.Username).Replace("{Password}", password);
+            await _emailService.SendEmailAsync(_user.Email, "Creación de cuenta", messageBody);
 
             return _user;
         }
