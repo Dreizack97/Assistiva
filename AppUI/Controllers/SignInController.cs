@@ -105,11 +105,13 @@ namespace AppUI.Controllers
             {
                 try
                 {
-                    if (user.NewPassword.Equals(user.ConfirmPassword))
+                    if (!user.NewPassword.Equals(user.ConfirmPassword))
                         throw new TaskCanceledException("Las contraseñas no coinciden.");
 
                     await _userService.IsValidRecoveryCodeAsync(user.RecoveryCode, user.NewPassword);
                     TempData["success"] = "Tu contraseña ha sido restablecida correctamente.";
+
+                    return View("Index");
                 }
                 catch (Exception ex)
                 {

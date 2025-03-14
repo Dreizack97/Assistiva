@@ -44,6 +44,10 @@ namespace IoC
         /// <term>Repositorio Genérico:</term>
         /// <description>Registra la implementación genérica del repositorio con ciclo de vida Transient</description>
         /// </item>
+        /// <item>
+        /// <term>Servicios de Negocio:</term>
+        /// <description>Registra la implementación de los servicios de negocio</description>
+        /// </item>
         /// </list>
         /// </remarks>
         public static void DependencyInjection(this IServiceCollection services, IConfiguration configuration)
@@ -55,6 +59,7 @@ namespace IoC
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
         }
     }
