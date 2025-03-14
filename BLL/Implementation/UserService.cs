@@ -1,9 +1,8 @@
-﻿using System.Reflection;
-using BLL.Interfaces;
-using BLL.Properties;
+﻿using BLL.Interfaces;
 using BLL.Utilities;
 using DAL.Interfaces;
 using Entity;
+using System.Reflection;
 
 namespace BLL.Implementation
 {
