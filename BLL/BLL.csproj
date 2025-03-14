@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\PasswordChange.html" />
+    <None Remove="Resources\ResetPassword.html" />
+    <None Remove="Resources\Welcome.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PasswordChange.html" />
+    <EmbeddedResource Include="Resources\ResetPassword.html" />
+    <EmbeddedResource Include="Resources\Welcome.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.11.0" />
   </ItemGroup>
 

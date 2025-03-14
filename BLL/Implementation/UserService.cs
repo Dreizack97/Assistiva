@@ -1,4 +1,5 @@
-﻿using BLL.Interfaces;
+﻿using System.Reflection;
+using BLL.Interfaces;
 using BLL.Properties;
 using BLL.Utilities;
 using DAL.Interfaces;
@@ -19,6 +20,7 @@ namespace BLL.Implementation
     {
         private readonly IGenericRepository<User> _repository;
         private readonly IEmailService _emailService;
+        private const int VALID_TIME = 1;
 
         /// <summary>
         /// Inicializa una nueva instancia del servicio de usuarios.
@@ -55,8 +57,9 @@ namespace BLL.Implementation
                 throw new TaskCanceledException("Ocurrió un error al intentar crear el usuario.");
 
             // Envío de correo electrónico de bienvenida
-            string messageBody = Resources.Welcome.Replace("{Username}", _user.Username).Replace("{Password}", password);
-            await _emailService.SendEmailAsync(_user.Email, "Creación de cuenta", messageBody);
+            string htmlContent = GetMessageText("BLL.Resources.Welcome.html");
+            string messageBody = htmlContent.Replace("{Username}", _user.Username).Replace("{Password}", password);
+            await _emailService.SendEmailAsync(_user.Email, "Bienvenido a Assistiva", messageBody);
 
             return _user;
         }
@@ -116,7 +119,15 @@ namespace BLL.Implementation
                 throw new TaskCanceledException("La contraseña es incorrecta.");
         }
 
-        // TODO: Documentar
+        /// <inheritdoc/>
+        /// <remarks>
+        /// <para><strong>Flujo de ejecución:</strong></para>
+        /// <ol>
+        /// <li>Genera nuevo salt y hash usando <see cref="PasswordUtility"/></li>
+        /// <li>Invalida códigos de recuperación previos</li>
+        /// <li>Envía confirmación por correo usando <see cref="IEmailService"/></li>
+        /// </ol>
+        /// </remarks>
         public async Task<bool> ChangePasswordAsync(int userId, string newPassword)
         {
             User? user = await GetByIdAsync(userId)
@@ -133,10 +144,24 @@ namespace BLL.Implementation
             user.IsPasswordDefect = false;
             user.LastPasswordReset = DateTime.Now;
 
-            return await _repository.UpdateAsync(user);
+            if (await _repository.UpdateAsync(user))
+            {
+                string htmlContent = GetMessageText("BLL.Resources.PasswordChange.html");
+                string messageBody = htmlContent.Replace("{Username}", user.Username);
+                return await _emailService.SendEmailAsync(user.Email, "Confirmación de cambio de contraseña", messageBody);
+            }
+
+            return false;
         }
 
-        // TODO: Documentar
+        /// <inheritdoc/>
+        /// <remarks>
+        /// <para><strong>Detalles técnicos:</strong></para>
+        /// <ul>
+        /// <li>Genera código usando <see cref="Guid.NewGuid"/> truncado a 16 caracteres</li>
+        /// <li>Establece expiración en <see cref="VALID_TIME"/> hora(s)</li>
+        /// </ul>
+        /// </remarks>
         public async Task<bool> SetRecoveryCodeAsync(string username)
         {
             User user = await _repository.GetByFilterAsync(u => u.Username == username || u.Email == username)
@@ -145,11 +170,20 @@ namespace BLL.Implementation
             string recoveryCode = Guid.NewGuid().ToString("N").Substring(0, 16);
 
             user.RecoveryCode = recoveryCode;
-            user.ExpirationCode = DateTime.Now.AddHours(1);
+            user.ExpirationCode = DateTime.Now.AddHours(VALID_TIME);
             user.IsPasswordReset = true;
             user.LastPasswordReset = DateTime.Now;
 
-            return await _repository.UpdateAsync(user);
+            if (await _repository.UpdateAsync(user))
+            {
+                string validTime = VALID_TIME == 1 ? "1 hora" : $"{VALID_TIME} horas";
+                string htmlContent = GetMessageText("BLL.Resources.ResetPassword.html");
+                string messageBody = htmlContent.Replace("{Username}", user.Username).Replace("{RecoveryCode}", recoveryCode).Replace("{Valid-Time}", validTime);
+
+                return await _emailService.SendEmailAsync(user.Email, "Restablecimiento de contraseña", messageBody);
+            }
+
+            return false;
         }
 
         /// <inheritdoc/>
@@ -161,13 +195,35 @@ namespace BLL.Implementation
             return user == null;
         }
 
-        // TODO: Documentar
+        /// <inheritdoc/>
+        /// <remarks>
+        /// <para><strong>Lógica de validación:</strong></para>
+        /// <ul>
+        /// <li>Compara código en base de datos con <see cref="StringComparison.Ordinal"/></li>
+        /// <li>Verifica <see cref="DateTime.Now"/> contra fecha de expiración</li>
+        /// </ul>
+        /// </remarks>
         public async Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword)
         {
             User? user = await _repository.GetByFilterAsync(u => u.RecoveryCode == recoveryCode && u.ExpirationCode > DateTime.Now)
                 ?? throw new TaskCanceledException("El código de recuperación es inválido o ha expirado.");
 
             return await ChangePasswordAsync(user.UserId, newPassword);
+        }
+
+        private static string GetMessageText(string resourceName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream? file = assembly.GetManifestResourceStream(resourceName)
+                ?? throw new FileNotFoundException("No se encontró el archivo de recursos.", resourceName);
+
+            using (Stream stream = file)
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
     }
 }

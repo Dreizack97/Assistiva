@@ -60,10 +60,21 @@ namespace BLL.Interfaces
         /// </exception>
         Task<User> SignInAsync(string username, string password);
 
-        // TODO: Documentar
+        /// <summary>
+        /// Cambia la contraseña de un usuario de manera asíncrona.
+        /// </summary>
+        /// <param name="userId">ID del usuario.</param>
+        /// <param name="newPassword">Nueva contraseña en texto plano.</param>
+        /// <returns><c>True</c> si el cambio fue exitoso; de lo contrario, <c>False</c>.</returns>
+        /// <exception cref="TaskCanceledException">Se lanza si el usuario no existe.</exception>
         Task<bool> ChangePasswordAsync(int userId, string newPassword);
 
-        // TODO: Documentar
+        /// <summary>
+        /// Genera y envía un código de recuperación para restablecer la contraseña.
+        /// </summary>
+        /// <param name="username">Nombre de usuario o correo electrónico.</param>
+        /// <returns><c>True</c> si el código fue generado y enviado correctamente; de lo contrario, <c>False</c>.</returns>
+        /// <exception cref="TaskCanceledException">Se lanza si no se encuentra el usuario.</exception>
         Task<bool> SetRecoveryCodeAsync(string username);
 
         /// <summary>
@@ -75,7 +86,13 @@ namespace BLL.Interfaces
         /// <returns><c>true</c> si el nombre y correo están disponibles; de lo contrario, <c>false</c>.</returns>
         Task<bool> IsUsernameOrEmailAvailableAsync(string username, string email, int? userId = null);
 
-        // TODO: Documentar
+        /// <summary>
+        /// Valida un código de recuperación y cambia la contraseña si es válido.
+        /// </summary>
+        /// <param name="recoveryCode">Código de recuperación proporcionado por el usuario.</param>
+        /// <param name="newPassword">Nueva contraseña en texto plano.</param>
+        /// <returns><c>True</c> si la contraseña fue cambiada exitosamente; de lo contrario, <c>False</c>.</returns>
+        /// <exception cref="TaskCanceledException">Se lanza si el código es inválido o ha expirado.</exception>
         Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword);
     }
 }

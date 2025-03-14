@@ -63,6 +63,26 @@ namespace BLL.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Byte[].
         /// </summary>
+        internal static byte[] PasswordChange {
+            get {
+                object obj = ResourceManager.GetObject("PasswordChange", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
+        internal static byte[] ResetPassword {
+            get {
+                object obj = ResourceManager.GetObject("ResetPassword", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
         internal static byte[] Welcome {
             get {
                 object obj = ResourceManager.GetObject("Welcome", resourceCulture);
