@@ -4,24 +4,24 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1 class="fs-4 card-title fw-bold mb-4">Iniciar sesión</h1>
-<form method="post" asp-controller="SignIn" asp-action="SignIn">
+<form method="post" asp-controller="SignIn" asp-action="SignIn" aria-labelledby="loginHeading">
 	<div class="mb-3">
 		<label asp-for="@Model.Username" class="mb-2 text-muted"></label>
 		<div class="input-group">
-			<span class="input-group-text"><i class="fas fa-user"></i></span>
-			<input asp-for="@Model.Username" class="form-control" required autofocus />
+			<span class="input-group-text" aria-hidden="true"><i class="fas fa-user"></i></span>
+			<input asp-for="@Model.Username" class="form-control" required autofocus aria-required="true" aria-labelledby="@Model.Username" aria-describedby="@Model.Username" />
 		</div>
-		<span asp-validation-for="@Model.Username" class="small text-danger"></span>
+		<span asp-validation-for="@Model.Username" class="small text-danger" role="alert" aria-live="assertive"></span>
 	</div>
 	<div class="mb-3">
 		<label asp-for="@Model.Password" class="mb-2 text-muted"></label>
 		<div class="input-group">
-			<span class="input-group-text"><i class="fas fa-key"></i></span>
-			<input asp-for="@Model.Password" class="form-control" required />
+			<span class="input-group-text" aria-hidden="true"><i class="fas fa-key"></i></span>
+			<input asp-for="@Model.Password" class="form-control" required aria-required="true" aria-labelledby="@Model.Password" aria-describedby="@Model.Password" />
 		</div>
-		<span asp-validation-for="@Model.Password" class="small text-danger"></span>
+		<span asp-validation-for="@Model.Password" class="small text-danger" role="alert" aria-live="assertive"></span>
 	</div>
 	<div class="text-center">
-		<button type="submit" class="btn btn-primary">Iniciar sesión</button>
+		<button type="submit" class="btn btn-primary" aria-label="Iniciar sesión con usuario y contraseña">Iniciar sesión</button>
 	</div>
 </form>

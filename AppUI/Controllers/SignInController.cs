@@ -20,7 +20,7 @@ namespace AppUI.Controllers
         public IActionResult Index()
         {
             ClaimsPrincipal claimsUser = HttpContext.User;
-            return claimsUser.Identity?.IsAuthenticated == true ? RedirectToAction("Index", "Home") : View();
+            return claimsUser.Identity?.IsAuthenticated == true ? RedirectToAction("Index", "Home") : View(new SignInModel());
         }
 
         public IActionResult ForgotPassword()
