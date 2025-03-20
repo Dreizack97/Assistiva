@@ -1,46 +1,49 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es-mx">
 <head>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - AppUI</title>
-	<script type="importmap"></script>
-	<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=5.0 shrink-to-fit=no" />
+	<meta name="description" content="Plataforma inclusiva para aprender matemáticas diseñada para personas con discapacidad visual, auditiva o motora. Ofrecemos recursos adaptados,
+		herramientas accesibles y lecciones interactivas para facilitar el aprendizaje de matemáticas de manera efectiva y accesible para todos." />
+	<meta name="keywords" content="matemáticas accesibles, aprender matemáticas, discapacidad visual, discapacidad auditiva, discapacidad motora, educación inclusiva, recursos adaptados,
+		herramientas accesibles, lecciones interactivas, enseñanza inclusiva, matemáticas para todos, aprendizaje adaptativo, educación especial, matemáticas inclusivas" />
+	<meta name="author" content="Jorge Eduardo Silva Prieto, Jorge Andrés González Hernández" />
+	<title>@ViewData["Title"]</title>
+	<link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="~/vendor/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
+	@await RenderSectionAsync("CSS", required: false)
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AppUI</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-						</li>
-					</ul>
+	<partial name="_Notification" />
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="text-center my-5">
+						<img src="~/img/Logo.png" alt="Logo Assistiva">
+					</div>
+					<div class="card shadow-lg">
+						<div class="card-body p-5">
+							@RenderBody()
+						</div>
+						<div class="card-footer py-3 border-0">
+							<div class="text-center">
+								¿Olvidaste tu contraseña? <a asp-controller="SignIn" asp-action="ForgotPassword" class="text-dark" aria-label="¿Olvidaste tu contraseña?. Presiona aquí">Presiona aquí</a>
+							</div>
+						</div>
+					</div>
+					<div class="text-center mt-5 text-muted">
+						Copyright &copy; 2024 - @DateTime.Now.Year &mdash; J&J Software
+					</div>
 				</div>
 			</div>
-		</nav>
-	</header>
-	<div class="container">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2025 - AppUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 		</div>
-	</footer>
+	</section>
+	@await RenderSectionAsync("Scripts", required: false)
 	<script src="~/vendor/jquery/jquery.min.js"></script>
 	<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	@await RenderSectionAsync("Scripts", required: false)
+	<script src="~/js/General.js"></script>
+	<partial name="_ValidationScriptsPartial" />
 </body>
 </html>

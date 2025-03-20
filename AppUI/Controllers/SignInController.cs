@@ -20,12 +20,12 @@ namespace AppUI.Controllers
         public IActionResult Index()
         {
             ClaimsPrincipal claimsUser = HttpContext.User;
-            return claimsUser.Identity?.IsAuthenticated == true ? RedirectToAction("Index", "Home") : View();
+            return claimsUser.Identity?.IsAuthenticated == true ? RedirectToAction("Index", "Home") : View(new SignInModel());
         }
 
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordModel());
         }
 
         public IActionResult ResetPassword(string recoveryCode)
@@ -33,7 +33,7 @@ namespace AppUI.Controllers
             if (string.IsNullOrWhiteSpace(recoveryCode))
                 return View("Index");
 
-            return View();
+            return View(new ResetPasswordModel());
         }
 
         [HttpPost]
