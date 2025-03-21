@@ -5,7 +5,7 @@ $(document).ready(async function () {
 
     await LoadAccesibilityLabels()
 
-    InitializeSpeechRecognition()
+    await InitializeSpeechRecognition()
 })
 
 function SpeechSynthesis(text) {
@@ -39,7 +39,7 @@ async function LoadAccesibilityLabels() {
     }
 }
 
-function InitializeSpeechRecognition() {
+async function InitializeSpeechRecognition() {
     const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
     if (speechRecognition) {
@@ -50,13 +50,13 @@ function InitializeSpeechRecognition() {
         recognition.interimResults = false
         recognition.start()
 
-        recognition.onresult = (event) => {
+        recognition.onresult = async (event) => {
             const last = event.results.length - 1
             const text = event.results[last][0].transcript.trim()
 
             const words = text.toLowerCase().split(" ")
 
-            console.log(words)
+            await VoiceCommands(words)
         }
 
         recognition.onerror = function (event) {
@@ -67,8 +67,10 @@ function InitializeSpeechRecognition() {
     }
 }
 
-function VoiceCommands(command) {
-    if (command === "Nombre de usuario") {
+async function VoiceCommands(command) {
+    if (command[0] === "ayuda") {
+        await SpeechSynthesis(instructions)
+    } else if (command === "Nombre de usuario") {
         const username = command.slice(1)
 
         if (username) {
