@@ -70,11 +70,5 @@ async function InitializeSpeechRecognition() {
 async function VoiceCommands(command) {
     if (command[0] === "ayuda") {
         await SpeechSynthesis(instructions)
-    } else if (command === "Nombre de usuario") {
-        const username = command.slice(1)
-
-        if (username) {
-            $("#Username").val(username)
-        }
     }
 }
