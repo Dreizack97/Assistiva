@@ -40,6 +40,12 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+app.MapAreaControllerRoute(
+    name: "School",
+    areaName: "School",
+    pattern: "School/{controller=Home}/{action=Index}/{id?}"
+);
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=SignIn}/{action=Index}/{id?}")

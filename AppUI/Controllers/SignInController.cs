@@ -66,7 +66,13 @@ namespace AppUI.Controllers
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
 
-                        return RedirectToAction("Index", "Home");
+                        switch (_user.RoleId)
+                        {
+                            case 5:
+                                return RedirectToAction("Index", "Home", new { area = "Students" });
+                            default:
+                                return RedirectToAction("Index", "Home", new { area = "School" });
+                        }
                     }
                 }
                 catch (Exception ex)
