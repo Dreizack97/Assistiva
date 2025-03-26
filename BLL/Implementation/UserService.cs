@@ -72,7 +72,7 @@ namespace BLL.Implementation
         /// <inheritdoc/>
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync([r => r.Role]);
         }
 
         /// <inheritdoc/>
@@ -90,6 +90,7 @@ namespace BLL.Implementation
             _user.RoleId = user.RoleId;
             _user.Username = user.Username;
             _user.Email = user.Email;
+            _user.UpdatedAt = DateTime.Now;
 
             return await _repository.UpdateAsync(_user);
         }

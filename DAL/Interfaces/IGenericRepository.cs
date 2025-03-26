@@ -68,6 +68,16 @@ namespace DAL.Interfaces
         Task<IEnumerable<TEntity>> GetAllAsync();
 
         /// <summary>
+        /// Obtiene todas las entidades de tipo <typeparamref name="TEntity"/> de manera asíncrona.
+        /// </summary>
+        /// /// <param name="includes">Expresión lambda que define las tablas relacionadas a incluir.</param>
+        /// <returns>
+        /// Tarea que representa la operación asíncrona. Contiene una colección de todas 
+        /// las entidades disponibles.
+        /// </returns>
+        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>>[] includes);
+
+        /// <summary>
         /// Obtiene todas las entidades de tipo <typeparamref name="TEntity"/> que cumplen con el filtro especificado.
         /// </summary>
         /// <param name="filter">Expresión lambda que define el criterio de filtrado.</param>
@@ -79,6 +89,20 @@ namespace DAL.Interfaces
         /// Se lanza si <paramref name="filter"/> es <c>null</c>.
         /// </exception>
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Obtiene todas las entidades de tipo <typeparamref name="TEntity"/> que cumplen con el filtro especificado.
+        /// </summary>
+        /// <param name="filter">Expresión lambda que define el criterio de filtrado.</param>
+        /// <param name="includes">Expresión lambda que define las tablas relacionadas a incluir.</param>
+        /// <returns>
+        /// Tarea que representa la operación asíncrona. Contiene una colección de entidades 
+        /// que cumplen con el filtro.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Se lanza si <paramref name="filter"/> es <c>null</c>.
+        /// </exception>
+        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
         /// Actualiza una entidad existente de tipo <typeparamref name="TEntity"/> de manera asíncrona.

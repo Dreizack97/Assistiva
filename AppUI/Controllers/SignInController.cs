@@ -1,8 +1,8 @@
 ﻿using AppUI.Models.User;
 using BLL.Interfaces;
 using Entity;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -66,13 +66,11 @@ namespace AppUI.Controllers
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
 
-                        switch (_user.RoleId)
+                        return _user.RoleId switch
                         {
-                            case 5:
-                                return RedirectToAction("Index", "Home", new { area = "Students" });
-                            default:
-                                return RedirectToAction("Index", "Home", new { area = "School" });
-                        }
+                            5 => RedirectToAction("Index", "Home", new { area = "Students" }),
+                            _ => RedirectToAction("Index", "Home", new { area = "School" }),
+                        };
                     }
                 }
                 catch (Exception ex)
@@ -117,7 +115,7 @@ namespace AppUI.Controllers
                     await _userService.IsValidRecoveryCodeAsync(user.RecoveryCode, user.NewPassword);
                     TempData["success"] = "Tu contraseña ha sido restablecida correctamente.";
 
-                    return View("Index");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {

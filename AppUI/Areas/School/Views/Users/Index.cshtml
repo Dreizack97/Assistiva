@@ -1,45 +1,48 @@
 ﻿@{
-	ViewData["Title"] = "Usuarios";
-	Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Usuarios";
+    Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
 }
 @section CSS {
-	<link href="~/vendor/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/vendor/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 }
-<header class="fixed-top bg-light shadow">
-	<div class="container d-flex justify-content-between align-items-center py-3">
-		<h1 class="h5 m-0">
-			<i class="fas fa-users"></i>
-			Usuarios
-		</h1>
-		<a asp-area="School" asp-controller="Users" asp-action="Upsert" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i>Agregar usuario</a>
-	</div>
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="fas fa-users me-2"></i>
+                    Usuarios
+                </h1>
+            </div>
+            <div class="col-12 col-xl-auto mb-3">
+                <a asp-area="School" asp-controller="Users" asp-action="Upsert" class="btn btn-sm btn-primary"><i class="fas fa-plus me-2"></i>Agregar usuario</a>
+            </div>
+        </div>
+    </div>
 </header>
 <div class="container-fluid px-4">
-	<div class="card">
-		<div class="card-body">
-			<table class="table table-striped" style="width:100%" id="dataTable">
-				<thead>
-					<tr>
-						<th>UsuarioId</th>
-						<th>Rol</th>
-						<th>Usuario</th>
-						<th>Email</th>
-						<th>Restableciendo contraseña</th>
-						<th>Último restablecimiento</th>
-						<th>Contraseña por defecto</th>
-						<th>Creado</th>
-						<th>Actualizado</th>
-						<th>Activo</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
-	</div>
+    <div class="card">
+        <div class="card-body">
+            <table id="dataTable" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>UsuarioId</th>
+                        <th>Rol</th>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th>Activo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @section Scripts {
-	<script src="~/vendor/datatables/datatables.min.js"></script>
-	<script src="~/js/Views/Users_Index.js"></script>
+    <script src="~/vendor/datatables/datatables.min.js"></script>
+    <script src="~/js/Views/Users_Index.js"></script>
 }

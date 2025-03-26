@@ -10,14 +10,6 @@
 
         public string Email { get; set; } = null!;
 
-        public string? IsPasswordReset { get; set; }
-
-        public DateTime? LastPasswordReset { get; set; }
-
-        public string IsPasswordDefect { get; set; } = null!;
-
-        public DateTime LastPasswordChange { get; set; }
-
         public DateTime CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }

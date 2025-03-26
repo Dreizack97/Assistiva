@@ -41,7 +41,9 @@ public partial class AssistivaContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.IsPasswordDefect).HasDefaultValue(true);
             entity.Property(e => e.IsPasswordReset).HasDefaultValue(false);
-            entity.Property(e => e.LastPasswordChange).HasColumnType("datetime");
+            entity.Property(e => e.LastPasswordChange)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.LastPasswordReset).HasColumnType("datetime");
             entity.Property(e => e.Password).HasMaxLength(32);
             entity.Property(e => e.RecoveryCode).HasMaxLength(16);
