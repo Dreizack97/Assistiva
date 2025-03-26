@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
+    <Folder Include="Areas\Students\" />
   </ItemGroup>
 
 </Project>
