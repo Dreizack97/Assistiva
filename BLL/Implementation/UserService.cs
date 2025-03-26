@@ -96,9 +96,15 @@ namespace BLL.Implementation
         }
 
         /// <inheritdoc/>
-        public async Task<bool> DeleteAsync(int userId)
+        public async Task<bool> DisableAsync(int userId)
         {
-            return await _repository.DeleteAsync(userId);
+            User? user = await GetByIdAsync(userId)
+                ?? throw new TaskCanceledException("El usuario no existe.");
+
+            user.IsActive = false;
+            user.UpdatedAt = DateTime.Now;
+
+            return await _repository.UpdateAsync(user);
         }
         #endregion
 

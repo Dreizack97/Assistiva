@@ -42,11 +42,11 @@ namespace BLL.Interfaces
         Task<bool> UpdateAsync(User user);
 
         /// <summary>
-        /// Elimina un usuario por su ID de manera asíncrona.
+        /// Deshabilita un usuario por su ID de manera asíncrona.
         /// </summary>
         /// <param name="userId">ID único del usuario a eliminar.</param>
-        /// <returns><c>true</c> si la eliminación fue exitosa; de lo contrario, <c>false</c>.</returns>
-        Task<bool> DeleteAsync(int userId);
+        /// <returns><c>true</c> si la inhabilitación fue exitosa; de lo contrario, <c>false</c>.</returns>
+        Task<bool> DisableAsync(int userId);
         #endregion
 
         /// <summary>

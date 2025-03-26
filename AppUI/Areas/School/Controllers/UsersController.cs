@@ -82,8 +82,8 @@ namespace AppUI.Areas.School.Controllers
         {
             try
             {
-                await _userService.DeleteAsync(id);
-                return Json(new { success = true, message = "Usuario eliminado exitosamente." });
+                await _userService.DisableAsync(id);
+                return Json(new { success = true, message = "Usuario deshabilitado exitosamente." });
             }
             catch (Exception ex)
             {
