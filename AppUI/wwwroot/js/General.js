@@ -1,32 +1,74 @@
-﻿let synth = window.speechSynthesis
-let elements = []
-let index = 0
-let utterance
+﻿const instructions = $("#Instructions").val()
 
-$(document).ready(function () {
-    elements = document.querySelectorAll("h1, h2, h3, p, button, a, label");
-    index = 0;
-    LeerElemento();
+$(document).ready(async function () {
+    await SpeechSynthesis(instructions)
+
+    await LoadAccesibilityLabels()
+
+    await InitializeSpeechRecognition()
 })
 
-function LeerElemento() {
-    if (index < elements.length) {
-        let element = elements[index]
-        let texto = element.getAttribute("aria-label") || element.innerText || "Elemento sin texto"
+function SpeechSynthesis(text) {
+    return new Promise((resolve) => {
+        const speech = new SpeechSynthesisUtterance(text)
 
-        // Resaltar el elemento que se está leyendo
-        element.style.border = "2px solid red"
+        speech.volume = 1
+        speech.rate = 1
+        speech.pitch = 0.5
+        speech.lang = "es-MX"
 
-        // Crear la voz
-        utterance = new SpeechSynthesisUtterance(texto)
-        utterance.lang = "es-MX"
-
-        utterance.onend = function () {
-            element.style.border = "" // Quitar el borde después de leer
-            index++
-            LeerElemento() // Leer el siguiente elemento
+        speech.onend = () => {
+            resolve()
         }
 
-        synth.speak(utterance)
+        window.speechSynthesis.speak(speech)
+    })
+}
+
+async function LoadAccesibilityLabels() {
+    const elements = document.querySelectorAll("h1, h2, h3, p, button, a, label")
+
+    for (const element of elements) {
+        let text = element.getAttribute("aria-label") || element.innerText || "Elemento sin texto"
+
+        element.style.border = "2px solid red"
+
+        await SpeechSynthesis(text)
+
+        element.style.border = ""
+    }
+}
+
+async function InitializeSpeechRecognition() {
+    const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+
+    if (speechRecognition) {
+        const recognition = new speechRecognition()
+
+        recognition.continuous = true
+        recognition.lang = "es-MX"
+        recognition.interimResults = false
+        recognition.start()
+
+        recognition.onresult = async (event) => {
+            const last = event.results.length - 1
+            const text = event.results[last][0].transcript.trim()
+
+            const words = text.toLowerCase().split(" ")
+
+            await VoiceCommands(words)
+        }
+
+        recognition.onerror = function (event) {
+            console.error(event.error)
+        }
+    } else {
+        alert('Tu navegador no soporta reconocimiento de voz.')
+    }
+}
+
+async function VoiceCommands(command) {
+    if (command[0] === "ayuda") {
+        await SpeechSynthesis(instructions)
     }
 }
