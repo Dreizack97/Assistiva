@@ -2,3 +2,52 @@
     ViewData["Title"] = "Usuarios";
     Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
 }
+@section CSS {
+    <link href="~/vendor/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i class="fas fa-users"></i></div>
+                        Lista de usuarios
+                    </h1>
+                </div>
+                <div class="col-12 col-xl-auto mb-3">
+                    <a asp-area="Administration" asp-controller="Users" asp-action="Upsert" class="btn btn-sm btn-primary text-white"><i class="fa-solid fa-plus me-2"></i>Crear usuario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped" style="width:100%" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>UsuarioId</th>
+                        <th>Rol</th>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Restableciendo contraseña</th>
+                        <th>Último restablecimiento</th>
+                        <th>Contraseña por defecto</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th>Activo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/vendor/datatables/datatables.min.js"></script>
+    <script src="~/js/Views/Users_Index.js"></script>
+}

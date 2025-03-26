@@ -89,7 +89,7 @@
 					</a>
 					<ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
 						<li class="sidebar-item">
-							<a href="" class="sidebar-link">Usuarios</a>
+							<a asp-area="School" asp-controller="Users" asp-action="Index" class="sidebar-link">Usuarios</a>
 						</li>
 					</ul>
 				</li>
@@ -106,8 +106,9 @@
 		</div>
 	</div>
 	<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="~/vendor/fontawesome/js/all.min.js"></script>
+	<script src="~/vendor/jquery/jquery.min.js"></script>
 	<script src="~/js/script.js"></script>
+	<partial name="_ValidationScriptsPartial" />
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
