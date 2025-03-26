@@ -1,8 +1,8 @@
-﻿using System.Linq.Expressions;
-using DAL.DBContext;
+﻿using DAL.DBContext;
 using DAL.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DAL.Implementation
 {
@@ -131,6 +131,35 @@ namespace DAL.Implementation
 
         /// <inheritdoc/>
         /// <remarks>
+        /// Este método utiliza <see cref="DbSet{TEntity}.Include"/> para aplicar relación con tablas
+        /// y <see cref="DbSet{TEntity}.ToListAsync"/> para retornar
+        /// todas las entidades de la base de datos.
+        /// </remarks>
+        /// <exception cref="SqlException">
+        /// Error de conexión o consulta a la base de datos.
+        /// </exception>
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>>[] includes)
+        {
+            if (includes == null || !includes.Any())
+                throw new ArgumentNullException(nameof(includes));
+
+            try
+            {
+                IQueryable<TEntity> query = _dbContext.Set<TEntity>();
+
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+                return await query.ToListAsync();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>
         /// Este método utiliza <see cref="DbSet{TEntity}.Where"/> para aplicar el filtro 
         /// y <see cref="DbSet{TEntity}.ToListAsync"/> para retornar los resultados.
         /// </remarks>
@@ -144,6 +173,37 @@ namespace DAL.Implementation
             try
             {
                 return await _dbContext.Set<TEntity>().Where(filter).ToListAsync();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>
+        /// Este método utiliza <see cref="DbSet{TEntity}.Where"/> para aplicar el filtro,
+        /// <see cref="DbSet{TEntity}.Include"/> para aplicar relación con tablas
+        /// y <see cref="DbSet{TEntity}.ToListAsync"/> para retornar los resultados.
+        /// </remarks>
+        /// <exception cref="SqlException">
+        /// Error de conexión o consulta a la base de datos.
+        /// </exception>
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>[] includes)
+        {
+            ArgumentNullException.ThrowIfNull(filter, nameof(filter));
+
+            if (includes == null || !includes.Any())
+                throw new ArgumentNullException(nameof(includes));
+
+            try
+            {
+                IQueryable<TEntity> query = _dbContext.Set<TEntity>();
+
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+                return await query.Where(filter).ToListAsync();
             }
             catch (SqlException)
             {

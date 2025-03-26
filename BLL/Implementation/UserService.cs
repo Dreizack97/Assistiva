@@ -19,7 +19,7 @@ namespace BLL.Implementation
     {
         private readonly IGenericRepository<User> _repository;
         private readonly IEmailService _emailService;
-        private const int VALID_TIME = 1;
+        private const int VALID_TIME_HOURS = 1;
 
         /// <summary>
         /// Inicializa una nueva instancia del servicio de usuarios.
@@ -72,7 +72,7 @@ namespace BLL.Implementation
         /// <inheritdoc/>
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync([r => r.Role]);
         }
 
         /// <inheritdoc/>
@@ -90,6 +90,7 @@ namespace BLL.Implementation
             _user.RoleId = user.RoleId;
             _user.Username = user.Username;
             _user.Email = user.Email;
+            _user.UpdatedAt = DateTime.Now;
 
             return await _repository.UpdateAsync(_user);
         }
@@ -158,7 +159,7 @@ namespace BLL.Implementation
         /// <para><strong>Detalles técnicos:</strong></para>
         /// <ul>
         /// <li>Genera código usando <see cref="Guid.NewGuid"/> truncado a 16 caracteres</li>
-        /// <li>Establece expiración en <see cref="VALID_TIME"/> hora(s)</li>
+        /// <li>Establece expiración en <see cref="VALID_TIME_HOURS"/> hora(s)</li>
         /// </ul>
         /// </remarks>
         public async Task<bool> SetRecoveryCodeAsync(string username)
@@ -169,13 +170,13 @@ namespace BLL.Implementation
             string recoveryCode = Guid.NewGuid().ToString("N").Substring(0, 16);
 
             user.RecoveryCode = recoveryCode;
-            user.ExpirationCode = DateTime.Now.AddHours(VALID_TIME);
+            user.ExpirationCode = DateTime.Now.AddHours(VALID_TIME_HOURS);
             user.IsPasswordReset = true;
             user.LastPasswordReset = DateTime.Now;
 
             if (await _repository.UpdateAsync(user))
             {
-                string validTime = VALID_TIME == 1 ? "1 hora" : $"{VALID_TIME} horas";
+                string validTime = VALID_TIME_HOURS == 1 ? "1 hora" : $"{VALID_TIME_HOURS} horas";
                 string htmlContent = GetMessageText("BLL.Resources.ResetPassword.html");
                 string messageBody = htmlContent.Replace("{Username}", user.Username).Replace("{RecoveryCode}", recoveryCode).Replace("{Valid-Time}", validTime);
 

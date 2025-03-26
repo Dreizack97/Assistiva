@@ -1,3 +1,4 @@
+using AppUI.Utilities;
 using IoC;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -9,18 +10,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     option.LoginPath = "/SignIn/Index";
-    //option.AccessDeniedPath = "/SignIn";
-    //option.LogoutPath = "/SignOut";
-    //option.Cookie.Name = "AuthCookie";
-    //option.Cookie.HttpOnly = true;
-    //option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    //option.Cookie.SameSite = SameSiteMode.Strict;
-    //option.Cookie.MaxAge = TimeSpan.FromDays(30);
     option.SlidingExpiration = true;
     option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 });
 
 builder.Services.DependencyInjection(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 WebApplication app = builder.Build();
 
