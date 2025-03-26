@@ -44,3 +44,11 @@ SET @PasswordBytes = HASHBYTES('SHA2_256', @Salt + CONVERT(VARBINARY(32), @Passw
 
 INSERT INTO USERS (RoleId, Username, Salt, [Password], Email) VALUES (1, 'SuperAdmin', @Salt, @PasswordBytes, 'assistiva@assitiva.com')
 GO
+
+CREATE TABLE Disabilities(
+    DisabilityId INT IDENTITY(1, 1) CONSTRAINT PK_Disabilities PRIMARY KEY NOT NULL,
+    [Name] NVARCHAR(50) CONSTRAINT UQ_Disabilities_Name UNIQUE NOT NULL, -- No permite datos duplicados,
+    [Description] NVARCHAR(255) NULL,
+	IsActive BIT DEFAULT 1 NOT NULL
+)
+GO
