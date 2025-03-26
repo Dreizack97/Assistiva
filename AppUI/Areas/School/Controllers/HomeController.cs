@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppUI.Areas.School.Controllers
@@ -10,6 +12,17 @@ namespace AppUI.Areas.School.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/");
         }
     }
 }

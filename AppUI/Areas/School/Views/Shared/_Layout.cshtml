@@ -18,13 +18,13 @@
 </head>
 <body>
 	<div class="wrapper">
-		<aside id="sidebar">
+		<aside id="sidebar" class="expand">
 			<div class="d-flex">
 				<button class="toggle-btn" type="button">
 					<i class="lni lni-grid-alt"></i>
 				</button>
 				<div class="sidebar-logo">
-					<a href="#">Assistiva</a>
+					<a asp-area="School" asp-controller="Home" asp-action="Index">Assistiva</a>
 				</div>
 			</div>
 			<ul class="sidebar-nav">
@@ -41,8 +41,7 @@
 					</a>
 				</li>
 				<li class="sidebar-item">
-					<a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-					   data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+					<a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
 						<i class="lni lni-protection"></i>
 						<span>Auth</span>
 					</a>
@@ -56,8 +55,7 @@
 					</ul>
 				</li>
 				<li class="sidebar-item">
-					<a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-					   data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+					<a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
 						<i class="lni lni-layout"></i>
 						<span>Multi Level</span>
 					</a>
@@ -85,16 +83,21 @@
 					</a>
 				</li>
 				<li class="sidebar-item">
-					<a href="#" class="sidebar-link">
+					<a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#settings" aria-expanded="false" aria-controls="settings">
 						<i class="lni lni-cog"></i>
-						<span>Settings</span>
+						<span>Configuraciones</span>
 					</a>
+					<ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item">
+							<a href="" class="sidebar-link">Usuarios</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 			<div class="sidebar-footer">
-				<a href="#" class="sidebar-link">
+				<a asp-area="School" asp-controller="Home" asp-action="LogOut" class="sidebar-link">
 					<i class="lni lni-exit"></i>
-					<span>Logout</span>
+					<span>Cerrar sesión</span>
 				</a>
 			</div>
 		</aside>
