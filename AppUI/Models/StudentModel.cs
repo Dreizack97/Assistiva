@@ -31,6 +31,12 @@ namespace AppUI.Models
         [DataType(DataType.Date)]
         public DateOnly DateOfBirth { get; set; }
 
+        [Required(ErrorMessage = "Intoduce el correo electrónico.")]
+        [DisplayName("Correo electrónico")]
+        [MaxLength(100)]
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; } = null!;
+
         [Required(ErrorMessage = "Selecciona el nivel educativo.")]
         [DisplayName("Nivel educativo")]
         public string EducationLevel { get; set; } = null!;
@@ -72,7 +78,7 @@ namespace AppUI.Models
         public string City { get; set; } = null!;
 
         [Required(ErrorMessage = "Introduce la código postal.")]
-        [DisplayName("Código ostal")]
+        [DisplayName("Código postal")]
         [Range(0, 99999)]
         public int PostalCode { get; set; }
 

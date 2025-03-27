@@ -48,6 +48,9 @@ namespace BLL.Implementation
             // Asginación de valores
             user.Salt = salt;
             user.Password = encryptedPassword;
+            user.IsPasswordDefect = true;
+            user.IsActive = true;
+
 
             // Creación del usuario
             User _user = await _repository.AddAsync(user);

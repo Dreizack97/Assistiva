@@ -47,12 +47,14 @@ namespace BLL.Implementation
                 RoleId = ROLE_ID_STUDENT,
                 Username = username,
                 Email = email,
-                UrlPicture = student.PhotoUrl,
-                IsActive = true
+                UrlPicture = student.PhotoUrl
             };
 
-            if (await _userService.CreateAsync(user) != null)
+            user = await _userService.CreateAsync(user);
+
+            if (user.UserId > 0)
             {
+                student.UserId = user.UserId;
                 student.IsActive = true;
 
                 Student _student = await _repository.AddAsync(student);
@@ -81,7 +83,7 @@ namespace BLL.Implementation
         /// <inheritdoc/>
         public async Task<IEnumerable<Student>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(s => s.IsActive);
         }
 
         /// <inheritdoc/>

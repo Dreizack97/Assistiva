@@ -55,12 +55,12 @@ namespace AppUI.Areas.School.Controllers
                     if (user.UserId == 0)
                     {
                         await _userService.CreateAsync(_mapper.Map<User>(user));
-                        TempData["success"] = "Usuario registrado existosamente.";
+                        TempData["success"] = "Usuario registrado exitosamente.";
                     }
                     else
                     {
                         await _userService.UpdateAsync(_mapper.Map<User>(user));
-                        TempData["success"] = "Usuario actualizado existosamente.";
+                        TempData["success"] = "Usuario actualizado exitosamente.";
                     }
 
                     return View("Index");
