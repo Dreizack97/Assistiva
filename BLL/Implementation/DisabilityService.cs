@@ -43,6 +43,8 @@ namespace BLL.Implementation
         {
             Disability? oDisability = await _repository.GetByFilterAsync(d => d.Name == disability.Name);
 
+            disability.IsActive = true;
+
             if (oDisability != null)
                 throw new TaskCanceledException("El nombre de la discapacidad no se encuentra disponible.");
 

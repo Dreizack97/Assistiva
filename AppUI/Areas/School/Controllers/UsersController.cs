@@ -77,7 +77,7 @@ namespace AppUI.Areas.School.Controllers
             return View(user);
         }
 
-        [HttpDelete]
+        [HttpPut]
         public async Task<IActionResult> Delete(int id)
         {
             try
