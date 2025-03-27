@@ -52,3 +52,33 @@ CREATE TABLE Disabilities(
 	IsActive BIT DEFAULT 1 NOT NULL
 )
 GO
+
+INSERT INTO Disabilities ([Name], [Description])VALUES
+	('Auditiva', 'Discapacidad que afecta la capacidad de oír, total o parcialmente. Requiere comunicación visual (lenguaje de señas, lectura labial) o dispositivos auditivos. Necesita accesibilidad en medios y entornos con subtítulos, intérpretes o señales visuales.'),
+	('Motora', 'Dificultad para moverse, coordinar miembros o mantener el equilibrio. Incluye uso de sillas de ruedas, prótesis o adaptadores. Precise accesibilidad física (rampas, ascensores) y herramientas ergonómicas para autonomía en actividades cotidianas.'),
+	('Visual', 'Pérdida total o parcial de la visión. Implica usar recursos como braille, lectores de pantalla, perros guía o aumentar el contraste. Requiere entornos con señalización táctil, auditiva y diseño inclusivo para navegación autónoma.')
+GO
+
+CREATE TABLE Students(
+	StudentId INT IDENTITY(1, 1) CONSTRAINT PK_Students PRIMARY KEY NOT NULL,
+	FirstName NVARCHAR(100) NOT NULL,
+    PaternalLastName NVARCHAR(50) NOT NULL,
+    MaternalLastName NVARCHAR(50) NULL,
+	Gender NVARCHAR(10) NOT NULL,
+    DateOfBirth DATE NOT NULL,
+	EducationLevel NVARCHAR(20) NOT NULL,
+    Profession NVARCHAR(50) NULL,
+    ProfessionStatus NVARCHAR(10) NOT NULL,
+    MaritalStatus NVARCHAR(15) NOT NULL,
+    BloodType NVARCHAR(15) NOT NULL,
+	Street NVARCHAR(75) NOT NULL,
+    Number NVARCHAR(10) NOT NULL,
+    Neighborhood NVARCHAR(50) NOT NULL,
+    City NVARCHAR(30) NOT NULL,
+    PostalCode INT NOT NULL,
+    [State] NVARCHAR(30) NOT NULL,
+    Country NVARCHAR(30) NOT NULL,
+	PhotoUrl NVARCHAR(200) NULL,
+    IsActive BIT DEFAULT 1 NOT NULL
+)
+GO
