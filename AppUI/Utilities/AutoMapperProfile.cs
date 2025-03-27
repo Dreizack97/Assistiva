@@ -21,10 +21,12 @@ namespace AppUI.Utilities
 
             #region Student
             CreateMap<Student, StudentModel>()
+                .ForMember(d => d.EmailAddress, o => o.MapFrom(or => or.User.Email))
                 .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));
 
             CreateMap<StudentModel, Student>()
-                .ForMember(d => d.IsActive, o => o.Ignore());
+                .ForMember(d => d.IsActive, o => o.Ignore())
+                .ForMember(d => d.User, o => o.Ignore());
             #endregion
 
             #region Users

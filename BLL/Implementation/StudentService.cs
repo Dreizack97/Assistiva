@@ -74,7 +74,7 @@ namespace BLL.Implementation
         /// </remarks>
         public async Task<Student> GetByIdAsync(int studentId)
         {
-            Student? student = await _repository.GetByIdAsync(studentId)
+            Student? student = await _repository.GetByFilterAsync(s => s.StudentId == studentId, [u => u.User])
                 ?? throw new TaskCanceledException("No existe el estudiante con la información proporcionada.");
 
             return student;

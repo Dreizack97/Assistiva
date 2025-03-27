@@ -59,6 +59,22 @@ namespace DAL.Interfaces
         Task<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> filter);
 
         /// <summary>
+        /// Obtiene una entidad de tipo <typeparamref name="TEntity"/> relacionando la(s) tabla(s) de tipo <typeparamref name="TEntity"/> que cumple con el filtro especificado.
+        /// </summary>
+        /// <param name="filter">Expresión lambda que define el criterio de búsqueda.</param>
+        /// <param name="includes">Expresión lambda que define el criterio de relación.</param>
+        /// <returns>
+        /// Tarea que representa la operación asíncrona. Contiene la entidad que cumple 
+        /// con el filtro o <c>null</c> si no se encuentra.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Se lanza si <paramref name="filter"/> es <c>null</c>.
+        /// Se lanza si <paramref name="includes"/> es <c>null</c>.
+        /// </exception>
+
+        Task<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>[] includes);
+
+        /// <summary>
         /// Obtiene todas las entidades de tipo <typeparamref name="TEntity"/> de manera asíncrona.
         /// </summary>
         /// <returns>
