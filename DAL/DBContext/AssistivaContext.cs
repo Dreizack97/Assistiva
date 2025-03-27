@@ -14,12 +14,23 @@ public partial class AssistivaContext : DbContext
     {
     }
 
+    public virtual DbSet<Disability> Disabilities { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Disability>(entity =>
+        {
+            entity.HasIndex(e => e.Name, "UQ_Disabilities_Name").IsUnique();
+
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasIndex(e => e.Name, "UQ_Roles_Name").IsUnique();

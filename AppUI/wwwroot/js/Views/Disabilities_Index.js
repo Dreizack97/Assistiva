@@ -1,5 +1,4 @@
-﻿
-var dataTable
+﻿var dataTable
 
 $(document).ready(async function () {
     await DataLoad()
@@ -10,23 +9,26 @@ async function DataLoad() {
         responsive: true,
         pageLength: 25,
         ajax: {
-            url: '/School/Users/GetUsers',
+            url: '/School/Disabilities/GetDisabilities',
             dataSrc: ''
         },
         autoWidth: true,
         columns: [
-            { data: 'userId', visible: false, searchable: false },
-            { data: 'role' },
-            { data: 'username' },
-            { data: 'email' },
-            { data: 'createdAt' },
-            { data: 'updatedAt' },
+            { data: 'disabilityId', visible: false, searchable: false },
+            { data: 'name' },
+            {
+                data: 'description',
+                render: function (data) {
+                    return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data}">${data.substr(0, 70)}...</span>`
+                },
+                width: '550px'
+            },
             { data: 'isActive' },
             {
-                data: 'userId',
+                data: 'disabilityId',
                 render: function (data) {
-                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Users/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
-                    <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-user-slash"></i></a>`
+                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Disabilities/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
+                    <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
                 },
                 orderable: false,
                 searchable: false,
@@ -54,7 +56,7 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
 
     Swal.fire({
         title: "¿Deseas eliminar?",
-        text: `Eliminar usuario: ${data.username}.`,
+        text: `Eliminar discapacidad: ${data.name}.`,
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -64,14 +66,14 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
     }).then(async (result) => {
         if (result.isConfirmed) {
             $(".swal2-popup").LoadingOverlay("show");
-            await Delete(data.userId)
+            await Delete(data.disabilityId)
         }
     })
 })
 
-async function Delete(userId) {
+async function Delete(disabilityId) {
     await $.ajax({
-        url: `/School/Users/Delete/${userId}`,
+        url: `/School/Disabilities/Delete/${disabilityId}`,
         type: 'PUT',
         success: function (data) {
             if (data.success) {

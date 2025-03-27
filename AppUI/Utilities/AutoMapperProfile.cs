@@ -9,6 +9,14 @@ namespace AppUI.Utilities
     {
         public AutoMapperProfile()
         {
+            #region Disability
+            CreateMap<Disability, DisabilityModel>()
+                .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));
+
+            CreateMap<DisabilityModel, Disability>()
+                .ForMember(d => d.IsActive, o => o.Ignore());
+            #endregion
+
             CreateMap<Role, RoleModel>().ReverseMap();
 
             #region Users
