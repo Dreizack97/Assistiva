@@ -4,6 +4,8 @@ public partial class Student
 {
     public int StudentId { get; set; }
 
+    public int UserId { get; set; }
+
     public string FirstName { get; set; } = null!;
 
     public string PaternalLastName { get; set; } = null!;
@@ -41,4 +43,6 @@ public partial class Student
     public string? PhotoUrl { get; set; }
 
     public bool IsActive { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

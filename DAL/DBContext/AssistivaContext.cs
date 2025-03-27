@@ -59,6 +59,11 @@ public partial class AssistivaContext : DbContext
             entity.Property(e => e.ProfessionStatus).HasMaxLength(10);
             entity.Property(e => e.State).HasMaxLength(30);
             entity.Property(e => e.Street).HasMaxLength(75);
+
+            entity.HasOne(d => d.User).WithMany(p => p.Students)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Students_UserId");
         });
 
         modelBuilder.Entity<User>(entity =>
