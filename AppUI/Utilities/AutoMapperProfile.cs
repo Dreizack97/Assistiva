@@ -19,6 +19,14 @@ namespace AppUI.Utilities
 
             CreateMap<Role, RoleModel>().ReverseMap();
 
+            #region Student
+            CreateMap<Student, StudentModel>()
+                .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));
+
+            CreateMap<StudentModel, Student>()
+                .ForMember(d => d.IsActive, o => o.Ignore());
+            #endregion
+
             #region Users
             CreateMap<User, UserListModel>()
                 .ForMember(d => d.Role, o => o.MapFrom(or => or.Role.Name))
