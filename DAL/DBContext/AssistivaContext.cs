@@ -18,6 +18,8 @@ public partial class AssistivaContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
+    public virtual DbSet<Student> Students { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,6 +38,27 @@ public partial class AssistivaContext : DbContext
             entity.HasIndex(e => e.Name, "UQ_Roles_Name").IsUnique();
 
             entity.Property(e => e.Name).HasMaxLength(25);
+        });
+
+        modelBuilder.Entity<Student>(entity =>
+        {
+            entity.Property(e => e.BloodType).HasMaxLength(15);
+            entity.Property(e => e.City).HasMaxLength(30);
+            entity.Property(e => e.Country).HasMaxLength(30);
+            entity.Property(e => e.EducationLevel).HasMaxLength(20);
+            entity.Property(e => e.FirstName).HasMaxLength(100);
+            entity.Property(e => e.Gender).HasMaxLength(10);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.MaritalStatus).HasMaxLength(15);
+            entity.Property(e => e.MaternalLastName).HasMaxLength(50);
+            entity.Property(e => e.Neighborhood).HasMaxLength(50);
+            entity.Property(e => e.Number).HasMaxLength(10);
+            entity.Property(e => e.PaternalLastName).HasMaxLength(50);
+            entity.Property(e => e.PhotoUrl).HasMaxLength(200);
+            entity.Property(e => e.Profession).HasMaxLength(50);
+            entity.Property(e => e.ProfessionStatus).HasMaxLength(10);
+            entity.Property(e => e.State).HasMaxLength(30);
+            entity.Property(e => e.Street).HasMaxLength(75);
         });
 
         modelBuilder.Entity<User>(entity =>
