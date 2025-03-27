@@ -111,6 +111,37 @@ namespace DAL.Implementation
 
         /// <inheritdoc/>
         /// <remarks>
+        /// Este método utiliza <see cref="DbSet{TEntity}.Where"/> para aplicar el filtro,
+        /// <see cref="DbSet{TEntity}.Include"/> para aplicar relación con tablas
+        /// y <see cref="DbSet{TEntity}.FirstOrDefaultAsync"/> para retornar el primer resultado.
+        /// </remarks>
+        /// <exception cref="SqlException">
+        /// Error de conexión o consulta a la base de datos.
+        /// </exception>
+        public async Task<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, object>>[] includes)
+        {
+            ArgumentNullException.ThrowIfNull(filter, nameof(filter));
+
+            if (includes == null || !includes.Any())
+                throw new ArgumentNullException(nameof(includes));
+
+            try
+            {
+                IQueryable<TEntity> query = _dbContext.Set<TEntity>();
+
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+                return await query.Where(filter).FirstOrDefaultAsync();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        /// <remarks>
         /// Este método utiliza <see cref="DbSet{TEntity}.ToListAsync"/> para retornar 
         /// todas las entidades de la base de datos.
         /// </remarks>

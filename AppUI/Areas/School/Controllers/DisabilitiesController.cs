@@ -73,7 +73,7 @@ namespace AppUI.Areas.School.Controllers
             try
             {
                 await _disabilityService.DisableAsync(id);
-                return Json(new { success = true, message = "Discapacidad deshabilitada correctamente." });
+                return Json(new { success = true, message = "Discapacidad deshabilitada exitosamente." });
             }
             catch (Exception ex)
             {
