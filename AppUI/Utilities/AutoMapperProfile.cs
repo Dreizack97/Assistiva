@@ -1,4 +1,5 @@
 ﻿using AppUI.Models;
+using AppUI.Models.StudentDisability;
 using AppUI.Models.User;
 using AutoMapper;
 using Entity;
@@ -27,6 +28,13 @@ namespace AppUI.Utilities
             CreateMap<StudentModel, Student>()
                 .ForMember(d => d.IsActive, o => o.Ignore())
                 .ForMember(d => d.User, o => o.Ignore());
+            #endregion
+
+            #region StudentDisability
+            CreateMap<StudentDisability, StudentDisabilityModel>().ReverseMap();
+
+            CreateMap<StudentDisability, StudentDisabilityListModel>()
+                .ForMember(d => d.DisabilityName, o => o.MapFrom(or => or.Disability.Name));
             #endregion
 
             #region Users

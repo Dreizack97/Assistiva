@@ -54,9 +54,9 @@ CREATE TABLE Disabilities(
 GO
 
 INSERT INTO Disabilities ([Name], [Description])VALUES
-	('Auditiva', 'Discapacidad que afecta la capacidad de oír, total o parcialmente. Requiere comunicación visual (lenguaje de señas, lectura labial) o dispositivos auditivos. Necesita accesibilidad en medios y entornos con subtítulos, intérpretes o señales visuales.'),
-	('Motora', 'Dificultad para moverse, coordinar miembros o mantener el equilibrio. Incluye uso de sillas de ruedas, prótesis o adaptadores. Precise accesibilidad física (rampas, ascensores) y herramientas ergonómicas para autonomía en actividades cotidianas.'),
-	('Visual', 'Pérdida total o parcial de la visión. Implica usar recursos como braille, lectores de pantalla, perros guía o aumentar el contraste. Requiere entornos con señalización táctil, auditiva y diseño inclusivo para navegación autónoma.')
+	('Auditiva', 'Discapacidad que afecta la capacidad de oÃ­r, total o parcialmente. Requiere comunicaciÃ³n visual (lenguaje de seÃ±as, lectura labial) o dispositivos auditivos. Necesita accesibilidad en medios y entornos con subtÃ­tulos, intÃ©rpretes o seÃ±ales visuales.'),
+	('Motora', 'Dificultad para moverse, coordinar miembros o mantener el equilibrio. Incluye uso de sillas de ruedas, prÃ³tesis o adaptadores. Precise accesibilidad fÃ­sica (rampas, ascensores) y herramientas ergonÃ³micas para autonomÃ­a en actividades cotidianas.'),
+	('Visual', 'PÃ©rdida total o parcial de la visiÃ³n. Implica usar recursos como braille, lectores de pantalla, perros guÃ­a o aumentar el contraste. Requiere entornos con seÃ±alizaciÃ³n tÃ¡ctil, auditiva y diseÃ±o inclusivo para navegaciÃ³n autÃ³noma.')
 GO
 
 CREATE TABLE Students(
@@ -82,5 +82,15 @@ CREATE TABLE Students(
 	PhotoUrl NVARCHAR(200) NULL,
     IsActive BIT DEFAULT 1 NOT NULL,
 	CONSTRAINT FK_Students_UserId FOREIGN KEY (UserId) REFERENCES Users(UserId)
+)
+GO
+
+CREATE TABLE StudentDisabilities(
+    Id INT IDENTITY(1, 1) CONSTRAINT PK_StudentDisabilities PRIMARY KEY NOT NULL,
+    StudentId INT NOT NULL,
+    DisabilityId INT NOT NULL,
+    CONSTRAINT FK_StudentDisabilities_StudentId FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
+    CONSTRAINT FK_StudentDisabilities_DisabilityId FOREIGN KEY (DisabilityId) REFERENCES Disabilities(DisabilityId),
+    CONSTRAINT UQ_Student_Disability UNIQUE (StudentID, DisabilityID)  -- No permite datos duplicados
 )
 GO

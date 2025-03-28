@@ -20,6 +20,8 @@ public partial class AssistivaContext : DbContext
 
     public virtual DbSet<Student> Students { get; set; }
 
+    public virtual DbSet<StudentDisability> StudentDisabilities { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -64,6 +66,21 @@ public partial class AssistivaContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Students_UserId");
+        });
+
+        modelBuilder.Entity<StudentDisability>(entity =>
+        {
+            entity.HasIndex(e => new { e.StudentId, e.DisabilityId }, "UQ_Student_Disability").IsUnique();
+
+            entity.HasOne(d => d.Disability).WithMany(p => p.StudentDisabilities)
+                .HasForeignKey(d => d.DisabilityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StudentDisabilities_DisabilityId");
+
+            entity.HasOne(d => d.Student).WithMany(p => p.StudentDisabilities)
+                .HasForeignKey(d => d.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StudentDisabilities_StudentId");
         });
 
         modelBuilder.Entity<User>(entity =>
