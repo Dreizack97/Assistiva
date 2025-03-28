@@ -57,7 +57,7 @@ namespace BLL.Implementation
         /// </returns>
         public async Task<IEnumerable<StudentDisability>> GetAllByStudentIdAsync(int studentId)
         {
-            return await _repository.GetAllAsync(d => d.StudentId == studentId);
+            return await _repository.GetAllAsync(d => d.StudentId == studentId, [d => d.Disability]);
         }
 
         // <inheritdoc />
