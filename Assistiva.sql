@@ -54,9 +54,9 @@ CREATE TABLE Disabilities(
 GO
 
 INSERT INTO Disabilities ([Name], [Description])VALUES
-	('Auditiva', 'Discapacidad que afecta la capacidad de o�r, total o parcialmente. Requiere comunicaci�n visual (lenguaje de se�as, lectura labial) o dispositivos auditivos. Necesita accesibilidad en medios y entornos con subt�tulos, int�rpretes o se�ales visuales.'),
-	('Motora', 'Dificultad para moverse, coordinar miembros o mantener el equilibrio. Incluye uso de sillas de ruedas, pr�tesis o adaptadores. Precise accesibilidad f�sica (rampas, ascensores) y herramientas ergon�micas para autonom�a en actividades cotidianas.'),
-	('Visual', 'P�rdida total o parcial de la visi�n. Implica usar recursos como braille, lectores de pantalla, perros gu�a o aumentar el contraste. Requiere entornos con se�alizaci�n t�ctil, auditiva y dise�o inclusivo para navegaci�n aut�noma.')
+	('Auditiva', 'Discapacidad que afecta la capacidad de oír, total o parcialmente. Requiere comunicación visual (lenguaje de señas, lectura labial) o dispositivos auditivos. Necesita accesibilidad en medios y entornos con subtítulos, intérpretes o señales visuales.'),
+	('Motora', 'Dificultad para moverse, coordinar miembros o mantener el equilibrio. Incluye uso de sillas de ruedas, prótesis o adaptadores. Precise accesibilidad física (rampas, ascensores) y herramientas ergonómicas para autonomía en actividades cotidianas.'),
+	('Visual', 'Pérdida total o parcial de la visión. Implica usar recursos como braille, lectores de pantalla, perros guía o aumentar el contraste. Requiere entornos con señalización táctil, auditiva y diseño inclusivo para navegación autónoma.')
 GO
 
 CREATE TABLE Students(
@@ -90,7 +90,7 @@ CREATE TABLE StudentDisabilities(
     StudentId INT NOT NULL,
     DisabilityId INT NOT NULL,
     CONSTRAINT FK_StudentDisabilities_StudentId FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
-    CONSTRAINT FK_StudentDisabilities_DisabilityId FOREIGN KEY (DisabilityId) REFERENCES Students(DisabilityId),
+    CONSTRAINT FK_StudentDisabilities_DisabilityId FOREIGN KEY (DisabilityId) REFERENCES Disabilities(DisabilityId),
     CONSTRAINT UQ_Student_Disability UNIQUE (StudentID, DisabilityID)  -- No permite datos duplicados
 )
 GO
