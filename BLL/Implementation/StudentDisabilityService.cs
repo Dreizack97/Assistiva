@@ -17,7 +17,7 @@ namespace BLL.Implementation
         {
             _repository = repository;
         }
-        
+
         /// <inheritdoc />
         /// <exception cref="TaskCanceledException">
         /// Se lanza cuando:
@@ -31,7 +31,7 @@ namespace BLL.Implementation
             StudentDisability? oStudentDisability = await _repository.GetByFilterAsync(d => d.StudentId == studentDisability.StudentId && d.DisabilityId == studentDisability.DisabilityId);
 
             if (oStudentDisability != null)
-                throw new TaskCanceledException("El estudiante ya cuenta una esta discapacidad registrada.");
+                throw new TaskCanceledException("El estudiante ya cuenta esta discapacidad registrada.");
 
             StudentDisability _studentDisability = await _repository.AddAsync(studentDisability);
 
@@ -70,11 +70,11 @@ namespace BLL.Implementation
         /// </exception>
         public async Task<bool> UpdateAsync(StudentDisability studentDisability)
         {
-            StudentDisability? oStudentDisability = await _repository.GetByFilterAsync(d => d.StudentId == studentDisability.StudentId && d.DisabilityId == studentDisability.DisabilityId 
+            StudentDisability? oStudentDisability = await _repository.GetByFilterAsync(d => d.StudentId == studentDisability.StudentId && d.DisabilityId == studentDisability.DisabilityId
                 && d.Id != studentDisability.Id);
 
             if (oStudentDisability != null)
-                throw new TaskCanceledException("El estudiante ya cuenta una esta discapacidad registrada.");
+                throw new TaskCanceledException("El estudiante ya cuenta esta discapacidad registrada.");
 
             StudentDisability _studentDisability = await GetByIdAsync(studentDisability.Id);
 

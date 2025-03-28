@@ -166,7 +166,7 @@
                 <button type="submit" class="btn btn-sm btn-success me-2">@(Model.StudentId == 0 ? "Agregar" : "Actualizar") estudiante</button>
                 @if (Model.StudentId > 0)
                 {
-                    <a class="btn btn-sm btn-info me-2" asp-area="School" asp-controller="StudentDisabilities" asp-action="Index">Discapacidades</a>
+                    <a class="btn btn-sm btn-info me-2" asp-area="School" asp-controller="StudentDisabilities" asp-action="Index" asp-route-StudentId="@Model.StudentId">Discapacidades</a>
                 }
                 <a class="btn btn-sm btn-primary" asp-area="School" asp-controller="Students" asp-action="Index">Regresar</a>
             </div>
