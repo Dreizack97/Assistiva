@@ -10,6 +10,8 @@ namespace AppUI.Utilities
     {
         public AutoMapperProfile()
         {
+            CreateMap<Classroom, ClassroomModel>().ReverseMap();
+            
             #region Disability
             CreateMap<Disability, DisabilityModel>()
                 .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));
