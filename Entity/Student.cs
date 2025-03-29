@@ -44,6 +44,8 @@ public partial class Student
 
     public bool IsActive { get; set; }
 
+    public virtual ICollection<ClassroomStudent> ClassroomStudents { get; set; } = new List<ClassroomStudent>();
+
     public virtual ICollection<StudentDisability> StudentDisabilities { get; set; } = new List<StudentDisability>();
 
     public virtual User User { get; set; } = null!;

@@ -14,6 +14,10 @@ public partial class AssistivaContext : DbContext
     {
     }
 
+    public virtual DbSet<Classroom> Classrooms { get; set; }
+
+    public virtual DbSet<ClassroomStudent> ClassroomStudents { get; set; }
+
     public virtual DbSet<Disability> Disabilities { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -26,6 +30,33 @@ public partial class AssistivaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Classroom>(entity =>
+        {
+            entity.HasIndex(e => e.Name, "UQ_Classrooms_Name").IsUnique();
+
+            entity.Property(e => e.Name).HasMaxLength(50);
+
+            entity.HasOne(d => d.Teacher).WithMany(p => p.Classrooms)
+                .HasForeignKey(d => d.TeacherId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Classrooms_TeacherId");
+        });
+
+        modelBuilder.Entity<ClassroomStudent>(entity =>
+        {
+            entity.HasIndex(e => new { e.ClassroomId, e.StudentId }, "UQ_Classroom_Student").IsUnique();
+
+            entity.HasOne(d => d.Classroom).WithMany(p => p.ClassroomStudents)
+                .HasForeignKey(d => d.ClassroomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ClassroomStudents_ClassroomId");
+
+            entity.HasOne(d => d.Student).WithMany(p => p.ClassroomStudents)
+                .HasForeignKey(d => d.StudentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ClassroomStudents_StudentId");
+        });
+
         modelBuilder.Entity<Disability>(entity =>
         {
             entity.HasIndex(e => e.Name, "UQ_Disabilities_Name").IsUnique();
