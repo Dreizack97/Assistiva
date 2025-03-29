@@ -91,6 +91,24 @@ CREATE TABLE StudentDisabilities(
     DisabilityId INT NOT NULL,
     CONSTRAINT FK_StudentDisabilities_StudentId FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
     CONSTRAINT FK_StudentDisabilities_DisabilityId FOREIGN KEY (DisabilityId) REFERENCES Disabilities(DisabilityId),
-    CONSTRAINT UQ_Student_Disability UNIQUE (StudentID, DisabilityID)  -- No permite datos duplicados
+    CONSTRAINT UQ_Student_Disability UNIQUE (StudentId, DisabilityId)  -- No permite datos duplicados
+)
+GO
+
+CREATE TABLE Classrooms(
+	ClassroomId INT IDENTITY(1, 1) CONSTRAINT PK_Classrooms PRIMARY KEY NOT NULL,
+	TeacherId INT NOT NULL,
+	[Name] NVARCHAR(50) CONSTRAINT UQ_Classrooms_Name UNIQUE NOT NULL, -- No permite datos duplicados
+	CONSTRAINT FK_Classrooms_TeacherId FOREIGN KEY (TeacherId) REFERENCES Users(UserId)
+)
+GO
+
+CREATE TABLE ClassroomStudents(
+	Id INT IDENTITY(1, 1) CONSTRAINT PK_ClassroomStudents PRIMARY KEY NOT NULL,
+	ClassroomId INT NOT NULL,
+	StudentId INT NOT NULL,
+	CONSTRAINT FK_ClassroomStudents_ClassroomId FOREIGN KEY (ClassroomId) REFERENCES Classrooms(ClassroomId),
+	CONSTRAINT FK_ClassroomStudents_StudentId FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
+	CONSTRAINT UQ_Classroom_Student UNIQUE (ClassroomId, StudentId) -- No permite datos duplicados
 )
 GO
