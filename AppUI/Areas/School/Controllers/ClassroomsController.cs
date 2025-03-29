@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppUI.Areas.School.Controllers
 {
+    [Authorize]
+    [Area("School")]
     public class ClassroomsController : Controller
     {
         public IActionResult Index()
