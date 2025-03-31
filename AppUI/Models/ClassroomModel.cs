@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,5 +16,8 @@ namespace AppUI.Models
         [DisplayName("Nombre de grupo")]
         [MaxLength(50)]
         public string Name { get; set; } = null!;
+
+        [ValidateNever]
+        public string Teacher { get; set; } = null!;
     }
 }

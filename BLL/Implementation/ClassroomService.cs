@@ -52,7 +52,7 @@ namespace BLL.Implementation
         /// <inheritdoc/>
         public async Task<IEnumerable<Classroom>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync([u => u.Teacher]);
         }
 
         /// <inheritdoc/>

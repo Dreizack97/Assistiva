@@ -1,9 +1,11 @@
 using AppUI.Models;
+using AppUI.Models.User;
 using AutoMapper;
 using BLL.Interfaces;
 using Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AppUI.Areas.School.Controllers
 {
@@ -12,11 +14,13 @@ namespace AppUI.Areas.School.Controllers
     public class ClassroomsController : Controller
     {
         private readonly IClassroomService _classroomService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public ClassroomsController(IClassroomService classroomService, IMapper mapper)
+        public ClassroomsController(IClassroomService classroomService, IUserService userService, IMapper mapper)
         {
             _classroomService = classroomService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -27,6 +31,9 @@ namespace AppUI.Areas.School.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
+            IEnumerable<UserModel> users = _mapper.Map<IEnumerable<UserModel>>(await _userService.GetAllTeachersAsync());
+            ViewBag.Teachers = new SelectList(users, "UserId", "Username");
+
             ClassroomModel classroom = id == null ? new ClassroomModel() : _mapper.Map<ClassroomModel>(await _classroomService.GetByIdAsync((int)id));
             return classroom != null ? View(classroom) : NotFound();
         }
@@ -52,17 +59,20 @@ namespace AppUI.Areas.School.Controllers
                     }
                     else
                     {
-                        await _classroomService.CreateAsync(_mapper.Map<Classroom>(classroom));
+                        await _classroomService.UpdateAsync(_mapper.Map<Classroom>(classroom));
                         TempData["success"] = "Grupo actualizado exitosamente.";
                     }
 
-                    return View ("Index");
+                    return View("Index");
                 }
                 catch (Exception ex)
                 {
                     TempData["info"] = ex.Message;
                 }
             }
+
+            IEnumerable<UserModel> users = _mapper.Map<IEnumerable<UserModel>>(await _userService.GetAllTeachersAsync());
+            ViewBag.Teachers = new SelectList(users, "UserId", "Username");
 
             return View(classroom);
         }

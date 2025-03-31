@@ -16,7 +16,7 @@ async function DataLoad() {
         columns: [
             { data: 'classroomId', visible: false, searchable: false },
             { data: 'name' },
-            { data: 'teacherId' },
+            { data: 'teacher' },
             {
                 data: 'classroomId',
                 render: function (data) {
