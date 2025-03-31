@@ -79,6 +79,12 @@ namespace BLL.Implementation
         }
 
         /// <inheritdoc/>
+        public async Task<IEnumerable<User>> GetAllTeachersAsync()
+        {
+            return await _repository.GetAllAsync(u => u.RoleId == 3);
+        }
+
+        /// <inheritdoc/>
         public async Task<bool> UpdateAsync(User user)
         {
             // Validación de disponibilidad excluyendo el usuario actual

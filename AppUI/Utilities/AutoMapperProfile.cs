@@ -10,6 +10,14 @@ namespace AppUI.Utilities
     {
         public AutoMapperProfile()
         {
+            #region
+            CreateMap<Classroom, ClassroomModel>()
+                .ForMember(d => d.Teacher, o => o.MapFrom(or => or.Teacher.Username));
+
+            CreateMap<ClassroomModel, Classroom>()
+                .ForMember(d => d.Teacher, o => o.Ignore());
+            #endregion
+
             #region Disability
             CreateMap<Disability, DisabilityModel>()
                 .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));

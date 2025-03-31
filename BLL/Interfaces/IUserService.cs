@@ -32,6 +32,12 @@ namespace BLL.Interfaces
         Task<IEnumerable<User>> GetAllAsync();
 
         /// <summary>
+        /// Obtiene todos los usuarios de tipo "Docente" de manera asíncrona.
+        /// </summary>
+        /// <returns>Colección de usuarios de tipo "Docente" registrados.</returns>
+        Task<IEnumerable<User>> GetAllTeachersAsync();
+
+        /// <summary>
         /// Actualiza un usuario existente de manera asíncrona.
         /// </summary>
         /// <param name="user">Instancia del usuario con datos actualizados.</param>
