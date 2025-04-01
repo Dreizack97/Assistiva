@@ -12,6 +12,6 @@ namespace BLL.Interfaces
 
         Task<bool> UpdateAsync(ClassroomStudent student);
 
-        Task<bool> DeleteAsync(int classroomId);
+        Task<bool> DeleteAsync(int id);
     }
 }

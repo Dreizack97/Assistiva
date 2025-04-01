@@ -13,29 +13,52 @@ namespace BLL.Implementation
             _repository = repository;
         }
 
-        public Task<ClassroomStudent> CreateAsync(ClassroomStudent student)
+        public async Task<ClassroomStudent> CreateAsync(ClassroomStudent student)
         {
-            throw new NotImplementedException();
+            ClassroomStudent? oStudent = await _repository.GetByFilterAsync(s => s.ClassroomId == student.ClassroomId && s.StudentId == student.Id);
+
+            if (oStudent != null)
+                throw new TaskCanceledException("El estudiante ya se encuentra asignado al grupo.");
+
+            ClassroomStudent _student = await _repository.AddAsync(student);
+
+            if (_student.Id == 0)
+                throw new TaskCanceledException("Ocurrió un error al intentar registrar al estudiante.");
+
+            return _student;
+        }
+
+        public async Task<ClassroomStudent> GetByIdAsync(int id)
+        {
+            ClassroomStudent? student = await _repository.GetByIdAsync(id)
+                ?? throw new TaskCanceledException("No se encontró estudiante con la información proporcionada.");
+
+            return student;
         }
 
         public Task<IEnumerable<ClassroomStudent>> GetAllByClassroomIdAsync(int classroomId)
         {
-            throw new NotImplementedException();
+            return _repository.GetAllAsync(e => e.ClassroomId == classroomId);
         }
 
-        public Task<ClassroomStudent> GetByIdAsync(int id)
+        public async Task<bool> UpdateAsync(ClassroomStudent student)
         {
-            throw new NotImplementedException();
+            ClassroomStudent? oStudent = await _repository.GetByFilterAsync(s => s.ClassroomId == student.ClassroomId && s.StudentId == student.Id);
+
+            if (oStudent != null)
+                throw new TaskCanceledException("El estudiante ya se encuentra asignado al grupo.");
+
+            ClassroomStudent _student = await GetByIdAsync(student.Id);
+
+            _student.ClassroomId = student.ClassroomId;
+            _student.StudentId = student.StudentId;
+
+            return await _repository.UpdateAsync(_student);
         }
 
-        public Task<bool> UpdateAsync(ClassroomStudent student)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(int classroomId)
-        {
-            throw new NotImplementedException();
+            return await _repository.DeleteAsync(id);
         }
     }
 }
