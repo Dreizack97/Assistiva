@@ -60,6 +60,7 @@ namespace IoC
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<IClassroomService, ClassroomService>();
+            services.AddScoped<IClassroomStudentService, ClassroomStudentService>();
             services.AddScoped<IDisabilityService, DisabilityService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IRoleService, RoleService>();
