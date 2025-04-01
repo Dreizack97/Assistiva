@@ -10,12 +10,20 @@ namespace AppUI.Utilities
     {
         public AutoMapperProfile()
         {
-            #region
+            #region Classroom
             CreateMap<Classroom, ClassroomModel>()
                 .ForMember(d => d.Teacher, o => o.MapFrom(or => or.Teacher.Username));
 
             CreateMap<ClassroomModel, Classroom>()
                 .ForMember(d => d.Teacher, o => o.Ignore());
+            #endregion
+
+            #region ClassroomStudent
+            CreateMap<ClassroomStudent, ClassroomStudentModel>()
+                .ForMember(d => d.StudentName, o => o.MapFrom(or => string.Join(' ', new[] { or.Student.FirstName, or.Student.PaternalLastName, or.Student.MaternalLastName })));
+
+            CreateMap<ClassroomStudentModel, ClassroomStudent>()
+                .ForMember(d => d.Student, o => o.Ignore());
             #endregion
 
             #region Disability

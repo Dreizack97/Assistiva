@@ -73,7 +73,7 @@ namespace BLL.Implementation
         /// </remarks>
         public Task<IEnumerable<ClassroomStudent>> GetAllByClassroomIdAsync(int classroomId)
         {
-            return _repository.GetAllAsync(e => e.ClassroomId == classroomId);
+            return _repository.GetAllAsync(e => e.ClassroomId == classroomId, [s => s.Student]);
         }
 
         /// <inheritdoc/>
