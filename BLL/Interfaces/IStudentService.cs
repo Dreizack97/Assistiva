@@ -26,6 +26,13 @@ namespace BLL.Interfaces
         Task<Student> GetByIdAsync(int studentId);
 
         /// <summary>
+        /// Obtiene un estudiante por su nombre.
+        /// </summary>
+        /// <param name="studentName">Nombre del estudiante a buscar.</param>
+        /// <returns>El estudiante encontrado.</returns>
+        Task<Student> GetByNameAsync(string studentName);
+
+        /// <summary>
         /// Obtiene todos los estudiantes registrados en el sistema.
         /// </summary>
         /// <returns>Una colección de todos los estudiantes.</returns>

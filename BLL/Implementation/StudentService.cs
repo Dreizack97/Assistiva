@@ -81,6 +81,13 @@ namespace BLL.Implementation
         }
 
         /// <inheritdoc/>
+        public async Task<Student> GetByNameAsync(string studentName)
+        {
+            Student? student = await _repository.GetByFilterAsync(s => string.Join(" ", new[] { s.FirstName, s.PaternalLastName, s.MaternalLastName }).Contains(studentName));
+            return student!;
+        }
+
+        /// <inheritdoc/>
         public async Task<IEnumerable<Student>> GetAllAsync()
         {
             return await _repository.GetAllAsync(s => s.IsActive);

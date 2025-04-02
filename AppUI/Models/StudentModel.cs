@@ -96,5 +96,8 @@ namespace AppUI.Models
 
         [ValidateNever]
         public string IsActive { get; set; } = null!;
+
+        [ValidateNever]
+        public string FullName => string.Join(" ", [FirstName, PaternalLastName, MaternalLastName]);
     }
 }
