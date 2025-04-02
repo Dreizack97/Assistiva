@@ -5,28 +5,28 @@ $(document).ready(async function () {
 })
 
 async function DataLoad() {
+    let classroomId = $("#ClassroomId").val()
+
     dataTable = await $("#dataTable").DataTable({
         responsive: true,
         pageLength: 25,
         ajax: {
-            url: '/School/Classrooms/GetClassrooms',
+            url: `/School/ClassroomStudents/GetStudentsByClassroomId?classroomId=${classroomId}`,
             dataSrc: ''
         },
         autoWidth: true,
         columns: [
-            { data: 'classroomId', visible: false, searchable: false },
-            { data: 'name' },
-            { data: 'teacher' },
+            { data: 'id', visible: false, searchable: false },
+            { data: 'studentName' },
             {
-                data: 'classroomId',
+                data: 'id',
                 render: function (data) {
-                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Classrooms/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>` +
-                        `<a class="btn btn-sm btn-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Estudiantes" href="/School/Classrooms/Upsert/${data}/Students"><i class="fas fa-chalkboard-user"></i></a>` +
-                        `<a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
+                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Classrooms/Upsert/${classroomId}/Students/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
+                    <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
                 },
                 orderable: false,
                 searchable: false,
-                width: '150px'
+                width: '100px'
             }
         ],
         order: [[1, "asc"]],
@@ -50,7 +50,7 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
 
     Swal.fire({
         title: "¿Deseas eliminar?",
-        text: `Eliminar grupo: ${data.name}.`,
+        text: `Eliminar estudiante: ${data.studentName}.`,
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -60,14 +60,14 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
     }).then(async (result) => {
         if (result.isConfirmed) {
             $(".swal2-popup").LoadingOverlay("show");
-            await Delete(data.classroomId)
+            await Delete(data.id)
         }
     })
 })
 
-async function Delete(classroomId) {
+async function Delete(id) {
     await $.ajax({
-        url: `/School/Classrooms/Delete/${classroomId}`,
+        url: `/School/ClassroomStudents/Delete/${id}`,
         type: 'DELETE',
         success: function (data) {
             if (data.success) {

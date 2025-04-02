@@ -40,7 +40,7 @@ namespace BLL.Implementation
         /// </remarks>
         public async Task<ClassroomStudent> CreateAsync(ClassroomStudent student)
         {
-            ClassroomStudent? oStudent = await _repository.GetByFilterAsync(s => s.ClassroomId == student.ClassroomId && s.StudentId == student.Id);
+            ClassroomStudent? oStudent = await _repository.GetByFilterAsync(s => s.ClassroomId == student.ClassroomId && s.StudentId == student.StudentId);
 
             if (oStudent != null)
                 throw new TaskCanceledException("El estudiante ya se encuentra asignado al grupo.");
@@ -87,7 +87,7 @@ namespace BLL.Implementation
         /// </remarks>
         public async Task<bool> UpdateAsync(ClassroomStudent student)
         {
-            ClassroomStudent? oStudent = await _repository.GetByFilterAsync(s => s.ClassroomId == student.ClassroomId && s.StudentId == student.Id);
+            ClassroomStudent? oStudent = await _repository.GetByFilterAsync(s => s.ClassroomId == student.ClassroomId && s.StudentId == student.StudentId && s.Id != student.Id);
 
             if (oStudent != null)
                 throw new TaskCanceledException("El estudiante ya se encuentra asignado al grupo.");
