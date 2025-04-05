@@ -124,7 +124,6 @@ namespace BLL.Implementation
             _user.Username = user.Username;
             _user.Email = user.Email;
             _user.UpdatedAt = DateTime.Now;
-            _user.UrlPicture = user.UrlPicture != _user.UrlPicture ? user.UrlPicture : _user.UrlPicture;
 
             return await _repository.UpdateAsync(_user);
         }
@@ -249,6 +248,17 @@ namespace BLL.Implementation
                 ?? throw new TaskCanceledException("El código de recuperación es inválido o ha expirado.");
 
             return await ChangePasswordAsync(user.UserId, newPassword);
+        }
+
+        public async Task<bool> UpdatePictureAsync(int userId, string picturePath)
+        {
+            User user = await GetByIdAsync(userId)
+                ?? throw new TaskCanceledException("No se ha encontrado un usuario con la información proporcionada.");
+
+            user.UrlPicture = picturePath;
+            user.UpdatedAt = DateTime.Now;
+
+            return await _repository.UpdateAsync(user);
         }
 
         private static string GetMessageText(string resourceName)

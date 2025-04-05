@@ -108,8 +108,17 @@ namespace BLL.Interfaces
         /// </summary>
         /// <param name="recoveryCode">Código de recuperación proporcionado por el usuario.</param>
         /// <param name="newPassword">Nueva contraseña en texto plano.</param>
-        /// <returns><c>True</c> si la contraseña fue cambiada exitosamente; de lo contrario, <c>False</c>.</returns>
+        /// <returns><c>true</c> si la contraseña fue cambiada exitosamente; de lo contrario, <c>false</c>.</returns>
         /// <exception cref="TaskCanceledException">Se lanza si el código es inválido o ha expirado.</exception>
         Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword);
+
+        /// <summary>
+        /// Actualiza la imágen de perfil del usuario encontrado mediante el Id.
+        /// </summary>
+        /// <param name="userId">Id de usuario a actualizar.</param>
+        /// <param name="picturePath">Ruta de acceso a la imágen de perfil.</param>
+        /// <returns><c>true</c> si la imágen de perfil fue cambiada exitosamente; de lo contrario, <c>false</c>.</returns>
+        /// <exception cref="TaskCanceledException">Se lanza si no se encuentra un usuario mediante el Id proporcionado.
+        Task<bool> UpdatePictureAsync(int userId, string picturePath);
     }
 }

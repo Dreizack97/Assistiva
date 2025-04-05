@@ -66,11 +66,10 @@ namespace AppUI.Areas.School.Controllers
                     await picture.CopyToAsync(stream);
                 }
 
-                userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf("wwwroot"));
+                userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf(@"\img"));
 
-                if (await _userService.UpdateAsync(_mapper.Map<User>(userProfile)))
+                if (await _userService.UpdatePictureAsync(userProfile.UserId, uploadPath))
                     TempData["success"] = "Imágen de perfil actualizada exitosamente.";
-
             }
             else
                 TempData["info"] = "No se ha seleccionado una imagen o supera el tamaño máximo permitido.";
