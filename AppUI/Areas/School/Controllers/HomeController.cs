@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Iana;
 
 namespace AppUI.Areas.School.Controllers
 {
@@ -10,6 +11,11 @@ namespace AppUI.Areas.School.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Profile()
         {
             return View();
         }
