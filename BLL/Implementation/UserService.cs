@@ -124,6 +124,7 @@ namespace BLL.Implementation
             _user.Username = user.Username;
             _user.Email = user.Email;
             _user.UpdatedAt = DateTime.Now;
+            _user.UrlPicture = user.UrlPicture != _user.UrlPicture ? user.UrlPicture : _user.UrlPicture;
 
             return await _repository.UpdateAsync(_user);
         }

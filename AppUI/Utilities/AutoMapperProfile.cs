@@ -62,6 +62,9 @@ namespace AppUI.Utilities
             CreateMap<UserModel, User>().ReverseMap();
 
             CreateMap<UserProfileDTO, UserProfileModel>().ReverseMap();
+
+            CreateMap<UserProfileModel, User>()
+                .ForMember(d => d.Students, o => o.Ignore());
             #endregion
         }
     }
