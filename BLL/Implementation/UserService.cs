@@ -250,6 +250,7 @@ namespace BLL.Implementation
             return await ChangePasswordAsync(user.UserId, newPassword);
         }
 
+        /// <inheritdoc/>
         public async Task<bool> UpdatePictureAsync(int userId, string picturePath)
         {
             User user = await GetByIdAsync(userId)

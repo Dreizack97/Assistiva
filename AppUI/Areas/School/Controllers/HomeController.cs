@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AppUI.Areas.School.Controllers
 {
@@ -50,31 +51,59 @@ namespace AppUI.Areas.School.Controllers
 
             if (picture != null && picture.Length <= MAX_PICTURE_SIZE)
             {
-                string pictureName = Guid.NewGuid().ToString("N") + Path.GetExtension(picture.FileName);
-                string uploadPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", "img", "users", pictureName);
-
-                if (!string.IsNullOrWhiteSpace(userProfile.UrlPicture))
+                try
                 {
-                    string oldPicturePath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", userProfile.UrlPicture.TrimStart('\\'));
+                    string pictureName = Guid.NewGuid().ToString("N") + Path.GetExtension(picture.FileName);
+                    string uploadPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", "img", "users", pictureName);
 
-                    if (System.IO.File.Exists(oldPicturePath))
-                        System.IO.File.Delete(oldPicturePath);
+                    if (!string.IsNullOrWhiteSpace(userProfile.UrlPicture))
+                    {
+                        string oldPicturePath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", userProfile.UrlPicture.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldPicturePath))
+                            System.IO.File.Delete(oldPicturePath);
+                    }
+
+                    using (Stream stream = new FileStream(uploadPath, FileMode.Create))
+                    {
+                        await picture.CopyToAsync(stream);
+                    }
+
+                    userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf(@"\img"));
+
+                    if (await _userService.UpdatePictureAsync(userProfile.UserId, userProfile.UrlPicture))
+                        TempData["success"] = "Imagen de perfil actualizada exitosamente.";
                 }
-
-                using (Stream stream = new FileStream(uploadPath, FileMode.Create))
+                catch (Exception ex)
                 {
-                    await picture.CopyToAsync(stream);
+                    TempData["info"] = ex.Message;
                 }
-
-                userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf(@"\img"));
-
-                if (await _userService.UpdatePictureAsync(userProfile.UserId, userProfile.UrlPicture))
-                    TempData["success"] = "Imagen de perfil actualizada exitosamente.";
             }
             else
                 TempData["info"] = "No se ha seleccionado una imagen o supera el tamaño máximo permitido.";
 
             return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateData(UserProfileModel userProfile)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _userService.UpdateAsync(_mapper.Map<User>(userProfile));
+                    TempData["success"] = "Información actualizada exitosamente.";
+
+                    return RedirectToAction("Profile");
+                }
+                catch (Exception ex)
+                {
+                    TempData["info"] = ex.Message;
+                }
+            }
+
+            return View("Profile");
         }
 
         public async Task<IActionResult> LogOut()
