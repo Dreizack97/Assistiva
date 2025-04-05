@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppUI.Models.User
 {
-    public class UserProfile
+    public class UserProfileModel
     {
         public int UserId { get; set; }
 
@@ -38,6 +38,6 @@ namespace AppUI.Models.User
         [DataType(DataType.DateTime)]
         public DateTime? UpdatedAt { get; set; }
 
-        public StudentModel? StudentModel { get; set; }
+        public StudentModel? Student { get; set; }
     }
 }
