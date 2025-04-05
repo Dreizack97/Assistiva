@@ -68,8 +68,8 @@ namespace AppUI.Areas.School.Controllers
 
                 userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf(@"\img"));
 
-                if (await _userService.UpdatePictureAsync(userProfile.UserId, uploadPath))
-                    TempData["success"] = "Imágen de perfil actualizada exitosamente.";
+                if (await _userService.UpdatePictureAsync(userProfile.UserId, userProfile.UrlPicture))
+                    TempData["success"] = "Imagen de perfil actualizada exitosamente.";
             }
             else
                 TempData["info"] = "No se ha seleccionado una imagen o supera el tamaño máximo permitido.";
