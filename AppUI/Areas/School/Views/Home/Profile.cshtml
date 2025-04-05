@@ -1,4 +1,190 @@
+@model AppUI.Models.User.UserProfile
 @{
     ViewData["Title"] = "Mi perfil";
     Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
 }
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="lni lni-user"></i>
+                    Mi perfil
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card mb-4 mb-xl-0">
+                <form method="post" enctype="multipart/form-data" asp-area="School" asp-controller="Home" asp-action="UploadImage">
+                    <div class="card-header">
+                        Imagen de perfil
+                    </div>
+                    <div class="card-body">
+                        <input asp-for="@Model.UserId" type="hidden" />
+                        <input asp-for="@Model.UrlPicture" type="hidden" />
+                        <img class="img-account-profile rounded-circle mb-2" src="@Model.UrlPicture" alt="@Model.Username" />
+                        <div class="small font-italic text-muted mb-4">JPG o PNG no mayor a 5 MB</div>
+                        <label asp-for="@Model.UrlPicture" class="small mb-1">Seleccionar imagen</label>
+                        <input asp-for="@Model.UrlPicture" name="picture" type="file" class="form-control mb-4" />
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-primary">Subir imagen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card mb-4">
+                <form method="post" asp-area="School" asp-controller="Home" asp-action="">
+                    <div class="card-header">
+                        Detalles de mi cuenta de usuario
+                    </div>
+                    <div class="card-body">
+                        <input asp-for="@Model.UserId" type="hidden" />
+                        <div class="row gx-3 mb-3">
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.Username" class="small mb-1"></label>
+                                <input asp-for="@Model.Username" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.Email" class="small mb-1"></label>
+                                <input asp-for="@Model.Email" class="form-control form-control-sm" readonly />
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.LastPasswordReset" class="small mb-1"></label>
+                                <input asp-for="@Model.LastPasswordReset" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.LastPasswordChange" class="small mb-1"></label>
+                                <input asp-for="@Model.LastPasswordChange" class="form-control form-control-sm" readonly />
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.CreatedAt" class="small mb-1"></label>
+                                <input asp-for="@Model.CreatedAt" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.UpdatedAt" class="small mb-1"></label>
+                                <input asp-for="@Model.UpdatedAt" class="form-control form-control-sm" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-primary">Actualizar datos</button>
+                    </div>
+                </form>
+            </div>            
+        </div>
+        @if(Model.StudentModel != null)
+        {
+            <div class="col-xl-4">
+                <div class="card mb-4">
+                    <form method="post" asp-area="School" asp-controller="Home" asp-action="">
+                        <div class="card-header">
+                            Detalles de mi cuenta de estudiante
+                        </div>
+                        <div class="card-body">
+                            <input asp-for="@Model.UserId" type="hidden" />
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.FirstName" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.FirstName" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.PaternalLastName" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.PaternalLastName" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.MaternalLastName" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.MaternalLastName" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.Gender" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.Gender" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.DateOfBirth" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.DateOfBirth" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.EmailAddress" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.EmailAddress" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.EducationLevel" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.EducationLevel" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.Profession" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.Profession" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.ProfessionStatus" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.ProfessionStatus" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.MaritalStatus" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.MaritalStatus" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.BloodType" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.BloodType" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.Street" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.Street" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.Number" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.Number" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.Neighborhood" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.Neighborhood" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.City" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.City" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.PostalCode" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.PostalCode" class="form-control form-control-sm" readonly />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.State" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.State" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-sm-4">
+                                    <label asp-for="@Model.StudentModel.Country" class="small mb-1"></label>
+                                    <input asp-for="@Model.StudentModel.Country" class="form-control form-control-sm" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="submit" class="btn btn-sm btn-primary">Actualizar datos</button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        }
+    </div>
+</div>
