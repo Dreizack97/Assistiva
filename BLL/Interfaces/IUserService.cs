@@ -1,4 +1,5 @@
-﻿using Entity;
+﻿using DTO;
+using Entity;
 
 namespace BLL.Interfaces
 {
@@ -24,6 +25,16 @@ namespace BLL.Interfaces
         /// <param name="userId">ID único del usuario.</param>
         /// <returns>Usuario encontrado o <c>null</c> si no existe.</returns>
         Task<User?> GetByIdAsync(int userId);
+
+        /// <summary>
+        /// Obtiene un perfil de usuario por su ID de manera asíncrona.
+        /// </summary>
+        /// <param name="userId">ID único del usuario.</param>
+        /// <returns>DTO de usuario encontrado.</returns>
+        /// <exception cref="TaskCanceledException">
+        /// Se lanza una excepción cuando no se encuentra un usuario.
+        /// </exception>
+        Task<UserProfileDTO> GetProfileByIdAsync(int userId);
 
         /// <summary>
         /// Obtiene todos los usuarios de manera asíncrona.

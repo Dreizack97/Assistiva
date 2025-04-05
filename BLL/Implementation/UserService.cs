@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Utilities;
 using DAL.Interfaces;
+using DTO;
 using Entity;
 using System.Reflection;
 
@@ -70,6 +71,29 @@ namespace BLL.Implementation
         public async Task<User?> GetByIdAsync(int userId)
         {
             return await _repository.GetByIdAsync(userId);
+        }
+
+        /// <inheritdoc/>
+        public async Task<UserProfileDTO> GetProfileByIdAsync(int userId)
+        {
+            User user = await _repository.GetByFilterAsync(u => u.UserId == userId, [s => s.Students])
+                ?? throw new TaskCanceledException("No se ha encontrado un usuario con la información proporcionada.");
+
+            UserProfileDTO userProfile = new UserProfileDTO()
+            {
+                UserId = user.UserId,
+                RoleId = user.RoleId,
+                Username = user.Username,
+                Email = user.Email,
+                UrlPicture = user.UrlPicture,
+                LastPasswordReset = user.LastPasswordReset,
+                LastPasswordChange = user.LastPasswordChange,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt,
+                Student = user.Students.FirstOrDefault()
+            };
+
+            return userProfile;
         }
 
         /// <inheritdoc/>
