@@ -37,6 +37,8 @@ namespace AppUI.Utilities
 
             CreateMap<Role, RoleModel>().ReverseMap();
 
+            CreateMap<Subject, SubjectModel>().ReverseMap();
+
             #region Student
             CreateMap<Student, StudentModel>()
                 .ForMember(d => d.EmailAddress, o => o.MapFrom(or => or.User.Email))
