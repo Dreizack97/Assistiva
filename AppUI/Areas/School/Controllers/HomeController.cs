@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using AppUI.Models.User;
+﻿using AppUI.Models.User;
 using AutoMapper;
 using BLL.Interfaces;
 using Entity;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
 
 namespace AppUI.Areas.School.Controllers
 {
