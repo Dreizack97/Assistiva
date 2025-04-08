@@ -28,6 +28,8 @@ namespace BLL.Implementation
             if (oSubject != null)
                 throw new TaskCanceledException("El código no se encuentra disponible.");
 
+            subject.IsActive = true;
+
             Subject _subject = await _repository.AddAsync(subject);
 
             if (_subject.SubjectId == 0)
