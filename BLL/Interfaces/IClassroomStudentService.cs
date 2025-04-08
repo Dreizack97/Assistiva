@@ -14,7 +14,7 @@ namespace BLL.Interfaces
         /// <returns>El ClassroomStudent creado.</returns>
         /// <exception cref="TaskCanceledException">Se lanza si el estudiante ya está asignado al aula o ocurre un error al registrar.</exception>
         Task<ClassroomStudent> CreateAsync(ClassroomStudent student);
-        
+
         /// <summary>
         /// Obtiene una asignación estudiante-aula por su ID.
         /// </summary>

@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace AppUI.Models
 {
@@ -17,6 +17,6 @@ namespace AppUI.Models
 
         [ValidateNever]
         [DisplayName("Estudiante")]
-        public string StudentName { get; set;} = null!;
+        public string StudentName { get; set; } = null!;
     }
 }
