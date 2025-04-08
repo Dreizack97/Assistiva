@@ -1,4 +1,5 @@
-﻿using Entity;
+﻿using DTO;
+using Entity;
 
 namespace BLL.Interfaces
 {
@@ -24,6 +25,16 @@ namespace BLL.Interfaces
         /// <param name="userId">ID único del usuario.</param>
         /// <returns>Usuario encontrado o <c>null</c> si no existe.</returns>
         Task<User?> GetByIdAsync(int userId);
+
+        /// <summary>
+        /// Obtiene un perfil de usuario por su ID de manera asíncrona.
+        /// </summary>
+        /// <param name="userId">ID único del usuario.</param>
+        /// <returns>DTO de usuario encontrado.</returns>
+        /// <exception cref="TaskCanceledException">
+        /// Se lanza una excepción cuando no se encuentra un usuario.
+        /// </exception>
+        Task<UserProfileDTO> GetProfileByIdAsync(int userId);
 
         /// <summary>
         /// Obtiene todos los usuarios de manera asíncrona.
@@ -97,8 +108,17 @@ namespace BLL.Interfaces
         /// </summary>
         /// <param name="recoveryCode">Código de recuperación proporcionado por el usuario.</param>
         /// <param name="newPassword">Nueva contraseña en texto plano.</param>
-        /// <returns><c>True</c> si la contraseña fue cambiada exitosamente; de lo contrario, <c>False</c>.</returns>
+        /// <returns><c>true</c> si la contraseña fue cambiada exitosamente; de lo contrario, <c>false</c>.</returns>
         /// <exception cref="TaskCanceledException">Se lanza si el código es inválido o ha expirado.</exception>
         Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword);
+
+        /// <summary>
+        /// Actualiza la imagen de perfil del usuario encontrado mediante el Id.
+        /// </summary>
+        /// <param name="userId">Id de usuario a actualizar.</param>
+        /// <param name="picturePath">Ruta de acceso a la imagen de perfil.</param>
+        /// <returns><c>true</c> si la imagen de perfil fue cambiada exitosamente; de lo contrario, <c>false</c>.</returns>
+        /// <exception cref="TaskCanceledException">Se lanza si no se encuentra un usuario mediante el Id proporcionado.</exception>
+        Task<bool> UpdatePictureAsync(int userId, string picturePath);
     }
 }

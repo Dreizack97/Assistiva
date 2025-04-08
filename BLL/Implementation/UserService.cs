@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Utilities;
 using DAL.Interfaces;
+using DTO;
 using Entity;
 using System.Reflection;
 
@@ -70,6 +71,29 @@ namespace BLL.Implementation
         public async Task<User?> GetByIdAsync(int userId)
         {
             return await _repository.GetByIdAsync(userId);
+        }
+
+        /// <inheritdoc/>
+        public async Task<UserProfileDTO> GetProfileByIdAsync(int userId)
+        {
+            User user = await _repository.GetByFilterAsync(u => u.UserId == userId, [s => s.Students])
+                ?? throw new TaskCanceledException("No se ha encontrado un usuario con la información proporcionada.");
+
+            UserProfileDTO userProfile = new UserProfileDTO()
+            {
+                UserId = user.UserId,
+                RoleId = user.RoleId,
+                Username = user.Username,
+                Email = user.Email,
+                UrlPicture = user.UrlPicture,
+                LastPasswordReset = user.LastPasswordReset,
+                LastPasswordChange = user.LastPasswordChange,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt,
+                Student = user.Students.FirstOrDefault()
+            };
+
+            return userProfile;
         }
 
         /// <inheritdoc/>
@@ -224,6 +248,18 @@ namespace BLL.Implementation
                 ?? throw new TaskCanceledException("El código de recuperación es inválido o ha expirado.");
 
             return await ChangePasswordAsync(user.UserId, newPassword);
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> UpdatePictureAsync(int userId, string picturePath)
+        {
+            User user = await GetByIdAsync(userId)
+                ?? throw new TaskCanceledException("No se ha encontrado un usuario con la información proporcionada.");
+
+            user.UrlPicture = picturePath;
+            user.UpdatedAt = DateTime.Now;
+
+            return await _repository.UpdateAsync(user);
         }
 
         private static string GetMessageText(string resourceName)

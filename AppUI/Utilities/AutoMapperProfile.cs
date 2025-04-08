@@ -2,6 +2,7 @@
 using AppUI.Models.StudentDisability;
 using AppUI.Models.User;
 using AutoMapper;
+using DTO;
 using Entity;
 
 namespace AppUI.Utilities
@@ -59,6 +60,11 @@ namespace AppUI.Utilities
                 .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));
 
             CreateMap<UserModel, User>().ReverseMap();
+
+            CreateMap<UserProfileDTO, UserProfileModel>().ReverseMap();
+
+            CreateMap<UserProfileModel, User>()
+                .ForMember(d => d.Students, o => o.Ignore());
             #endregion
         }
     }
