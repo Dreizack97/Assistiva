@@ -48,7 +48,7 @@ namespace BLL.Implementation
         /// <inheritdoc/>
         public async Task<IEnumerable<Subject>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(s => s.IsActive);
         }
 
         /// <inheritdoc/>
