@@ -112,3 +112,12 @@ CREATE TABLE ClassroomStudents(
 	CONSTRAINT UQ_Classroom_Student UNIQUE (ClassroomId, StudentId) -- No permite datos duplicados
 )
 GO
+
+CREATE TABLE Subjects(
+	SubjectId INT IDENTITY(1, 1) CONSTRAINT PK_Subjects PRIMARY KEY NOT NULL,
+	Code NVARCHAR(10) CONSTRAINT UQ_Subjetcs_Code UNIQUE NOT NULL, -- No permite datos duplicados
+	[Name] NVARCHAR(50) NOT NULL,
+	[Description] NVARCHAR(255) NULL,
+	IsActive BIT DEFAULT 1 NOT NULL
+)
+GO
