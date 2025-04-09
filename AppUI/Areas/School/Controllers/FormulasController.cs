@@ -24,12 +24,15 @@ namespace AppUI.Areas.School.Controllers
         public IActionResult Index(int subjectId)
         {
             ViewBag.SubjectId = subjectId;
+
             return View();
         }
 
         [Route("/School/Subjects/{subjectId}/Formulas/Upsert/{formulaId?}")]
-        public async Task<IActionResult> Upsert(int? formulaId)
+        public async Task<IActionResult> Upsert(int subjectId, int? formulaId)
         {
+            ViewBag.SubjectId = subjectId;
+
             FormulaModel formula = formulaId == null ? new FormulaModel() : _mapper.Map<FormulaModel>(await _formulaService.GetByIdAsync((int)formulaId));
             return formula != null ? View(formula) : NotFound();
         }

@@ -5,35 +5,30 @@ $(document).ready(async function () {
 })
 
 async function DataLoad() {
+    let subjectId = $("#SubjectId").val()
+
     dataTable = await $("#dataTable").DataTable({
         responsive: true,
         pageLength: 25,
         ajax: {
-            url: '/School/Subjects/GetSubjects',
+            url: `/School/Formulas/GetFormulasBySubjectId?subjectId=${subjectId}`,
             dataSrc: ''
         },
         autoWidth: true,
         columns: [
-            { data: 'subjectId', visible: false, searchable: false },
-            { data: 'code' },
+            { data: 'formulaId', visible: false, searchable: false },
             { data: 'name' },
+            { data: 'content' },
+            { data: 'description' },
             {
-                data: 'description',
+                data: 'formulaId',
                 render: function (data) {
-                    return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data}">${data.substr(0, 70)}...</span>`
-                },
-                width: '550px'
-            },
-            {
-                data: 'subjectId',
-                render: function (data) {
-                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Subjects/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>` +
-                        `<a class="btn btn-sm btn-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Formulas" href="/School/Subjects/${data}/Formulas"><i class="fas fa-plus-minus"></i></a>` +
-                        `<a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
+                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Subjects/${subjectId}/Formulas/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
+                    <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
                 },
                 orderable: false,
                 searchable: false,
-                width: '150px'
+                width: '100px'
             }
         ],
         order: [[1, "asc"]],
@@ -57,7 +52,7 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
 
     Swal.fire({
         title: "¿Deseas eliminar?",
-        text: `Eliminar materia: ${data.name}.`,
+        text: `Eliminar formula: ${data.name}.`,
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -67,15 +62,15 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
     }).then(async (result) => {
         if (result.isConfirmed) {
             $(".swal2-popup").LoadingOverlay("show");
-            await Delete(data.subjectId)
+            await Delete(data.formulaId)
         }
     })
 })
 
-async function Delete(classroomId) {
+async function Delete(id) {
     await $.ajax({
-        url: `/School/Subjects/Delete/${classroomId}`,
-        type: 'PUT',
+        url: `/School/Formulas/Delete/${id}`,
+        type: 'DELETE',
         success: function (data) {
             if (data.success) {
                 dataTable.ajax.reload()

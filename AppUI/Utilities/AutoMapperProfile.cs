@@ -35,6 +35,12 @@ namespace AppUI.Utilities
                 .ForMember(d => d.IsActive, o => o.Ignore());
             #endregion
 
+            CreateMap<Formula, FormulaModel>()
+                .ForMember(d => d.Content, o => o.MapFrom(or => or.Content.Trim('$')));
+
+            CreateMap<FormulaModel, Formula>()
+                .ForMember(d => d.Content, o => o.MapFrom(or => string.Concat('$', or.Content, '$')));
+
             CreateMap<Role, RoleModel>().ReverseMap();
 
             CreateMap<Subject, SubjectModel>().ReverseMap();
