@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AppUI.Models;
+using AutoMapper;
+using BLL.Interfaces;
+using Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppUI.Areas.School.Controllers
@@ -7,14 +11,79 @@ namespace AppUI.Areas.School.Controllers
     [Area("School")]
     public class FormulasController : Controller
     {
-        public IActionResult Index()
+        private readonly IFormulaService _formulaService;
+        private readonly IMapper _mapper;
+
+        public FormulasController(IFormulaService formulaService, IMapper mapper)
         {
+            _formulaService = formulaService;
+            _mapper = mapper;
+        }
+
+        [Route("/School/Subjects/{subjectId}/Formulas")]
+        public IActionResult Index(int subjectId)
+        {
+            ViewBag.SubjectId = subjectId;
             return View();
         }
 
-        public IActionResult Upsert()
+        [Route("/School/Subjects/{subjectId}/Formulas/Upsert/{formulaId?}")]
+        public async Task<IActionResult> Upsert(int? formulaId)
         {
-            return View();
+            FormulaModel formula = formulaId == null ? new FormulaModel() : _mapper.Map<FormulaModel>(await _formulaService.GetByIdAsync((int)formulaId));
+            return formula != null ? View(formula) : NotFound();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetFormulasBySubjectId(int subjectId)
+        {
+            IEnumerable<FormulaModel> formulas = _mapper.Map<IEnumerable<FormulaModel>>(await _formulaService.GetAllBySubjectIdAsync(subjectId));
+            return Json(formulas);
+        }
+
+        [HttpPost]
+        [Route("/School/Subjects/{subjectId}/Formulas/Upsert/{formulaId?}")]
+        public async Task<IActionResult> Upsert(FormulaModel formula)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (formula.FormulaId == 0)
+                    {
+                        await _formulaService.CreateAsync(_mapper.Map<Formula>(formula));
+                        TempData["success"] = "Formula registrada exitosamente.";
+                    }
+                    else
+                    {
+                        await _formulaService.UpdateAsync(_mapper.Map<Formula>(formula));
+                        TempData["success"] = "Formula actualizada exitosamente.";
+                    }
+
+                    return Redirect($"/School/Subjects/{formula.SubjectId}/Formulas");
+                }
+                catch (Exception ex)
+                {
+                    TempData["info"] = ex.Message;
+                }
+            }
+
+            ViewBag.SubjectId = formula.SubjectId;
+            return View(formula);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _formulaService.DeleteAsync(id);
+                return Json(new { success = true, message = "Formula eliminada exitosamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = true, message = ex.Message });
+            }
         }
     }
 }
