@@ -20,6 +20,8 @@ public partial class AssistivaContext : DbContext
 
     public virtual DbSet<Disability> Disabilities { get; set; }
 
+    public virtual DbSet<Formula> Formulas { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Student> Students { get; set; }
@@ -66,6 +68,16 @@ public partial class AssistivaContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Formula>(entity =>
+        {
+            entity.Property(e => e.Name).HasMaxLength(100);
+
+            entity.HasOne(d => d.Subject).WithMany(p => p.Formulas)
+                .HasForeignKey(d => d.SubjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Formulas_Subjects");
         });
 
         modelBuilder.Entity<Role>(entity =>
