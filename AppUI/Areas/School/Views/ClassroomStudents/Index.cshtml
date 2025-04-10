@@ -17,6 +17,7 @@
             </div>
             <div class="col-12 col-xl-auto mb-3">
                 <a asp-area="School" asp-controller="ClassroomStudents" asp-action="Upsert" asp-route-ClassroomId="@ViewBag.ClassroomId" class="btn btn-sm btn-primary"><i class="fas fa-plus me-2"></i>Agregar estudiante</a>
+                <a asp-area="School" asp-controller="Subjects" asp-action="Index" asp-route-ClassroomId="@ViewBag.ClassroomId" class="btn btn-sm btn-secondary">Regresar</a>
             </div>
         </div>
     </div>

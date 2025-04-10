@@ -20,7 +20,11 @@ async function DataLoad() {
             {
                 data: 'description',
                 render: function (data) {
-                    return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data}">${data.substr(0, 70)}...</span>`
+                    if (data) {
+                        return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data}">${data.substr(0, 70)}...</span>`
+                    } else {
+                        return null
+                    }
                 },
                 width: '550px'
             },
