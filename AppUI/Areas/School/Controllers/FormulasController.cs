@@ -1,4 +1,4 @@
-﻿using AppUI.Models;
+﻿using AppUI.Models.Formula;
 using AutoMapper;
 using BLL.Interfaces;
 using Entity;
@@ -40,7 +40,7 @@ namespace AppUI.Areas.School.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFormulasBySubjectId(int subjectId)
         {
-            IEnumerable<FormulaModel> formulas = _mapper.Map<IEnumerable<FormulaModel>>(await _formulaService.GetAllBySubjectIdAsync(subjectId));
+            IEnumerable<FormulaListModel> formulas = _mapper.Map<IEnumerable<FormulaListModel>>(await _formulaService.GetAllBySubjectIdAsync(subjectId));
             return Json(formulas);
         }
 

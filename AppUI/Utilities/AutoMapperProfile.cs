@@ -1,4 +1,5 @@
 ﻿using AppUI.Models;
+using AppUI.Models.Formula;
 using AppUI.Models.StudentDisability;
 using AppUI.Models.User;
 using AutoMapper;
@@ -35,11 +36,15 @@ namespace AppUI.Utilities
                 .ForMember(d => d.IsActive, o => o.Ignore());
             #endregion
 
+            #region
             CreateMap<Formula, FormulaModel>()
                 .ForMember(d => d.Content, o => o.MapFrom(or => or.Content.Trim('$')));
 
             CreateMap<FormulaModel, Formula>()
                 .ForMember(d => d.Content, o => o.MapFrom(or => string.Concat('$', or.Content, '$')));
+
+            CreateMap<Formula, FormulaListModel>().ReverseMap();
+            #endregion
 
             CreateMap<Role, RoleModel>().ReverseMap();
 

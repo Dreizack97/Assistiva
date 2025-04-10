@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace AppUI.Models
+namespace AppUI.Models.Formula
 {
     public class FormulaModel
     {

@@ -44,6 +44,15 @@ async function DataLoad() {
             const newTooltipList = [...newTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
         }
     })
+
+    dataTable.on('draw', function () {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: '$', right: '$', display: true }
+            ],
+            throwOnError: false
+        })
+    })
 }
 
 $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
