@@ -24,14 +24,14 @@ namespace AppUI.Areas.School.Controllers
             _mapper = mapper;
         }
 
-        [Route("/School/Classrooms/Upsert/{classroomId}/Students")]
+        [Route("/School/Classrooms/{classroomId}/Students")]
         public IActionResult Index(int classroomId)
         {
             ViewBag.ClassroomId = classroomId;
             return View();
         }
 
-        [Route("/School/Classrooms/Upsert/{classroomId}/Students/Upsert/{id?}")]
+        [Route("/School/Classrooms/{classroomId}/Students/Upsert/{id?}")]
         public async Task<IActionResult> Upsert(int classroomId, int? id)
         {
             ViewBag.ClassroomId = classroomId;
@@ -62,7 +62,7 @@ namespace AppUI.Areas.School.Controllers
         }
 
         [HttpPost]
-        [Route("/School/Classrooms/Upsert/{classroomId}/Students/Upsert/{id?}")]
+        [Route("/School/Classrooms/{classroomId}/Students/Upsert/{id?}")]
         public async Task<IActionResult> Upsert(ClassroomStudentModel student)
         {
             if (ModelState.IsValid)

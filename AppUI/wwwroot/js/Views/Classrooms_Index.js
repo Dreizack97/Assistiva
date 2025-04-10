@@ -21,7 +21,7 @@ async function DataLoad() {
                 data: 'classroomId',
                 render: function (data) {
                     return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Classrooms/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>` +
-                        `<a class="btn btn-sm btn-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Estudiantes" href="/School/Classrooms/Upsert/${data}/Students"><i class="fas fa-chalkboard-user"></i></a>` +
+                        `<a class="btn btn-sm btn-secondary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Estudiantes" href="/School/Classrooms/${data}/Students"><i class="fas fa-chalkboard-user"></i></a>` +
                         `<a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
                 },
                 orderable: false,
