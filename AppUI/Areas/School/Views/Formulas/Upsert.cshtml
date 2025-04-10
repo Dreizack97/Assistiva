@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <label asp-for="@Model.Content" class="small mb-1"></label>
-                                <input asp-for="@Model.Content" class="form-control form-control-sm" placeholder="Contenido de la formula" />
+                                <input asp-for="@Model.Content" class="form-control form-control-sm" placeholder="Contenido de la formula" oninput="renderPreview()" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
@@ -60,6 +60,9 @@
                     Vista previa de fórmula
                 </div>
                 <div class="card-body">
+                    <div id="formulaPreview" class="d-flex align-items-center justify-content-center" style="min-height: 60px">
+                        <span class="text-muted"></span>
+                    </div>
                 </div>
             </div>
         </div>
