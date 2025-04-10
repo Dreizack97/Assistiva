@@ -1,0 +1,447 @@
+﻿@model AppUI.Models.Formula.FormulaModel
+@{
+    ViewData["Title"] = @Model.FormulaId == 0 ? "Registrar formula" : "Editar formula";
+    Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
+}
+@section CSS {
+    <link href="~/vendor/katex/katex.min.css" rel="stylesheet" type="text/css" />
+}
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="fas fa-plus-minus me-2"></i>
+                    Información de la fórmula
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl col-xl-12 px-4">
+    <div class="row gx-3 mb-3">
+        <div class="col-sm-8">
+            <div class="card mb-3">
+                <div class="card-header">
+                    @(Model.FormulaId == 0 ? "Agregar" : "Editar") fórmula
+                </div>
+                <form method="post" asp-area="School" asp-controller="Formulas" asp-action="Upsert">
+                    <input asp-for="@Model.FormulaId" type="hidden" />
+                    <input asp-for="@Model.SubjectId" value="@ViewBag.SubjectId" type="hidden" />
+                    <div class="card-body">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.Name" class="small mb-1"></label>
+                                <input asp-for="@Model.Name" class="form-control form-control-sm" placeholder="Nombre de la formula" />
+                                <span asp-validation-for="@Model.Name" class="small text-danger"></span>
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="@Model.Content" class="small mb-1"></label>
+                                <input asp-for="@Model.Content" class="form-control form-control-sm" placeholder="Contenido de la formula" oninput="renderPreview()" />
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-sm-12">
+                                <label asp-for="@Model.Description" class="small mb-1"></label>
+                                <textarea asp-for="@Model.Description" class="form-control form-control-sm" rows="5" placeholder="Descripción"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success me-2">@(Model.FormulaId == 0 ? "Agregar" : "Actualizar") fórmula</button>
+                        <a class="btn btn-sm btn-primary" asp-area="School" asp-controller="Formulas" asp-action="Index" asp-route-SubjectId="@ViewBag.SubjectId">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    Vista previa de fórmula
+                </div>
+                <div class="card-body">
+                    <div id="formulaPreview" class="d-flex align-items-center justify-content-center" style="min-height: 60px">
+                        <span class="text-muted"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gx-3 mb-3">
+        <div class="col-12">
+            <div class="accordion" id="symbolsHelp">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSymbols" aria-expanded="false" aria-controls="collapseSymbols">
+                            <i class="fas fa-lightbulb me-2"></i>
+                            Guía de símbolos matemáticos
+                        </button>
+                    </h2>
+                    <div id="collapseSymbols" class="accordion-collapse collapse" data-bs-parent="#symbolsHelp">
+                        <div class="accordion-body">
+                            <p class="small text-muted mb-3">
+                                Utiliza estos códigos en el campo "Contenido de la fórmula". Encierra las expresiones entre <code>$...$</code> para fórmulas en línea o <code>$$...$$</code> para fórmulas destacadas.
+                            </p>
+                            <!-- Acordeón de Letras Griegas -->
+                            <div class="accordion accordion-flush mb-3" id="greekAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGreek">
+                                            Letras Griegas
+                                        </button>
+                                    </h2>
+                                    <div id="collapseGreek" class="accordion-collapse collapse" data-bs-parent="#greekAccordion">
+                                        <div class="accordion-body p-0">
+                                            <table class="table table-sm mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Símbolo</th>
+                                                        <th>Sintaxis KaTeX</th>
+                                                        <th>Resultado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Alfa minúscula</td>
+                                                        <td><code>\alpha</code></td>
+                                                        <td>$ \alpha $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Beta minúscula</td>
+                                                        <td><code>\beta</code></td>
+                                                        <td>$ \beta $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Gamma minúscula</td>
+                                                        <td><code>\gamma</code></td>
+                                                        <td>$ \gamma $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Gamma mayúscula</td>
+                                                        <td><code>\Gamma</code></td>
+                                                        <td>$ \Gamma $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Delta mayúscula</td>
+                                                        <td><code>\Delta</code></td>
+                                                        <td>$ \Delta $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Theta minúscula</td>
+                                                        <td><code>\theta</code></td>
+                                                        <td>$ \theta $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Pi minúscula</td>
+                                                        <td><code>\pi</code></td>
+                                                        <td>$ \pi $</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Acordeón de Operadores -->
+                            <div class="accordion accordion-flush mb-3" id="operatorsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOperators">
+                                            Operadores Matemáticos
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOperators" class="accordion-collapse collapse" data-bs-parent="#operatorsAccordion">
+                                        <div class="accordion-body p-0">
+                                            <table class="table table-sm mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Símbolo</th>
+                                                        <th>Sintaxis KaTeX</th>
+                                                        <th>Resultado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Más menos</td>
+                                                        <td><code>\pm</code></td>
+                                                        <td>$ \pm $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Multiplicación</td>
+                                                        <td><code>\times</code></td>
+                                                        <td>$ \times $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>División</td>
+                                                        <td><code>\div</code></td>
+                                                        <td>$ \div $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Raíz cuadrada</td>
+                                                        <td><code>\sqrt{x}</code></td>
+                                                        <td>$ \sqrt{x} $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Derivada parcial</td>
+                                                        <td><code>\partial</code></td>
+                                                        <td>$ \partial $</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Acordeón de Relaciones -->
+                            <div class="accordion accordion-flush mb-3" id="relationsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRelations">
+                                            Relaciones Matemáticas
+                                        </button>
+                                    </h2>
+                                    <div id="collapseRelations" class="accordion-collapse collapse" data-bs-parent="#relationsAccordion">
+                                        <div class="accordion-body p-0">
+                                            <table class="table table-sm mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Símbolo</th>
+                                                        <th>Sintaxis KaTeX</th>
+                                                        <th>Resultado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>No igual</td>
+                                                        <td><code>\neq</code></td>
+                                                        <td>$ \neq $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Aproximadamente igual</td>
+                                                        <td><code>\approx</code></td>
+                                                        <td>$ \approx $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Idénticamente igual</td>
+                                                        <td><code>\equiv</code></td>
+                                                        <td>$ \equiv $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Menor o igual que</td>
+                                                        <td><code>\leq</code></td>
+                                                        <td>$ \leq $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mayor o igual que</td>
+                                                        <td><code>\geq</code></td>
+                                                        <td>$ \geq $</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Acordeón de Flechas -->
+                            <div class="accordion accordion-flush mb-3" id="arrowsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArrows">
+                                            Flechas
+                                        </button>
+                                    </h2>
+                                    <div id="collapseArrows" class="accordion-collapse collapse" data-bs-parent="#arrowsAccordion">
+                                        <div class="accordion-body p-0">
+                                            <table class="table table-sm mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Símbolo</th>
+                                                        <th>Sintaxis KaTeX</th>
+                                                        <th>Resultado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Flecha derecha</td>
+                                                        <td><code>\rightarrow</code></td>
+                                                        <td>$ \rightarrow $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Flecha derecha doble</td>
+                                                        <td><code>\Rightarrow</code></td>
+                                                        <td>$ \Rightarrow $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Flecha izquierda-derecha</td>
+                                                        <td><code>\leftrightarrow</code></td>
+                                                        <td>$ \leftrightarrow $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mapea a</td>
+                                                        <td><code>\mapsto</code></td>
+                                                        <td>$ \mapsto $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Equivalencia lógica</td>
+                                                        <td><code>\Leftrightarrow</code></td>
+                                                        <td>$ \Leftrightarrow $</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Acordeón de Teoría de Conjuntos -->
+                            <div class="accordion accordion-flush mb-3" id="setsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSets">
+                                            Teoría de Conjuntos
+                                        </button>
+                                    </h2>
+                                    <div id="collapseSets" class="accordion-collapse collapse" data-bs-parent="#setsAccordion">
+                                        <div class="accordion-body p-0">
+                                            <table class="table table-sm mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Símbolo</th>
+                                                        <th>Sintaxis KaTeX</th>
+                                                        <th>Resultado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Pertenece a</td>
+                                                        <td><code>\in</code></td>
+                                                        <td>$ \in $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>No pertenece a</td>
+                                                        <td><code>\notin</code></td>
+                                                        <td>$ \notin $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Subconjunto</td>
+                                                        <td><code>\subset</code></td>
+                                                        <td>$ \subset $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Unión</td>
+                                                        <td><code>\cup</code></td>
+                                                        <td>$ \cup $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Intersección</td>
+                                                        <td><code>\cap</code></td>
+                                                        <td>$ \cap $</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Acordeón de Funciones -->
+                            <div class="accordion accordion-flush mb-3" id="functionsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFunctions">
+                                            Funciones y Operadores Avanzados
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFunctions" class="accordion-collapse collapse" data-bs-parent="#functionsAccordion">
+                                        <div class="accordion-body p-0">
+                                            <table class="table table-sm mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Símbolo</th>
+                                                        <th>Sintaxis KaTeX</th>
+                                                        <th>Resultado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Función seno</td>
+                                                        <td><code>\sin</code></td>
+                                                        <td>$ \sin $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Función coseno</td>
+                                                        <td><code>\cos</code></td>
+                                                        <td>$ \cos $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Límite</td>
+                                                        <td><code>\lim_{x \to a}</code></td>
+                                                        <td>$ \lim_{x \to a} $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sumatoria</td>
+                                                        <td><code>\sum_{i=1}^n</code></td>
+                                                        <td>$ \sum_{i=1}^n $</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Integral definida</td>
+                                                        <td><code>\int_a^b</code></td>
+                                                        <td>$ \int_a^b $</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Ejemplos Avanzados -->
+                            <div class="mt-4">
+                                <h6 class="fw-bold mb-3">Ejemplos avanzados:</h6>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <div class="card card-body p-2 small bg-light">
+                                            <code>$e^{i\pi} + 1 = 0$</code>
+                                            <div class="text-muted mt-1">$ e^{i\pi} + 1 = 0 $</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card card-body p-2 small bg-light">
+                                            <code>$\frac{d}{dx}\left( \int_{0}^{x} f(u)\,du\right)=f(x)$</code>
+                                            <div class="text-muted mt-1">$ \frac{d}{dx}\left( \int_{0}^{x} f(u)\,du\right)=f(x) $</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card card-body p-2 small bg-light">
+                                            <code>$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$</code>
+                                            <div class="text-muted mt-1">$ \begin{pmatrix} a & b \\ c & d \end{pmatrix} $</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card card-body p-2 small bg-light">
+                                            <code>$\forall \epsilon > 0, \exists \delta > 0 \text{ tal que } |x-a| < \delta \Rightarrow |f(x)-f(a)| < \epsilon$</code>
+                                            <div class="text-muted mt-1 small">$ \forall \epsilon > 0, \exists \delta > 0 \text{ tal que } |x-a| < \delta \Rightarrow |f(x)-f(a)| < \epsilon $</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Consejos Profesionales -->
+                            <div class="alert alert-info mt-4 small">
+                                <h6 class="fw-bold alert-heading">Consejos profesionales:</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Delimitadores:</strong> Usa <code>$...$</code> para fórmulas en línea y <code>$$...$$</code> para fórmulas centradas</li>
+                                    <li><strong>Delimitadores escalables:</strong> <code>\left(</code> y <code>\right)</code> para paréntesis que se ajusten</li>
+                                    <li><strong>Espaciado:</strong> <code>\,</code> (pequeño), <code>\:</code> (medio), <code>\;</code> (grande)</li>
+                                    <li><strong>Texto en fórmulas:</strong> <code>\text{comentario}</code> para texto normal</li>
+                                    <li><strong>Matrices:</strong> Usa <code>\begin{matrix} ... \end{matrix}</code> con <code>&</code> para columnas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/vendor/katex/katex.min.js"></script>
+    <script src="~/vendor/katex/contrib/auto-render.min.js"></script>
+    <script src="~/js/Views/Formulas/Upsert.js"></script>
+}
