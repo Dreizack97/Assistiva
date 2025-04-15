@@ -167,7 +167,7 @@ namespace BLL.Implementation
         /// <li>Envía confirmación por correo usando <see cref="IEmailService"/></li>
         /// </ol>
         /// </remarks>
-        public async Task<bool> ChangePasswordAsync(int userId, string newPassword)
+        public async Task<bool> ChangePasswordAsync(int userId, string newPassword, bool fromReset = false)
         {
             User? user = await GetByIdAsync(userId)
                 ?? throw new TaskCanceledException("El usuario no existe.");
@@ -181,7 +181,7 @@ namespace BLL.Implementation
             user.ExpirationCode = null;
             user.IsPasswordReset = false;
             user.IsPasswordDefect = false;
-            user.LastPasswordReset = DateTime.Now;
+            user.LastPasswordReset = fromReset ? DateTime.Now : user.LastPasswordReset;
             user.LastPasswordChange = DateTime.Now;
 
             if (await _repository.UpdateAsync(user))
@@ -248,7 +248,7 @@ namespace BLL.Implementation
             User? user = await _repository.GetByFilterAsync(u => u.RecoveryCode == recoveryCode && u.ExpirationCode > DateTime.Now)
                 ?? throw new TaskCanceledException("El código de recuperación es inválido o ha expirado.");
 
-            return await ChangePasswordAsync(user.UserId, newPassword);
+            return await ChangePasswordAsync(user.UserId, newPassword, true);
         }
 
         /// <inheritdoc/>

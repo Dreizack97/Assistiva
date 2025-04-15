@@ -84,7 +84,7 @@ namespace BLL.Interfaces
         /// <param name="newPassword">Nueva contraseña en texto plano.</param>
         /// <returns><c>True</c> si el cambio fue exitoso; de lo contrario, <c>False</c>.</returns>
         /// <exception cref="TaskCanceledException">Se lanza si el usuario no existe.</exception>
-        Task<bool> ChangePasswordAsync(int userId, string newPassword);
+        Task<bool> ChangePasswordAsync(int userId, string newPassword, bool fromReset = false);
 
         /// <summary>
         /// Genera y envía un código de recuperación para restablecer la contraseña.
