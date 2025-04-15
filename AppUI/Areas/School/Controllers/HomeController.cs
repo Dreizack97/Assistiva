@@ -38,9 +38,10 @@ namespace AppUI.Areas.School.Controllers
             return View(userProfile);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> LogOut()
         {
-            return View();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/");
         }
 
         [HttpPost]
@@ -103,12 +104,6 @@ namespace AppUI.Areas.School.Controllers
             }
 
             return View("Profile");
-        }
-
-        public async Task<IActionResult> LogOut()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("/");
         }
     }
 }

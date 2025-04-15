@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=5.0 shrink-to-fit=no" />
+    <meta name="description" content="Plataforma inclusiva para aprender matemáticas diseñada para personas con discapacidad visual, auditiva o motora. Ofrecemos recursos adaptados,
+		herramientas accesibles y lecciones interactivas para facilitar el aprendizaje de matemáticas de manera efectiva y accesible para todos." />
+    <meta name="keywords" content="matemáticas accesibles, aprender matemáticas, discapacidad visual, discapacidad auditiva, discapacidad motora, educación inclusiva, recursos adaptados,
+		herramientas accesibles, lecciones interactivas, enseñanza inclusiva, matemáticas para todos, aprendizaje adaptativo, educación especial, matemáticas inclusivas" />
+    <meta name="author" content="Jorge Eduardo Silva Prieto, Jorge Andrés González Hernández" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/vendor/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/vendor/sweetalert/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" />
+    @await RenderSectionAsync("CSS", required: false)
+</head>
+<body>
+    <partial name="_Notification" />
+    <div class="wrapper">
+        <aside id="sidebar" class="expand">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a asp-area="Students" asp-controller="Home" asp-action="Index">Assistiva</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a asp-area="Students" asp-controller="Home" asp-action="Profile" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Mi perfil</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a asp-area="Students" asp-controller="Subjects" asp-action="Index" class="sidebar-link">
+                        <i class="fas fa-square-root-variable"></i>
+                        <span>Mis materias</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a asp-area="Students" asp-controller="Home" asp-action="LogOut" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main p-3">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/loadingoverlay/loadingoverlay.min.js"></script>
+    <script src="~/vendor/sweetalert/js/sweetalert2.all.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
