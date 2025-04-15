@@ -86,7 +86,7 @@ namespace AppUI.Areas.School.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateData(UserProfileModel userProfile)
+        public async Task<IActionResult> UpdateData(UserProfileModel userProfile)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace AppUI.Areas.School.Controllers
                 }
             }
 
-            return View("Profile");
+            return View("Profile", userProfile);
         }
     }
 }

@@ -182,6 +182,7 @@ namespace BLL.Implementation
             user.IsPasswordReset = false;
             user.IsPasswordDefect = false;
             user.LastPasswordReset = DateTime.Now;
+            user.LastPasswordChange = DateTime.Now;
 
             if (await _repository.UpdateAsync(user))
             {
@@ -248,6 +249,20 @@ namespace BLL.Implementation
                 ?? throw new TaskCanceledException("El código de recuperación es inválido o ha expirado.");
 
             return await ChangePasswordAsync(user.UserId, newPassword);
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> IsValidPasswordAsync(int userId, string password, string newPassword)
+        {
+            User? user = await GetByIdAsync(userId)
+                ?? throw new TaskCanceledException("No se ha encontrado un usuario con la información proporcionada.");
+
+            if (PasswordUtility.VerifyPassword(user.Salt, user.Password, password))
+            {
+               return await ChangePasswordAsync(userId, newPassword);
+            }
+
+            throw new TaskCanceledException("La contraseña actual no coincide con la registrada en la base de datos.");
         }
 
         /// <inheritdoc/>
