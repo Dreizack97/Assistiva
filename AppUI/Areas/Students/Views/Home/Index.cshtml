@@ -1,4 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
     Layout = "~/Areas/Students/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.IsBirthday)
+{
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-cake-candles me-2"></i>
+                    <span class="fw-bold me-2">!Feliz cumpleaños, @ViewBag.FullName¡</span>
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-3 mb-3">
+                        <span class="mb-2">Hoy es un día muy especial... ¡el tuyo! Desde Instituto Aprende Matemáticas queremos desearte un día lleno de alegría, momentos inolvidables y mucha diversión.</span>
+                        <span class="mb-2">Que este nuevo año de vida esté cargado de éxitos, sueños cumplidos y nuevas oportunidades. ¡Eres parte importante de nuestra comunidad y por eso celebramos contigo!</span>
+                        <span class="mb-2">¡Disfruta al máximo tu día! <i class="fas fa-gifts"></i></span>
+                        <span>Con cariño, </span>
+                        <span class="mb-2">El equipo de Instituto Aprende Matemáticas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }

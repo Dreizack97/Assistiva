@@ -25,8 +25,24 @@ namespace AppUI.Areas.Students.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            int userId = Convert.ToInt32(HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single());
+            UserProfileModel userProfile = _mapper.Map<UserProfileModel>(await _userService.GetProfileByIdAsync(userId));
+
+            ViewBag.IsBirthday = false;
+
+            if (userProfile.Student != null)
+            {
+                DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+                if (userProfile.Student.DateOfBirth.Month == today.Month && userProfile.Student.DateOfBirth.Day == today.Day)
+                {
+                    ViewBag.IsBirthday = true;
+                    ViewBag.FullName = userProfile.Student.FullName;
+                }
+            }
+
             return View();
         }
 
