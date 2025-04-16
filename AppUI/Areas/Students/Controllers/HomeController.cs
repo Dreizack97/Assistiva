@@ -1,17 +1,17 @@
-﻿using AppUI.Models.User;
-using AutoMapper;
-using BLL.Interfaces;
-using Entity;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using BLL.Interfaces;
+using AppUI.Models.User;
 using System.Security.Claims;
+using Entity;
 
-namespace AppUI.Areas.School.Controllers
+namespace AppUI.Areas.Students.Controllers
 {
     [Authorize]
-    [Area("School")]
+    [Area("Students")]
     public class HomeController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -25,8 +25,24 @@ namespace AppUI.Areas.School.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            int userId = Convert.ToInt32(HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single());
+            UserProfileModel userProfile = _mapper.Map<UserProfileModel>(await _userService.GetProfileByIdAsync(userId));
+
+            ViewBag.IsBirthday = false;
+
+            if (userProfile.Student != null)
+            {
+                DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+                if (userProfile.Student.DateOfBirth.Month == today.Month && userProfile.Student.DateOfBirth.Day == today.Day)
+                {
+                    ViewBag.IsBirthday = true;
+                    ViewBag.FullName = userProfile.Student.FullName;
+                }
+            }
+
             return View();
         }
 
@@ -81,6 +97,31 @@ namespace AppUI.Areas.School.Controllers
             }
             else
                 TempData["info"] = "No se ha seleccionado una imagen o supera el tamaño máximo permitido.";
+
+            return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(UserProfileModel userProfile)
+        {
+            if (userProfile.ChangePassword != null)
+            {
+                if (!userProfile.ChangePassword.NewPassword.Equals(userProfile.ChangePassword.ConfirmPassword))
+                {
+                    TempData["info"] = "Las contraseñas no coinciden.";
+                    return RedirectToAction("Profile");
+                }
+            }
+
+            try
+            {
+                await _userService.IsValidPasswordAsync(userProfile.UserId, userProfile.ChangePassword!.ActualPassword, userProfile.ChangePassword!.NewPassword);
+                TempData["success"] = "Contraseña actualizada exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["info"] = ex.Message;
+            }
 
             return RedirectToAction("Profile");
         }

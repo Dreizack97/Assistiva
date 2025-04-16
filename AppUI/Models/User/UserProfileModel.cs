@@ -39,5 +39,7 @@ namespace AppUI.Models.User
         public DateTime? UpdatedAt { get; set; }
 
         public StudentModel? Student { get; set; }
+
+        public ChangePasswordModel? ChangePassword { get; set; }
     }
 }

@@ -84,7 +84,7 @@ namespace BLL.Interfaces
         /// <param name="newPassword">Nueva contraseña en texto plano.</param>
         /// <returns><c>True</c> si el cambio fue exitoso; de lo contrario, <c>False</c>.</returns>
         /// <exception cref="TaskCanceledException">Se lanza si el usuario no existe.</exception>
-        Task<bool> ChangePasswordAsync(int userId, string newPassword);
+        Task<bool> ChangePasswordAsync(int userId, string newPassword, bool fromReset = false);
 
         /// <summary>
         /// Genera y envía un código de recuperación para restablecer la contraseña.
@@ -111,6 +111,16 @@ namespace BLL.Interfaces
         /// <returns><c>true</c> si la contraseña fue cambiada exitosamente; de lo contrario, <c>false</c>.</returns>
         /// <exception cref="TaskCanceledException">Se lanza si el código es inválido o ha expirado.</exception>
         Task<bool> IsValidRecoveryCodeAsync(string recoveryCode, string newPassword);
+
+        /// <summary>
+        /// Verifica si la contraseña actua es válida y actualiza la nueva contraseña.
+        /// </summary>
+        /// <param name="userId">Id del usuario a cambiar contraseña.</param>
+        /// <param name="password">Contraseña actual del usuario.</param>
+        /// <param name="newPassword">Nueva contraseña a actualizar.</param>
+        /// <returns><c>true</c> si la contraseña fue actualizada exitosamente; de lo contrario <c>false</c>.</returns>
+        /// <exception cref="TaskCanceledException">Se lanza si no se encuentra un usuario mediante el Id proporcionada, o si la contraseña actual no coincide con la registrada.</exception>
+        Task<bool> IsValidPasswordAsync(int userId, string password, string newPassword);
 
         /// <summary>
         /// Actualiza la imagen de perfil del usuario encontrado mediante el Id.

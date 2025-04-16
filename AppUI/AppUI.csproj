@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Students\" />
     <Folder Include="wwwroot\doc\" />
+    <Folder Include="wwwroot\img\users\" />
   </ItemGroup>
 
 </Project>
