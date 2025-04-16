@@ -13,29 +13,49 @@ namespace BLL.Implementation
             _repository = repository;
         }
 
-        public Task<ClassroomSubject> CreateAsync(ClassroomSubject classroomSubject)
+        public async Task<ClassroomSubject> CreateAsync(ClassroomSubject classroomSubject)
         {
-            throw new NotImplementedException();
+            ClassroomSubject? oClassroomSubject = await _repository.GetByFilterAsync(c => c.ClassroomId == classroomSubject.ClassroomId && c.SubjectId == classroomSubject.SubjectId);
+
+            if (oClassroomSubject != null)
+                throw new TaskCanceledException("La materia ya se encuentra registrada al grupo.");
+
+            ClassroomSubject _classroomSubject = await _repository.AddAsync(classroomSubject);
+
+            if (_classroomSubject.Id == 0)
+                throw new TaskCanceledException("Ocurrió un problema al intentar registrar la materia al grupo.");
+
+            return _classroomSubject;
         }
 
-        public Task<ClassroomSubject> GetByIdAsync(int id)
+        public async Task<ClassroomSubject> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _repository.GetByIdAsync(id)
+                ?? throw new TaskCanceledException("No se ha encontrado una relación con la información proporcionada.");
         }
 
-        public Task<IEnumerable<ClassroomSubject>> GetAllByClassroomIdAsync(int classroomId)
+        public async Task<IEnumerable<ClassroomSubject>> GetAllByClassroomIdAsync(int classroomId)
         {
-            throw new NotImplementedException();
+            return await _repository.GetAllAsync(c => c.ClassroomId == classroomId);
         }
 
-        public Task<bool> Update(ClassroomSubject classroomSubject)
+        public async Task<bool> Update(ClassroomSubject classroomSubject)
         {
-            throw new NotImplementedException();
+            ClassroomSubject? oClassroomSubject = await _repository.GetByFilterAsync(c => c.ClassroomId == classroomSubject.ClassroomId && c.SubjectId == classroomSubject.SubjectId && c.Id != classroomSubject.Id);
+
+            if (oClassroomSubject != null)
+                throw new TaskCanceledException("La materia ya se encuentra registrada al grupo.");
+
+            ClassroomSubject _classroomSubject = await GetByIdAsync(classroomSubject.Id);
+
+            _classroomSubject.SubjectId = classroomSubject.SubjectId;
+
+            return await _repository.UpdateAsync(_classroomSubject);
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _repository.DeleteAsync(id);
         }
     }
 }
