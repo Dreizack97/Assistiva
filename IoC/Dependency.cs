@@ -61,6 +61,7 @@ namespace IoC
 
             services.AddScoped<IClassroomService, ClassroomService>();
             services.AddScoped<IClassroomStudentService, ClassroomStudentService>();
+            services.AddScoped<IClassroomSubjectService, ClassroomSubjectService>();
             services.AddScoped<IDisabilityService, DisabilityService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IFormulaService, FormulaService>();
