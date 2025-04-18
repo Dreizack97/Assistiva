@@ -30,6 +30,7 @@ namespace AppUI.Utilities
 
             #region ClassroomSubject
             CreateMap<ClassroomSubject, ClassroomSubjectModel>()
+                .ForMember(d => d.Code, o => o.MapFrom(or => or.Subject.Code))
                 .ForMember(d => d.SubjectName, o => o.MapFrom(or => or.Subject.Name));
 
             CreateMap<ClassroomSubjectModel, ClassroomSubject>()

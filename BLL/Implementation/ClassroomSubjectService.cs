@@ -53,9 +53,16 @@ namespace BLL.Implementation
                 ?? throw new TaskCanceledException("No se ha encontrado una relación con la información proporcionada.");
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<ClassroomSubject>> GetAllByClassroomIdAsync(int classroomId)
         {
             return await _repository.GetAllAsync(c => c.ClassroomId == classroomId, [s => s.Subject]);
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ClassroomSubject>> GetAllByStudentIdAsync(int studentId)
+        {
+            return await _repository.GetAllAsync(c => c.Classroom.ClassroomStudents.Any(s => s.StudentId == studentId), [s => s.Subject]);
         }
 
         /// <inheritdoc />

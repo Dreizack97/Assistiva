@@ -28,6 +28,14 @@ namespace BLL.Interfaces
         /// <returns>Colección de relaciones encontradas.</returns>
         Task<IEnumerable<ClassroomSubject>> GetAllByClassroomIdAsync(int classroomId);
 
+
+        /// <summary>
+        /// Obtiene todas las relaciones asociadas a un estudiante específico.
+        /// </summary>
+        /// <param name="studentId">Id del estudiante para filtrar relaciones.</param>
+        /// <returns>Colección de relaciones encontradas.</returns>
+        Task<IEnumerable<ClassroomSubject>> GetAllByStudentIdAsync(int studentId);
+
         /// <summary>
         /// Actualiza los datos de una relación existente.
         /// </summary>
