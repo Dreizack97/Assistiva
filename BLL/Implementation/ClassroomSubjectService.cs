@@ -55,7 +55,7 @@ namespace BLL.Implementation
 
         public async Task<IEnumerable<ClassroomSubject>> GetAllByClassroomIdAsync(int classroomId)
         {
-            return await _repository.GetAllAsync(c => c.ClassroomId == classroomId);
+            return await _repository.GetAllAsync(c => c.ClassroomId == classroomId, [s => s.Subject]);
         }
 
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace BLL.Implementation
         /// <exception cref="TaskCanceledException">
         /// Se lanza si la actualización genera un conflicto de duplicidad.
         /// </exception>
-        public async Task<bool> Update(ClassroomSubject classroomSubject)
+        public async Task<bool> UpdateAsync(ClassroomSubject classroomSubject)
         {
             ClassroomSubject? oClassroomSubject = await _repository.GetByFilterAsync(c => c.ClassroomId == classroomSubject.ClassroomId && c.SubjectId == classroomSubject.SubjectId && c.Id != classroomSubject.Id);
 

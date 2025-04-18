@@ -80,7 +80,7 @@ namespace AppUI.Areas.School.Controllers
                         TempData["success"] = "Estudiante actualizado exitosamente.";
                     }
 
-                    return Redirect($"/School/Classrooms/Upsert/{student.ClassroomId}/Students");
+                    return Redirect($"/School/Classrooms/{student.ClassroomId}/Students");
                 }
                 catch (Exception ex)
                 {

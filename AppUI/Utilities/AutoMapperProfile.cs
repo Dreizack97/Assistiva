@@ -28,6 +28,14 @@ namespace AppUI.Utilities
                 .ForMember(d => d.Student, o => o.Ignore());
             #endregion
 
+            #region ClassroomSubject
+            CreateMap<ClassroomSubject, ClassroomSubjectModel>()
+                .ForMember(d => d.SubjectName, o => o.MapFrom(or => or.Subject.Name));
+
+            CreateMap<ClassroomSubjectModel, ClassroomSubject>()
+                .ForMember(d => d.Subject, o => o.Ignore());
+            #endregion
+
             #region Disability
             CreateMap<Disability, DisabilityModel>()
                 .ForMember(d => d.IsActive, o => o.MapFrom(or => or.IsActive ? "Sí" : "No"));
@@ -36,7 +44,7 @@ namespace AppUI.Utilities
                 .ForMember(d => d.IsActive, o => o.Ignore());
             #endregion
 
-            #region
+            #region Formula
             CreateMap<Formula, FormulaModel>()
                 .ForMember(d => d.Content, o => o.MapFrom(or => or.Content.Trim('$')));
 

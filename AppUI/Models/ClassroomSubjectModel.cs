@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppUI.Models
@@ -14,5 +15,9 @@ namespace AppUI.Models
         [Required(ErrorMessage = "Selecciona la materia.")]
         [DisplayName("Materia")]
         public int SubjectId { get; set; }
+
+        [ValidateNever]
+        [DisplayName("Materia")]
+        public string SubjectName { get; set; } = null!;
     }
 }

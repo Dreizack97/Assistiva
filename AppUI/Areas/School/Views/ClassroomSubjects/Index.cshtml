@@ -2,3 +2,44 @@
     ViewData["Title"] = "Materias";
     Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
 }
+@section CSS {
+    <link href="~/vendor/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+}
+<input id="ClassroomId" value="@ViewBag.ClassroomId" type="hidden" />
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="fas fa-square-root-variable"></i>
+                    Estudiantes de grupo
+                </h1>
+            </div>
+            <div class="col-12 col-xl-auto mb-3">
+                <a asp-area="School" asp-controller="ClassroomSubjects" asp-action="Upsert" asp-route-ClassroomId="@ViewBag.ClassroomId" class="btn btn-sm btn-primary"><i class="fas fa-plus me-2"></i>Agregar materia</a>
+                <a asp-area="School" asp-controller="Classrooms" asp-action="Index" class="btn btn-sm btn-secondary">Regresar</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <table id="dataTable" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Materia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/vendor/datatables/datatables.min.js"></script>
+    <script src="~/js/Views/ClassroomSubjects_Index.js"></script>
+}

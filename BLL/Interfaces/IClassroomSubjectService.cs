@@ -33,7 +33,7 @@ namespace BLL.Interfaces
         /// </summary>
         /// <param name="classroomSubject">Objeto con los nuevos datos de la relación.</param>
         /// <returns><c>true</c> si la actualización fue exitosa.</returns>
-        Task<bool> Update(ClassroomSubject classroomSubject);
+        Task<bool> UpdateAsync(ClassroomSubject classroomSubject);
 
         /// <summary>
         /// Elimina una relación por su ID.
