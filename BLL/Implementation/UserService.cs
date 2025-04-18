@@ -259,7 +259,7 @@ namespace BLL.Implementation
 
             if (PasswordUtility.VerifyPassword(user.Salt, user.Password, password))
             {
-               return await ChangePasswordAsync(userId, newPassword);
+                return await ChangePasswordAsync(userId, newPassword);
             }
 
             throw new TaskCanceledException("La contraseña actual no coincide con la registrada en la base de datos.");
