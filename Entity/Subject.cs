@@ -12,5 +12,7 @@ public partial class Subject
 
     public bool IsActive { get; set; }
 
+    public virtual ICollection<ClassroomSubject> ClassroomSubjects { get; set; } = new List<ClassroomSubject>();
+
     public virtual ICollection<Formula> Formulas { get; set; } = new List<Formula>();
 }

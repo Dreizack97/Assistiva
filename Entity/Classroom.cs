@@ -10,5 +10,7 @@ public partial class Classroom
 
     public virtual ICollection<ClassroomStudent> ClassroomStudents { get; set; } = new List<ClassroomStudent>();
 
+    public virtual ICollection<ClassroomSubject> ClassroomSubjects { get; set; } = new List<ClassroomSubject>();
+
     public virtual User Teacher { get; set; } = null!;
 }
