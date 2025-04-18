@@ -1,4 +1,4 @@
-var dataTable
+﻿var dataTable
 
 $(document).ready(async function () {
     await DataLoad()
@@ -11,17 +11,17 @@ async function DataLoad() {
         responsive: true,
         pageLength: 25,
         ajax: {
-            url: `/School/ClassroomStudents/GetStudentsByClassroomId?classroomId=${classroomId}`,
+            url: `/School/ClassroomSubjects/GetSubjectsByClassroomId?classroomId=${classroomId}`,
             dataSrc: ''
         },
         autoWidth: true,
         columns: [
             { data: 'id', visible: false, searchable: false },
-            { data: 'studentName' },
+            { data: 'subjectName' },
             {
                 data: 'id',
                 render: function (data) {
-                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Classrooms/${classroomId}/Students/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
+                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Classrooms/${classroomId}/Subjects/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
                     <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
                 },
                 orderable: false,
@@ -50,7 +50,7 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
 
     Swal.fire({
         title: "¿Deseas eliminar?",
-        text: `Eliminar estudiante: ${data.studentName}.`,
+        text: `Eliminar materia: ${data.subjectName}.`,
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -67,7 +67,7 @@ $("#dataTable tbody").on("click", ".btn-eliminar", async function () {
 
 async function Delete(id) {
     await $.ajax({
-        url: `/School/ClassroomStudents/Delete/${id}`,
+        url: `/School/ClassroomSubjects/Delete/${id}`,
         type: 'DELETE',
         success: function (data) {
             if (data.success) {

@@ -1,0 +1,43 @@
+﻿@model AppUI.Models.ClassroomSubjectModel
+@{
+    ViewData["Title"] = @Model.Id == 0 ? "Registrar materia" : "Editar materia";
+    Layout = "~/Areas/School/Views/Shared/_Layout.cshtml";
+}
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="fas fa-square-root-variable me-2"></i>
+                    Información de la materia
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl col-xl-6 px-4">
+    <div class="card">
+        <div class="card-header">
+            @(Model.Id == 0 ? "Agregar" : "Editar") materia
+        </div>
+        <form method="post" asp-area="School" asp-controller="ClassroomSubjects" asp-action="Upsert">
+            <input asp-for="@Model.Id" type="hidden" />
+            <input asp-for="@Model.ClassroomId" value="@ViewBag.ClassroomId" type="hidden" />
+            <div class="card-body">
+                <div class="row gx-3 mb-3">
+                    <div class="col-sm-12">
+                        <label asp-for="@Model.SubjectId" class="small mb-1"></label>
+                        <select asp-for="@Model.SubjectId" asp-items="@ViewBag.Subjects" class="form-control form-control-sm">
+                            <option value="" disabled selected hidden></option>
+                        </select>
+                        <span asp-validation-for="@Model.SubjectId" class="small text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <button type="submit" class="btn btn-sm btn-success me-2">@(Model.Id == 0 ? "Agregar" : "Actualizar") materia</button>
+                <a class="btn btn-sm btn-primary" asp-area="School" asp-controller="ClassroomSubjects" asp-action="Index" asp-route-ClassroomId="@ViewBag.ClassroomId">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>

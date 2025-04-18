@@ -95,24 +95,6 @@ CREATE TABLE StudentDisabilities(
 )
 GO
 
-CREATE TABLE Classrooms(
-	ClassroomId INT IDENTITY(1, 1) CONSTRAINT PK_Classrooms PRIMARY KEY NOT NULL,
-	TeacherId INT NOT NULL,
-	[Name] NVARCHAR(50) CONSTRAINT UQ_Classrooms_Name UNIQUE NOT NULL, -- No permite datos duplicados
-	CONSTRAINT FK_Classrooms_TeacherId FOREIGN KEY (TeacherId) REFERENCES Users(UserId)
-)
-GO
-
-CREATE TABLE ClassroomStudents(
-	Id INT IDENTITY(1, 1) CONSTRAINT PK_ClassroomStudents PRIMARY KEY NOT NULL,
-	ClassroomId INT NOT NULL,
-	StudentId INT NOT NULL,
-	CONSTRAINT FK_ClassroomStudents_ClassroomId FOREIGN KEY (ClassroomId) REFERENCES Classrooms(ClassroomId),
-	CONSTRAINT FK_ClassroomStudents_StudentId FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
-	CONSTRAINT UQ_Classroom_Student UNIQUE (ClassroomId, StudentId) -- No permite datos duplicados
-)
-GO
-
 CREATE TABLE Subjects(
 	SubjectId INT IDENTITY(1, 1) CONSTRAINT PK_Subjects PRIMARY KEY NOT NULL,
 	Code NVARCHAR(10) CONSTRAINT UQ_Subjetcs_Code UNIQUE NOT NULL, -- No permite datos duplicados
@@ -123,7 +105,7 @@ CREATE TABLE Subjects(
 GO
 
 INSERT INTO Subjects (Code, [Name], [Description], IsActive) VALUES
-('AMABSA-001', 'Aritmética básica', 'Materia fundamental que cubre las operaciones matemáticas básicas: suma, resta, multiplicación y división. Es la base para todos los demás conceptos matemáticos en educación primaria. Incluye el entendimiento de números, sus relaciones y operaciones fundamentales.', 1),
+('AMABSA-001', 'Aritmética básica', 'Materia fundamental que cubre las operaciones básicas: suma, resta, multiplicación y división. Es la base para todos los demás conceptos matemáticos en educación primaria. Incluye el entendimiento de números, sus relaciones y operaciones fundamentales.', 1),
 ('FACOES-002', 'Fracciones', 'Estudio de las fracciones y sus operaciones. Cubre suma, resta, multiplicación y división de fracciones con igual y diferente denominador. Esencial para entender partes de un todo y conceptos más avanzados de matemáticas en grados superiores.', 1),
 ('GMABSA-003', 'Geometría básica', 'Introducción a las formas geométricas, cálculo de perímetros, áreas y volúmenes de figuras básicas como cuadrados, rectángulos, triángulos, círculos y cuerpos tridimensionales. Desarrolla el pensamiento espacial en estudiantes de primaria.', 1),
 ('MDICON-003', 'Medición', 'Conversión entre unidades de medida comunes: longitud (cm, m, km), masa (g, kg), volumen (ml, l) y tiempo (minutos, horas). Enseña a los estudiantes a manejar diferentes sistemas de medición en situaciones cotidianas.', 1)
@@ -170,5 +152,33 @@ INSERT INTO Formulas (SubjectId, [Name], Content, [Description]) VALUES
 (4, 'De mililitros a litros', '$litros = \frac{mililitros}{1000}$', 'Volumen en litros: dividir mililitros entre 1000. 1 litro = 1000 mililitros.'),
 (4, 'De litros a mililitros', '$mililitros = litros \times 1000$', 'Conversión a unidades menores: multiplicar litros por 1000 para obtener mililitros.'),
 (4, 'De minutos a horas', '$horas = \frac{minutos}{60}$', 'Transformar tiempo a horas dividiendo minutos entre 60. Ejemplo: 120 minutos = 2 horas.'),
-(4, 'De horas a minutos', '$minutos = horas \times 60$', 'Convertir horas a minutos multiplicando por 60. 1 hora = 60 minutos.');
+(4, 'De horas a minutos', '$minutos = horas \times 60$', 'Convertir horas a minutos multiplicando por 60. 1 hora = 60 minutos.')
+GO
+
+CREATE TABLE Classrooms(
+	ClassroomId INT IDENTITY(1, 1) CONSTRAINT PK_Classrooms PRIMARY KEY NOT NULL,
+	TeacherId INT NOT NULL,
+	[Name] NVARCHAR(50) CONSTRAINT UQ_Classrooms_Name UNIQUE NOT NULL, -- No permite datos duplicados
+	CONSTRAINT FK_Classrooms_TeacherId FOREIGN KEY (TeacherId) REFERENCES Users(UserId)
+)
+GO
+
+CREATE TABLE ClassroomStudents(
+	Id INT IDENTITY(1, 1) CONSTRAINT PK_ClassroomStudents PRIMARY KEY NOT NULL,
+	ClassroomId INT NOT NULL,
+	StudentId INT NOT NULL,
+	CONSTRAINT FK_ClassroomStudents_ClassroomId FOREIGN KEY (ClassroomId) REFERENCES Classrooms(ClassroomId),
+	CONSTRAINT FK_ClassroomStudents_StudentId FOREIGN KEY (StudentId) REFERENCES Students(StudentId),
+	CONSTRAINT UQ_Classroom_Student UNIQUE (ClassroomId, StudentId) -- No permite datos duplicados
+)
+GO
+
+CREATE TABLE ClassroomSubjects(
+	Id INT IDENTITY(1, 1) CONSTRAINT PK_ClassroomSubjects PRIMARY KEY NOT NULL,
+	ClassroomId INT NOT NULL,
+	SubjectId INT NOT NULL,
+	CONSTRAINT FK_ClassroomSubjects_ClassroomId FOREIGN KEY (ClassroomId) REFERENCES Classrooms(ClassroomId),
+	CONSTRAINT FK_ClassroomSubjects_SubjectId FOREIGN KEY (SubjectId) REFERENCES Subjects(SubjectId),
+	CONSTRAINT UQ_Classroom_Subject UNIQUE (ClassroomId, SubjectId) -- No permite datos duplicados
+)
 GO
