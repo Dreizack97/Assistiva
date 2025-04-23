@@ -3,7 +3,6 @@ using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace AppUI.Areas.Students.Controllers
 {
@@ -22,8 +21,7 @@ namespace AppUI.Areas.Students.Controllers
 
         public IActionResult Index()
         {
-            // FIX: Implementar solución para obtener el Id del estudiante.
-            ViewBag.StudentId = Convert.ToInt32(HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single());
+            ViewBag.StudentId = Convert.ToInt32(HttpContext.User.Claims.Where(c => c.Type == "StudentId").Select(c => c.Value).Single());
             return View();
         }
 
@@ -34,8 +32,7 @@ namespace AppUI.Areas.Students.Controllers
 
         public async Task<IActionResult> GetSubjectsByStudentId(int studentId)
         {
-            // FIX: Utilizar el Id del estudiante desde el contexto de la sesión.
-            IEnumerable<ClassroomSubjectModel> classroomSubjects = _mapper.Map<IEnumerable<ClassroomSubjectModel>>(await _classroomSubjectService.GetAllByStudentIdAsync(1));
+            IEnumerable<ClassroomSubjectModel> classroomSubjects = _mapper.Map<IEnumerable<ClassroomSubjectModel>>(await _classroomSubjectService.GetAllByStudentIdAsync(studentId));
             return Json(classroomSubjects);
         }
     }

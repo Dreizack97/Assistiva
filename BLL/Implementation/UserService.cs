@@ -148,7 +148,7 @@ namespace BLL.Implementation
         public async Task<User> SignInAsync(string username, string password)
         {
             // Busqueda del usuario activo
-            User? user = await _repository.GetByFilterAsync(u => (u.Username == username || u.Email == username) && u.IsActive)
+            User? user = await _repository.GetByFilterAsync(u => (u.Username == username || u.Email == username) && u.IsActive, [s => s.Students])
                 ?? throw new TaskCanceledException("No se encontró un usuario que coincida con la información proporcionada.");
 
             // Verificación de contraseña
