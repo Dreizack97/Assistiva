@@ -3,6 +3,7 @@ using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AppUI.Areas.Students.Controllers
 {
@@ -11,11 +12,13 @@ namespace AppUI.Areas.Students.Controllers
     public class SubjectsController : Controller
     {
         private readonly IClassroomSubjectService _classroomSubjectService;
+        private readonly ISubjectService _subjectService;
         private readonly IMapper _mapper;
 
-        public SubjectsController(IClassroomSubjectService classroomSubjectService, IMapper mapper)
+        public SubjectsController(IClassroomSubjectService classroomSubjectService, ISubjectService subjectService, IMapper mapper)
         {
             _classroomSubjectService = classroomSubjectService;
+            _subjectService = subjectService;
             _mapper = mapper;
         }
 
@@ -25,9 +28,10 @@ namespace AppUI.Areas.Students.Controllers
             return View();
         }
 
-        public IActionResult Subject()
+        public async Task<IActionResult> Subject(int id)
         {
-            return View();
+            SubjectModel subjectModel = _mapper.Map<SubjectModel>(await _subjectService.GetByIdAsync(id));
+            return subjectModel != null ? View(subjectModel) : NotFound();
         }
 
         public async Task<IActionResult> GetSubjectsByStudentId(int studentId)

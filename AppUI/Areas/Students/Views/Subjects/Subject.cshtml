@@ -1,4 +1,74 @@
-﻿@{
-    ViewData["Title"] = "Subject";
+﻿@model AppUI.Models.SubjectModel
+@{
+    ViewData["Title"] = @Model.Name;
     Layout = "~/Areas/Students/Views/Shared/_Layout.cshtml";
+}
+@section CSS {
+    <link href="~/vendor/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/vendor/katex/katex.min.css" rel="stylesheet" type="text/css" />
+}
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="fas fa-square-root-variable me-2"></i>
+                    @Model.Name
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-xl col-xl-10 px-4">
+    <div class="card">
+        <div class="card-header">
+            Información
+        </div>
+        <div class="card-body">
+            <input asp-for="@Model.SubjectId" type="hidden" />
+            <div class="row gx-3 mb-3">
+                <div class="col-sm-6">
+                    <label asp-for="@Model.Code" class="small mb-1"></label>
+                    <input asp-for="@Model.Code" class="form-control form-control-sm" readonly />
+                    <span asp-validation-for="@Model.Code" class="small text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label asp-for="@Model.Name" class="small mb-1"></label>
+                    <input asp-for="@Model.Name" class="form-control form-control-sm" readonly />
+                    <span asp-validation-for="@Model.Name" class="small text-danger"></span>
+                </div>
+            </div>
+            <div class="row gx-3 mb-3">
+                <div class="col-sm-12">
+                    <label asp-for="@Model.Description" class="small mb-1"></label>
+                    <textarea asp-for="@Model.Description" class="form-control form-control-sm" rows="5" placeholder="Descripción" readonly></textarea>
+                </div>
+            </div>
+            <hr class="shadow" />
+            <div class="row gx-3 mb-3">
+                <table id="dataTable" class="table table-striped align-middle" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Contenido</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a class="btn btn-sm btn-primary" asp-area="Students" asp-controller="Subjects" asp-action="Index">Regresar</a>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/vendor/datatables/datatables.min.js"></script>
+    <script src="~/vendor/katex/katex.min.js"></script>
+    <script src="~/vendor/katex/contrib/auto-render.min.js"></script>
+    <script src="~/js/Views/Formulas/Index.js"></script>
 }
