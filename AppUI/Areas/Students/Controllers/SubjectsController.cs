@@ -1,4 +1,5 @@
 ﻿using AppUI.Models;
+using AppUI.Models.Formula;
 using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +13,14 @@ namespace AppUI.Areas.Students.Controllers
     public class SubjectsController : Controller
     {
         private readonly IClassroomSubjectService _classroomSubjectService;
+        private readonly IFormulaService _formulaService;
         private readonly ISubjectService _subjectService;
         private readonly IMapper _mapper;
 
-        public SubjectsController(IClassroomSubjectService classroomSubjectService, ISubjectService subjectService, IMapper mapper)
+        public SubjectsController(IClassroomSubjectService classroomSubjectService, IFormulaService formulaService, ISubjectService subjectService, IMapper mapper)
         {
             _classroomSubjectService = classroomSubjectService;
+            _formulaService = formulaService;
             _subjectService = subjectService;
             _mapper = mapper;
         }
@@ -32,6 +35,13 @@ namespace AppUI.Areas.Students.Controllers
         {
             SubjectModel subjectModel = _mapper.Map<SubjectModel>(await _subjectService.GetByIdAsync(id));
             return subjectModel != null ? View(subjectModel) : NotFound();
+        }
+
+        [Route("/Students/Subjects/Subject/{subjectId}/Formula/{id}")]
+        public async Task<IActionResult> Formula(int id)
+        {
+            FormulaModel formulaModel = _mapper.Map<FormulaModel>(await _formulaService.GetByIdAsync(id));
+            return formulaModel != null ? View(formulaModel) : NotFound();
         }
 
         public async Task<IActionResult> GetSubjectsByStudentId(int studentId)
