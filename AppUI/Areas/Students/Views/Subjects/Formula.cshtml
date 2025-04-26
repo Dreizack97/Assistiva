@@ -26,6 +26,7 @@
                     Información
                 </div>
                 <div class="card-body">
+                    <input asp-for="@Model.Content" type="hidden" />
                     <div class="row gx-3 mb-3">
                         <div class="col-sm-6">
                             <label asp-for="@Model.Name" class="small mb-1"></label>
@@ -58,9 +59,14 @@
             </div>
         </div>
     </div>
+    <div class="row gx-3 mb-3">
+        <div class="col-sm-12">
+            <div id="Result"></div>
+        </div>
+    </div>
 </div>
 @section Scripts {
     <script src="~/vendor/katex/katex.min.js"></script>
     <script src="~/vendor/katex/contrib/auto-render.min.js"></script>
-    <script src="~/js/Views/Formulas/Upsert.js"></script>
+    <script src="~/js/Views/Formulas/Formula.js"></script>
 }
