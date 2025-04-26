@@ -7,6 +7,9 @@ $(document).ready(async function () {
 async function DataLoad() {
     let subjectId = $("#SubjectId").val()
 
+    let pathArray = window.location.pathname.split('/');
+    let area = pathArray.length > 1 ? pathArray[1] : null;
+
     dataTable = await $("#dataTable").DataTable({
         responsive: true,
         pageLength: 25,
@@ -19,12 +22,27 @@ async function DataLoad() {
             { data: 'formulaId', visible: false, searchable: false },
             { data: 'name' },
             { data: 'content' },
-            { data: 'description' },
+            {
+                data: 'description',
+                render: function (data) {
+                    if (data) {
+                        return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data}">${data.substr(0, 70)}...</span>`
+                    } else {
+                        return null
+                    }
+                },
+                width: '550px'
+            },
             {
                 data: 'formulaId',
                 render: function (data) {
-                    return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Subjects/${subjectId}/Formulas/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
-                    <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
+
+                    if (area == "School") {
+                        return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Subjects/${subjectId}/Formulas/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
+                        <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
+                    } else {
+                        return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver" href="/Students/Subjects/Subject/${subjectId}/Formula/${data}"><i class="fas fa-eye"></i></a>`
+                    }
                 },
                 orderable: false,
                 searchable: false,

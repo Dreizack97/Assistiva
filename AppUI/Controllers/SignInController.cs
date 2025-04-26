@@ -53,7 +53,8 @@ namespace AppUI.Controllers
                             new(ClaimTypes.Name, _user.Username),
                             new(ClaimTypes.Role, _user.RoleId.ToString()), // TODO: Posible uso de DTO para roles
                             new(ClaimTypes.Email, _user.Email),
-                            new(ClaimTypes.Uri, _user.UrlPicture ?? "")
+                            new(ClaimTypes.Uri, _user.UrlPicture ?? ""),
+                            new("StudentId", _user.Students.Any() ? _user.Students.First().StudentId.ToString() : "")
                         };
 
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Mis materias";
+    Layout = "~/Areas/Students/Views/Shared/_Layout.cshtml";
+}
+@section CSS {
+    <link href="~/vendor/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+}
+<input id="StudentId" value="@ViewBag.StudentId" type="hidden" />
+<header class="bg-light mb-4 shadow">
+    <div class="container-xl px-4">
+        <div class="row align-items-center justify-content-between pt-3">
+            <div class="col-auto mb-3">
+                <h1 class="card-title text-secondary">
+                    <i class="fas fa-square-root-variable"></i>
+                    Mis materias
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <table id="dataTable" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Código</th>
+                        <th>Materia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/vendor/datatables/datatables.min.js"></script>
+    <script src="~/js/Views/Subjects_Students_Index.js"></script>
+}

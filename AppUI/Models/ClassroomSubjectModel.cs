@@ -17,6 +17,10 @@ namespace AppUI.Models
         public int SubjectId { get; set; }
 
         [ValidateNever]
+        [DisplayName("Código")]
+        public string Code { get; set; } = null!;
+
+        [ValidateNever]
         [DisplayName("Materia")]
         public string SubjectName { get; set; } = null!;
     }

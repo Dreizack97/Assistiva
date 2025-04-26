@@ -148,7 +148,7 @@ namespace BLL.Implementation
         public async Task<User> SignInAsync(string username, string password)
         {
             // Busqueda del usuario activo
-            User? user = await _repository.GetByFilterAsync(u => (u.Username == username || u.Email == username) && u.IsActive)
+            User? user = await _repository.GetByFilterAsync(u => (u.Username == username || u.Email == username) && u.IsActive, [s => s.Students])
                 ?? throw new TaskCanceledException("No se encontró un usuario que coincida con la información proporcionada.");
 
             // Verificación de contraseña
@@ -259,7 +259,7 @@ namespace BLL.Implementation
 
             if (PasswordUtility.VerifyPassword(user.Salt, user.Password, password))
             {
-               return await ChangePasswordAsync(userId, newPassword);
+                return await ChangePasswordAsync(userId, newPassword);
             }
 
             throw new TaskCanceledException("La contraseña actual no coincide con la registrada en la base de datos.");
