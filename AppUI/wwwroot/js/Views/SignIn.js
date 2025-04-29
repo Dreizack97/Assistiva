@@ -1,23 +1,23 @@
 ﻿async function VoiceCommands(command) {
-    if (command.includes("usuario")) {
+    if (command.startsWith("usuario")) {
         $("#Username").focus()
         $("#Username").css("border", "2px solid blue")
 
-        const username = command.slice(1).join("")
+        const username = command.substring(command.indexOf(' ') + 1)
 
         if (username) {
-            $("#Username").val(RemoveAccents(username))
+            $("#Username").val(RemoveAccents(username.replace(/\s+/g, '')))
         }
-    } else if (command.includes("contraseña")) {
+    } else if (command.startsWith("contraseña")) {
         $("#Password").focus()
         $("#Password").css("border", "2px solid blue")
 
-        const password = command.slice(1).join("")
+        const password = command.substring(command.indexOf(' ') + 1)
 
         if (password) {
             $("#Password").val(password)
         }
-    } else if (command.includes("enviar")) {
+    } else if (command.startsWith("enviar formulario")) {
         $("#BtnSignIn").click()
     }
 }

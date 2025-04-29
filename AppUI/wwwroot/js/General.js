@@ -51,12 +51,18 @@ async function InitializeSpeechRecognition() {
         recognition.start()
 
         recognition.onresult = async (event) => {
-            const last = event.results.length - 1
-            const text = event.results[last][0].transcript.trim()
+            let finalTranscript = ""
+            let interimTranscript = ""
 
-            const words = text.toLowerCase().split(" ")
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript.trim().toLowerCase()
+                } else {
+                    interimTranscript += event.results[i][0].transcript
+                }
+            }
 
-            await VoiceCommands(words)
+            await VoiceCommands(finalTranscript)
         }
 
         recognition.onerror = function (event) {

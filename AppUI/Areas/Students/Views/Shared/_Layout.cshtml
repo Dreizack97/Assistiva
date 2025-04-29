@@ -18,6 +18,11 @@
     @await RenderSectionAsync("CSS", required: false)
 </head>
 <body>
+    <input id="Instructions" type="hidden" value="Bienvenido. Puedes utilizar los siguientes comandos de voz para navegar por la página: 
+            Di 'Mi perfil' para ingresar a la información de tu cuenta.
+            Di 'Mis materias' para saber a que materias estás registrado.
+            Di 'Cerrar sesión' para finalizar y salir de tu perfil.
+        Si necesitas asistencia, pronuncia 'Ayuda' para repetir estas instrucciones en cualquier momento." />
     <partial name="_Notification" />
     <div class="wrapper">
         <aside id="sidebar" class="expand">
@@ -59,6 +64,7 @@
     <script src="~/vendor/loadingoverlay/loadingoverlay.min.js"></script>
     <script src="~/vendor/sweetalert/js/sweetalert2.all.min.js"></script>
     <script src="~/js/script.js"></script>
+    <script src="~/js/General.js"></script>
     <partial name="_ValidationScriptsPartial" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
