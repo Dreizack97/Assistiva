@@ -54,6 +54,9 @@
             await SpeechSynthesis(`Contraseña ${password} ingresada correctamente}`)
         }
 
+    } else if (cmd.startsWith('olvide') || cmd === 'olvide mi contraseña') {
+        window.location.href = "/SignIn/ForgotPassword"
+        await SpeechSynthesis('Redirigiendo a recuperación de contraseña')
     } else if (cmd === 'iniciar sesion' || cmd === 'iniciar') {
         $("#BtnSignIn").click()
         await SpeechSynthesis('Formulario enviado')
