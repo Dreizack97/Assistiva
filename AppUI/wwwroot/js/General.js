@@ -1,5 +1,13 @@
 ﻿const instructions = $("#Instructions").val()
 
+const numberMap = { cero: '0', uno: '1', dos: '2', tres: '3', cuatro: '4', cinco: '5', seis: '6', siete: '7', ocho: '8', nueve: '9' }
+
+const symbolMap = { 
+    asterisco: '*', guion: '-', 'guion_bajo': '_', guionbajo: '_', punto: '.', coma: ',', arroba: '@', numeral: '#', paralelo: '|', admiracion: '!', interrogacion: '?', dolar: '$', porcentaje: '%', ampersand: '&', mas: '+'
+}
+
+let nextUpper = false
+
 $(document).ready(async function () {
     await SpeechSynthesis(instructions)
 
@@ -77,4 +85,12 @@ async function VoiceCommands(command) {
     if (command[0] === "ayuda") {
         await SpeechSynthesis(instructions)
     }
+}
+
+function RemoveAccents(str) {
+    return str.normalize("NFD").replace(/[̀-ͯ]/g, "")
+}
+
+function Capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1)
 }
