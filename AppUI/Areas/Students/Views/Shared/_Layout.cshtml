@@ -18,11 +18,32 @@
     @await RenderSectionAsync("CSS", required: false)
 </head>
 <body>
-    <input id="Instructions" type="hidden" value="Bienvenido. Puedes utilizar los siguientes comandos de voz para navegar por la página: 
-            Di 'Mi perfil' para ingresar a la información de tu cuenta.
-            Di 'Mis materias' para saber a que materias estás registrado.
-            Di 'Cerrar sesión' para finalizar y salir de tu perfil.
-        Si necesitas asistencia, pronuncia 'Ayuda' para repetir estas instrucciones en cualquier momento." />
+    @{
+        string instructions = string.Empty;
+        string currentPath = ViewContext.HttpContext.Request.Path;
+
+        if (currentPath.Equals("/Students"))
+        {
+            instructions = @"Bienvenido. Puedes utilizar los siguientes comandos de voz para navegar por la página: 
+                Di 'Mi perfil' para ingresar a la información de tu cuenta. 
+                Di 'Mis materias' para saber a qué materias estás registrado. 
+                Di 'Cerrar sesión' para finalizar y salir de tu perfil. 
+                Si necesitas asistencia, pronuncia 'Ayuda' para repetir estas instrucciones en cualquier momento.";
+        }
+        else if (currentPath.Equals("/Students/Home/Profile"))
+        {
+            instructions = @"Estás en tu perfil. Puedes actualizar tu información personal o cambiar tu contraseña. 
+                Di 'Mis materias' para ir a tus materias. 
+                Di 'Cerrar sesión' para finalizar y salir de tu perfil.";
+        }
+        else if (currentPath.Equals("/Students/Subjects"))
+        {
+            instructions = @"Estás en la sección de materias. Aquí puedes ver y gestionar tus materias registradas. 
+                Di 'Mi perfil' para regresar a tu información personal. 
+                Di 'Cerrar sesión' para finalizar y salir de tu perfil.";
+        }
+    }
+    <input id="Instructions" type="hidden" value="@instructions" />
     <partial name="_Notification" />
     <div class="wrapper">
         <aside id="sidebar" class="expand">
