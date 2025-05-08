@@ -54,7 +54,12 @@ namespace AppUI.Areas.School.Controllers
                 try
                 {
                     string pictureName = Guid.NewGuid().ToString("N") + Path.GetExtension(picture.FileName);
-                    string uploadPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", "img", "users", pictureName);
+                    string uploadPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot", "img", "users");
+
+                    if (!Directory.Exists(uploadPath))
+                        Directory.CreateDirectory(uploadPath);
+
+                    uploadPath = Path.Combine(uploadPath, pictureName);
 
                     if (!string.IsNullOrWhiteSpace(userProfile.UrlPicture))
                     {
@@ -69,7 +74,7 @@ namespace AppUI.Areas.School.Controllers
                         await picture.CopyToAsync(stream);
                     }
 
-                    userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf(@"\img"));
+                    userProfile.UrlPicture = uploadPath.Substring(uploadPath.IndexOf("/img"));
 
                     if (await _userService.UpdatePictureAsync(userProfile.UserId, userProfile.UrlPicture))
                         TempData["success"] = "Imagen de perfil actualizada exitosamente.";

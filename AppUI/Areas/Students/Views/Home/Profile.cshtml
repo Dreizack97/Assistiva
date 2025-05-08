@@ -33,7 +33,7 @@
                             <input asp-for="@Model.UrlPicture" name="picture" type="file" class="form-control mb-4" />
                         </div>
                         <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-sm btn-primary">Subir imagen</button>
+                            <button id="BtnUpload" type="submit" class="btn btn-sm btn-primary">Subir imagen</button>
                         </div>
                     </form>
                 </div>
@@ -229,3 +229,6 @@
         }
     </div>
 </div>
+@section Scripts {
+    <script src="~/js/Views/Accessibility/Profile.js"></script>
+}
