@@ -2,8 +2,6 @@ async function VoiceCommands(command) {
     const cmd = RemoveAccents(command.toLowerCase().trim())
 
     if (cmd.startsWith("usuario")) {
-        $("#Email").focus().css("border", "2px solid blue")
-
         const parts = cmd.substring('usuario'.length).trim().split(' ')
 
         let userEmail = ''

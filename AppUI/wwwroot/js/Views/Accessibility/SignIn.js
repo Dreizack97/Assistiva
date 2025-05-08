@@ -2,8 +2,6 @@
     const cmd = RemoveAccents(command.toLowerCase().trim())
 
     if (cmd.startsWith("usuario")) {
-        $("#Username").focus().css("border", "2px solid blue")
-
         const username = cmd.split(' ').slice(1).join('')
 
         if (username) {
@@ -12,8 +10,6 @@
         }
 
     } else if (cmd.startsWith("contrasena") || cmd.startsWith("contraseña")) {
-        $("#Password").focus().css("border", "2px solid blue")
-
         const parts = cmd.substring('contraseña'.length).trim().split(' ')
 
         let password = ''

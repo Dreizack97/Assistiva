@@ -69,30 +69,26 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.LastPasswordReset" class="small mb-1"></label>
-                                        <input asp-for="@Model.LastPasswordReset" class="form-control form-control-sm"
-                                            readonly />
+                                        <input asp-for="@Model.LastPasswordReset" class="form-control form-control-sm" readonly />
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.LastPasswordChange" class="small mb-1"></label>
-                                        <input asp-for="@Model.LastPasswordChange" class="form-control form-control-sm"
-                                            readonly />
+                                        <input asp-for="@Model.LastPasswordChange" class="form-control form-control-sm" readonly />
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.CreatedAt" class="small mb-1"></label>
-                                        <input asp-for="@Model.CreatedAt" class="form-control form-control-sm"
-                                            readonly />
+                                        <input asp-for="@Model.CreatedAt" class="form-control form-control-sm" readonly />
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.UpdatedAt" class="small mb-1"></label>
-                                        <input asp-for="@Model.UpdatedAt" class="form-control form-control-sm"
-                                            readonly />
+                                        <input asp-for="@Model.UpdatedAt" class="form-control form-control-sm" readonly />
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-end">
-                                <button type="submit" class="btn btn-sm btn-primary">Actualizar datos</button>
+                                <button id="BtnUpdate" type="submit" class="btn btn-sm btn-primary">Actualizar datos</button>
                             </div>
                         </form>
                     </div>
@@ -110,30 +106,22 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-12">
                                         <label asp-for="@Model.ChangePassword!.NewPassword" class="small mb-1"></label>
-                                        <input asp-for="@Model.ChangePassword!.NewPassword"
-                                            class="form-control form-control-sm" placeholder="Nueva contraseña" />
-                                        <span asp-validation-for="@Model.ChangePassword!.NewPassword"
-                                            class="small text-danger"></span>
+                                        <input asp-for="@Model.ChangePassword!.NewPassword" class="form-control form-control-sm" placeholder="Nueva contraseña" />
+                                        <span asp-validation-for="@Model.ChangePassword!.NewPassword" class="small text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-12">
-                                        <label asp-for="@Model.ChangePassword!.ConfirmPassword"
-                                            class="small mb-1"></label>
-                                        <input asp-for="@Model.ChangePassword!.ConfirmPassword"
-                                            class="form-control form-control-sm" placeholder="Nueva contraseña" />
-                                        <span asp-validation-for="@Model.ChangePassword!.ConfirmPassword"
-                                            class="small text-danger"></span>
+                                        <label asp-for="@Model.ChangePassword!.ConfirmPassword" class="small mb-1"></label>
+                                        <input asp-for="@Model.ChangePassword!.ConfirmPassword" class="form-control form-control-sm" placeholder="Nueva contraseña" />
+                                        <span asp-validation-for="@Model.ChangePassword!.ConfirmPassword" class="small text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-12">
-                                        <label asp-for="@Model.ChangePassword!.ActualPassword"
-                                            class="small mb-1"></label>
-                                        <input asp-for="@Model.ChangePassword!.ActualPassword"
-                                            class="form-control form-control-sm" placeholder="Nueva contraseña" />
-                                        <span asp-validation-for="@Model.ChangePassword!.ActualPassword"
-                                            class="small text-danger"></span>
+                                        <label asp-for="@Model.ChangePassword!.ActualPassword" class="small mb-1"></label>
+                                        <input asp-for="@Model.ChangePassword!.ActualPassword" class="form-control form-control-sm" placeholder="Nueva contraseña" />
+                                        <span asp-validation-for="@Model.ChangePassword!.ActualPassword" class="small text-danger"></span>
                                     </div>
                                 </div>
                             </div>

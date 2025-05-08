@@ -2,8 +2,6 @@ async function VoiceCommands(command) {
     const cmd = RemoveAccents(command.toLowerCase().trim())
 
     if (cmd.startsWith("contrasena") || cmd.startsWith("contraseña")) {
-        $("#NewPassword").focus().css("border", "2px solid blue")
-
         const parts = cmd.substring('contraseña'.length).trim().split(' ')
 
         let password = ''
@@ -33,8 +31,6 @@ async function VoiceCommands(command) {
             await SpeechSynthesis(`Contraseña ${password} ingresada correctamente}`)
         }
     } else if (cmd.startsWith("confirmar contraseña") || cmd.startsWith("confirmar")) {
-        $("#ConfirmPassword").focus().css("border", "2px solid blue")
-
         const parts = cmd.substring('confirmar contraseña'.length).trim().split(' ')
 
         let password = ''
