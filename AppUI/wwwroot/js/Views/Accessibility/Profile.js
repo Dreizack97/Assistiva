@@ -114,5 +114,10 @@ async function VoiceCommands(command) {
     } else if (cmd.startsWith("cambiar contraseña") || cmd.startsWith("cambiar contrasena") || cmd.startsWith("cambiar")) {
         $("#BtnChange").click()
         await SpeechSynthesis('Cambiando contraseña. Por favor, espera un momento.')
+    } else if (cmd.startsWith('leer pagina') || cmd.startsWith('leer página') || cmd.startsWith('leer')) {
+        await SpeechSynthesis('Iniciando lector de pantalla')
+        await LoadAccesibilityLabels()
+    } else if (cmd.startsWith('ayuda')) {
+        await SpeechSynthesis(instructions)
     }
 }

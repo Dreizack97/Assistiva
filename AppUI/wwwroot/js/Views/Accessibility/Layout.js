@@ -2,15 +2,15 @@ async function VoiceCommands(command) {
     const cmd = RemoveAccents(command.toLowerCase().trim())
 
     if (cmd.startsWith("mi perfil") || cmd.startsWith("perfil")) {
-        window.location.href = "/Students/Home/Profile"
         await SpeechSynthesis('Redirigiendo a mi perfil')
+        window.location.href = "/Students/Home/Profile"
     } else if (cmd.startsWith("mis materias") || cmd.startsWith("materias")) {
-        window.location.href = "/Students/Subjects/"
         await SpeechSynthesis('Redirigiendo a mi materias')
+        window.location.href = "/Students/Subjects/"
     } else if (cmd.startsWith('cerrar sesion')) {
-        window.location.href = "/Students/Home/LogOut"
         await SpeechSynthesis('Cerrando sesión')
-    } else if (cmd.startsWith('leer pagina') || cmd.startsWith('leer') || cmd.startsWith('lector de pantalla')) {
+        window.location.href = "/Students/Home/LogOut"
+    } else if (cmd.startsWith('leer pagina') || cmd.startsWith('leer página') || cmd.startsWith('leer')) {
         await SpeechSynthesis('Iniciando lector de pantalla')
         await LoadAccesibilityLabels()
     } else if (cmd.startsWith('ayuda')) {
