@@ -24,35 +24,36 @@
 
         if (currentPath.Equals("/Students"))
         {
-            instructions = @"Bienvenido. Puedes utilizar los siguientes comandos de voz para navegar por la página: 
-                Di 'Mi perfil', para ingresar a la información de tu cuenta. 
-                Di 'Mis materias', para saber a qué materias estás registrado. 
-                Di 'Cerrar sesión', para finalizar y salir de tu cuenta. 
-                Si necesitas asistencia, pronuncia 'Ayuda', para repetir estas instrucciones en cualquier momento.";
+            instructions = @"Bienvenido al portal de estudiantes. Comandos de voz disponibles:
+                • «Mi perfil» - Mostrar los datos de tu cuenta;
+                • «Mis materias» - Ver las materias en las que estás inscrito;
+                • «Cerrar sesión» - Salir de tu cuenta.";
         }
         else if (currentPath.Equals("/Students/Home/Profile"))
         {
-            instructions = @"Estás en tu perfil. Puedes actualizar tu información personal o cambiar tu contraseña. 
-                Di 'Mis materias', para ir a tus materias. 
-                Di 'Seleccionar imagen', para abrir el selector de imágenes.
-                Di 'Subir imagen', para guardar la imagen de perfil.
-                Di 'Usuario', seguido de tu nombre de usuario, para cambiar tu nombre de usuario.
-                Di 'Correo', seguido de tu correo electrónico, para cambiar tu correo electrónico.
-                Di 'Actualizar datos', para guardar los cambios realizados.
-                Di 'Nueva contraseña', seguido de tu nueva contraseña.
-                Di 'Confirmar contraseña', seguido de tu nueva contraseña, para confirmar tu nueva contraseña.
-                Di 'Contraseña actual', seguido de tu contraseña actual.
-                Di 'Cambiar contraseña', para guardar los cambios realizados.
-                Di 'Cerrar sesión', para finalizar y salir de tu cuenta.
-                Si necesitas asistencia, pronuncia 'Ayuda', para repetir estas instrucciones en cualquier momento.";
+            instructions = @"Estás en tu perfil. Puedes actualizar tus datos personales y la contraseña. Comandos de voz:
+                • «Mis materias» - Ir a la sección de materias;
+                • «Seleccionar imagen» - Abrir el selector de archivo para foto de perfil;
+                • «Subir imagen» - Guardar la nueva foto de perfil;
+                • «Usuario [tu usuario]» - Cambiar tu nombre de usuario;
+                • «Correo [tu dirección]» - Cambiar tu correo electrónico;
+                • «Actualizar datos» - Guardar los cambios en tu perfil;
+                • «Contraseña actual [tu contraseña]» - Introducir tu contraseña vigente;
+                • «Nueva contraseña [nueva clave]» - Especificar la nueva clave;
+                • «Confirmar contraseña [nueva clave]» - Repetir la nueva clave;
+                • «Cambiar contraseña» - Guardar la nueva contraseña;
+                • «Cerrar sesión» - Salir de tu cuenta.";
         }
         else if (currentPath.Equals("/Students/Subjects"))
         {
-            instructions = @"Estás en la sección de materias. Aquí puedes ver y gestionar tus materias registradas. 
-                Di 'Mi perfil' para regresar a tu información personal. 
-                Di 'Cerrar sesión' para finalizar y salir de tu perfil.
-                Si necesitas asistencia, pronuncia 'Ayuda', para repetir estas instrucciones en cualquier momento.";
+            instructions = @"Sección de materias. Aquí puedes consultar y gestionar tus asignaturas. Comandos de voz:
+                • «Mi perfil» - Volver a tu información personal;
+                • «Cerrar sesión» - Salir de tu cuenta.";
         }
+
+        instructions += @" Comandos adicionales:
+            • «Leer página» - Hacer que el lector de pantalla lea el contenido actual;
+            • «Ayuda» - Repetir estas instrucciones.";
     }
     <input id="Instructions" type="hidden" value="@instructions" />
     <partial name="_Notification" />

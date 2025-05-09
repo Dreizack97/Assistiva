@@ -10,9 +10,6 @@ let nextUpper = false
 
 $(document).ready(async function () {
     await SpeechSynthesis(instructions)
-
-    await LoadAccesibilityLabels()
-
     await InitializeSpeechRecognition()
 })
 
@@ -24,27 +21,13 @@ function SpeechSynthesis(text) {
         speech.rate = 1
         speech.pitch = 0.5
         speech.lang = "es-MX"
-
+        
         speech.onend = () => {
             resolve()
         }
 
         window.speechSynthesis.speak(speech)
     })
-}
-
-async function LoadAccesibilityLabels() {
-    const elements = document.querySelectorAll("h1, h2, h3, p, button, a, label")
-
-    for (const element of elements) {
-        let text = element.getAttribute("aria-label") || element.innerText || "Elemento sin texto"
-
-        element.style.border = "2px solid red"
-
-        await SpeechSynthesis(text)
-
-        element.style.border = ""
-    }
 }
 
 async function InitializeSpeechRecognition() {
