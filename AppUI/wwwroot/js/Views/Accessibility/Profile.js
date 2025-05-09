@@ -24,5 +24,95 @@ async function VoiceCommands(command) {
     } else if (cmd.startsWith('actualizar datos') || cmd.startsWith('actualizar')) {
         $("#BtnUpdate").click()
         await SpeechSynthesis('Actualizando datos. Por favor, espera un momento.')
+    } else if (cmd.startsWith('nueva contraseña') || cmd.startsWith('nueva contrasena') || cmd.startsWith('nueva')) {
+        const parts = cmd.substring('nueva contraseña'.length).trim().split(' ')
+
+        let password = ''
+        
+        for (let i = 0; i < parts.length; i++) {
+            const token = parts[i]
+
+            if (token === 'mayuscula' || token === 'mayúscula') {
+                nextUpper = true
+            } else if (numberMap[token] !== undefined) {
+                password += numberMap[token]
+                nextUpper = false
+            } else if (symbolMap[token] !== undefined) {
+                password += symbolMap[token]
+                nextUpper = false
+            } else if (token.length === 1) {
+                password += nextUpper ? token.toUpperCase() : token
+                nextUpper = false
+            } else {
+                password += nextUpper ? Capitalize(token) : token
+                nextUpper = false
+            }
+        }
+
+        if (password) {
+            $("#ChangePassword_NewPassword").val(password)
+            await SpeechSynthesis(`Contraseña ${password} ingresada correctamente}`)
+        }
+    } else if (cmd.startsWith('confirmar contraseña') || cmd.startsWith('confirmar contrasena') || cmd.startsWith('confirmar')) {
+        const parts = cmd.substring('confirmar contraseña'.length).trim().split(' ')
+
+        let password = ''
+        
+        for (let i = 0; i < parts.length; i++) {
+            const token = parts[i]
+
+            if (token === 'mayuscula' || token === 'mayúscula') {
+                nextUpper = true
+            } else if (numberMap[token] !== undefined) {
+                password += numberMap[token]
+                nextUpper = false
+            } else if (symbolMap[token] !== undefined) {
+                password += symbolMap[token]
+                nextUpper = false
+            } else if (token.length === 1) {
+                password += nextUpper ? token.toUpperCase() : token
+                nextUpper = false
+            } else {
+                password += nextUpper ? Capitalize(token) : token
+                nextUpper = false
+            }
+        }
+
+        if (password) {
+            $("#ChangePassword_ConfirmPassword").val(password)
+            await SpeechSynthesis(`Contraseña ${password} ingresada correctamente}`)
+        }
+    } else if (cmd.startsWith('contraseña actual') || cmd.startsWith('contrasena actual') || cmd.startsWith('actual')) {
+        const parts = cmd.substring('contraseña actual'.length).trim().split(' ')
+
+        let password = ''
+        
+        for (let i = 0; i < parts.length; i++) {
+            const token = parts[i]
+
+            if (token === 'mayuscula' || token === 'mayúscula') {
+                nextUpper = true
+            } else if (numberMap[token] !== undefined) {
+                password += numberMap[token]
+                nextUpper = false
+            } else if (symbolMap[token] !== undefined) {
+                password += symbolMap[token]
+                nextUpper = false
+            } else if (token.length === 1) {
+                password += nextUpper ? token.toUpperCase() : token
+                nextUpper = false
+            } else {
+                password += nextUpper ? Capitalize(token) : token
+                nextUpper = false
+            }
+        }
+
+        if (password) {
+            $("#ChangePassword_ActualPassword").val(password)
+            await SpeechSynthesis(`Contraseña ${password} ingresada correctamente}`)
+        }
+    } else if (cmd.startsWith("cambiar contraseña") || cmd.startsWith("cambiar contrasena") || cmd.startsWith("cambiar")) {
+        $("#BtnChange").click()
+        await SpeechSynthesis('Cambiando contraseña. Por favor, espera un momento.')
     }
 }
