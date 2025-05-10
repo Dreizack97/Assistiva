@@ -27,11 +27,18 @@
 						<div class="card-body p-5">
 							@RenderBody()
 						</div>
-						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-								¿Olvidaste tu contraseña? <a asp-controller="SignIn" asp-action="ForgotPassword" class="text-dark" aria-label="¿Olvidaste tu contraseña?. Presiona aquí">Presiona aquí</a>
-							</div>
-						</div>
+						@{
+							string currentPath = ViewContext.HttpContext.Request.Path;
+
+							if (currentPath.Equals("/") || currentPath.Equals("/SignIn") || currentPath.Equals("/SignIn/Index"))
+							{
+								<div class="card-footer py-3 border-0">
+									<div class="text-center">
+										¿Olvidaste tu contraseña? <a asp-controller="SignIn" asp-action="ForgotPassword" class="text-dark" aria-label="¿Olvidaste tu contraseña?. Presiona aquí">Presiona aquí</a>
+									</div>
+								</div>
+							}
+						}
 					</div>
 					<div class="text-center mt-5 text-muted">
 						Copyright &copy; 2024 - @DateTime.Now.Year &mdash; J&J Software

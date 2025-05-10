@@ -71,11 +71,11 @@ async function VoiceCommands(command) {
 }
 
 async function LoadAccesibilityLabels() {
-    const $elements = $(".card").find("h1, h2, h3, p, button, a, label");
+    const $elements = $(".card").find("h1, h2, h3, p, button, a, label, input");
 
     for (const element of $elements) {
         const $el = $(element);
-        let text = $el.attr("aria-label") || $el.text() || "Elemento sin texto";
+        let text = $el.attr("aria-label") || $el.text();
 
         $el.css("border", "2px solid red");
 

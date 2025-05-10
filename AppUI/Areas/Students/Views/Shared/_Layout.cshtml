@@ -27,7 +27,7 @@
             instructions = @"Bienvenido al portal de estudiantes. Comandos de voz disponibles:
                 • «Mi perfil» - Mostrar los datos de tu cuenta;
                 • «Mis materias» - Ver las materias en las que estás inscrito;
-                • «Cerrar sesión» - Salir de tu cuenta.";
+                • «Cerrar sesión» - Salir de tu cuenta.;";
         }
         else if (currentPath.Equals("/Students/Home/Profile"))
         {
@@ -42,13 +42,14 @@
                 • «Nueva contraseña [nueva clave]» - Especificar la nueva clave;
                 • «Confirmar contraseña [nueva clave]» - Repetir la nueva clave;
                 • «Cambiar contraseña» - Guardar la nueva contraseña;
-                • «Cerrar sesión» - Salir de tu cuenta.";
+                • «Cerrar sesión» - Salir de tu cuenta.;";
         }
         else if (currentPath.Equals("/Students/Subjects"))
         {
             instructions = @"Sección de materias. Aquí puedes consultar y gestionar tus asignaturas. Comandos de voz:
                 • «Mi perfil» - Volver a tu información personal;
-                • «Cerrar sesión» - Salir de tu cuenta.";
+                • «Mi perfil» - Volver a tu información personal;
+                • «Cerrar sesión» - Salir de tu cuenta.;";
         }
 
         instructions += @"Comandos adicionales:

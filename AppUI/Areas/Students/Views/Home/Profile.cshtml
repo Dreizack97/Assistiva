@@ -24,21 +24,18 @@
                         <form method="post" enctype="multipart/form-data" asp-area="Students" asp-controller="Home"
                             asp-action="UploadImage">
                             <div class="card-header">
-                                Imagen de perfil
+                                <label>Imagen de perfil</label>
                             </div>
                             <div class="card-body text-center">
                                 <input asp-for="@Model.UserId" type="hidden" />
                                 <input asp-for="@Model.UrlPicture" type="hidden" />
-                                <img class="rounded-circle mb-2" style="max-width: 150px; max-height: 150px;"
-                                    src="@Model.UrlPicture" alt="@Model.Username" />
-                                <div class="small font-italic text-muted mb-4">JPG o PNG no mayor a 5 MB</div>
+                                <img class="rounded-circle mb-2" style="max-width: 150px; max-height: 150px;" src="@Model.UrlPicture" alt="@Model.Username" aria-label="@Model.Username" />
+                                <div class="small font-italic text-muted mb-4"><label>JPG o PNG no mayor a 5 MB</label></div>
                                 <label asp-for="@Model.UrlPicture" class="small mb-1">Seleccionar imagen</label>
-                                <input asp-for="@Model.UrlPicture" name="picture" type="file"
-                                    class="form-control mb-4" />
+                                <input asp-for="@Model.UrlPicture" name="picture" type="file" class="form-control mb-4" aria-label="Seleccionar imagen" />
                             </div>
                             <div class="card-footer d-flex justify-content-end">
-                                <button id="BtnUpload" type="submit" class="btn btn-sm btn-primary">Subir
-                                    imagen</button>
+                                <button id="BtnUpload" type="submit" class="btn btn-sm btn-primary">Subir imagen</button>
                             </div>
                         </form>
                     </div>
@@ -49,7 +46,7 @@
                     <div class="card mb-4">
                         <form method="post" asp-area="Students" asp-controller="Home" asp-action="UpdateData">
                             <div class="card-header">
-                                Detalles de mi cuenta de usuario
+                                <label>Detalles de mi cuenta de usuario</label>
                             </div>
                             <div class="card-body">
                                 <input asp-for="@Model.UserId" type="hidden" />
@@ -57,33 +54,33 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.Username" class="small mb-1"></label>
-                                        <input asp-for="@Model.Username" class="form-control form-control-sm" />
-                                        <span asp-validation-for="@Model.Username" class="small text-danger"></span>
+                                        <input asp-for="@Model.Username" class="form-control form-control-sm" aria-label="@Model.Username" />
+                                        <span asp-validation-for="@Model.Username" class="small text-danger" role="alert" aria-live="polite"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.Email" class="small mb-1"></label>
-                                        <input asp-for="@Model.Email" class="form-control form-control-sm" />
-                                        <span asp-validation-for="@Model.Email" class="small text-danger"></span>
+                                        <input asp-for="@Model.Email" class="form-control form-control-sm" aria-label="@Model.Email" />
+                                        <span asp-validation-for="@Model.Email" class="small text-danger" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.LastPasswordReset" class="small mb-1"></label>
-                                        <input asp-for="@Model.LastPasswordReset" class="form-control form-control-sm" readonly />
+                                        <input asp-for="@Model.LastPasswordReset" class="form-control form-control-sm" aria-label="@Model.LastPasswordReset" readonly />
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.LastPasswordChange" class="small mb-1"></label>
-                                        <input asp-for="@Model.LastPasswordChange" class="form-control form-control-sm" readonly />
+                                        <input asp-for="@Model.LastPasswordChange" class="form-control form-control-sm" aria-label="@Model.LastPasswordChange" readonly />
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.CreatedAt" class="small mb-1"></label>
-                                        <input asp-for="@Model.CreatedAt" class="form-control form-control-sm" readonly />
+                                        <input asp-for="@Model.CreatedAt" class="form-control form-control-sm" aria-label="@Model.CreatedAt" readonly />
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="@Model.UpdatedAt" class="small mb-1"></label>
-                                        <input asp-for="@Model.UpdatedAt" class="form-control form-control-sm" readonly />
+                                        <input asp-for="@Model.UpdatedAt" class="form-control form-control-sm" aria-label="@Model.UpdatedAt" readonly />
                                     </div>
                                 </div>
                             </div>
@@ -100,28 +97,28 @@
                         <form method="post" asp-area="Students" asp-controller="Home" asp-action="ChangePassword">
                             <input asp-for="@Model.UserId" type="hidden" />
                             <div class="card-header">
-                                Cambiar contraseña
+                                <label>Cambiar contraseña</label>
                             </div>
                             <div class="card-body">
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-12">
                                         <label asp-for="@Model.ChangePassword!.NewPassword" class="small mb-1"></label>
                                         <input asp-for="@Model.ChangePassword!.NewPassword" class="form-control form-control-sm" placeholder="Nueva contraseña" />
-                                        <span asp-validation-for="@Model.ChangePassword!.NewPassword" class="small text-danger"></span>
+                                        <span asp-validation-for="@Model.ChangePassword!.NewPassword" class="small text-danger" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-12">
                                         <label asp-for="@Model.ChangePassword!.ConfirmPassword" class="small mb-1"></label>
                                         <input asp-for="@Model.ChangePassword!.ConfirmPassword" class="form-control form-control-sm" placeholder="Nueva contraseña" />
-                                        <span asp-validation-for="@Model.ChangePassword!.ConfirmPassword" class="small text-danger"></span>
+                                        <span asp-validation-for="@Model.ChangePassword!.ConfirmPassword" class="small text-danger" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-sm-12">
                                         <label asp-for="@Model.ChangePassword!.ActualPassword" class="small mb-1"></label>
                                         <input asp-for="@Model.ChangePassword!.ActualPassword" class="form-control form-control-sm" placeholder="Nueva contraseña" />
-                                        <span asp-validation-for="@Model.ChangePassword!.ActualPassword" class="small text-danger"></span>
+                                        <span asp-validation-for="@Model.ChangePassword!.ActualPassword" class="small text-danger" role="alert" aria-live="polite"></span>
                                     </div>
                                 </div>
                             </div>
@@ -138,94 +135,94 @@
             <div class="col-xl-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        Detalles de mi cuenta de estudiante
+                        <label>Detalles de mi cuenta de estudiante</label>
                     </div>
                     <div class="card-body">
                         <input asp-for="@Model.UserId" type="hidden" />
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.FirstName" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.FirstName" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.FirstName" class="form-control form-control-sm" aria-label="@Model.Student.FirstName" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.PaternalLastName" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.PaternalLastName" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.PaternalLastName" class="form-control form-control-sm" aria-label="@Model.Student.PaternalLastName" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.MaternalLastName" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.MaternalLastName" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.MaternalLastName" class="form-control form-control-sm" aria-label="@Model.Student.MaternalLastName" readonly />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.Gender" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.Gender" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.Gender" class="form-control form-control-sm" aria-label="@Model.Student.Gender" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.DateOfBirth" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.DateOfBirth" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.DateOfBirth" class="form-control form-control-sm" aria-label="@Model.Student.DateOfBirth" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.EmailAddress" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.EmailAddress" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.EmailAddress" class="form-control form-control-sm" aria-label="@Model.Student.EmailAddress" readonly />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.EducationLevel" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.EducationLevel" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.EducationLevel" class="form-control form-control-sm" aria-label="@Model.Student.EducationLevel" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.Profession" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.Profession" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.Profession" class="form-control form-control-sm" aria-label="@Model.Student.Profession" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.ProfessionStatus" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.ProfessionStatus" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.ProfessionStatus" class="form-control form-control-sm" aria-label="@Model.Student.ProfessionStatus" readonly />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.MaritalStatus" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.MaritalStatus" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.MaritalStatus" class="form-control form-control-sm" aria-label="@Model.Student.MaritalStatus" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.BloodType" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.BloodType" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.BloodType" class="form-control form-control-sm" aria-label="@Model.Student.BloodType" readonly />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.Street" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.Street" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.Street" class="form-control form-control-sm" aria-label="@Model.Student.Street" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.Number" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.Number" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.Number" class="form-control form-control-sm" aria-label="@Model.Student.Number" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.Neighborhood" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.Neighborhood" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.Neighborhood" class="form-control form-control-sm" aria-label="@Model.Student.Neighborhood" readonly />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.City" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.City" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.City" class="form-control form-control-sm" aria-label="@Model.Student.City" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.PostalCode" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.PostalCode" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.PostalCode" class="form-control form-control-sm" aria-label="@Model.Student.PostalCode" readonly />
                             </div>
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.State" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.State" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.State" class="form-control form-control-sm" aria-label="@Model.Student.State" readonly />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-sm-4">
                                 <label asp-for="@Model.Student.Country" class="small mb-1"></label>
-                                <input asp-for="@Model.Student.Country" class="form-control form-control-sm" readonly />
+                                <input asp-for="@Model.Student.Country" class="form-control form-control-sm" aria-label="@Model.Student.Country" readonly />
                             </div>
                         </div>
                     </div>
