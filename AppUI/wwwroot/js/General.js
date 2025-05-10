@@ -64,12 +64,6 @@ async function InitializeSpeechRecognition() {
     }
 }
 
-async function VoiceCommands(command) {
-    if (command[0] === "ayuda") {
-        await SpeechSynthesis(instructions)
-    }
-}
-
 function RemoveAccents(str) {
     return str.normalize("NFD").replace(/[̀-ͯ]/g, "")
 }
