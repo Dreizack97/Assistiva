@@ -31,7 +31,7 @@
         }
         else if (currentPath.Equals("/Students/Home/Profile"))
         {
-            instructions = @"Estás en tu perfil. Puedes actualizar tus datos personales y la contraseña. Comandos de voz:
+            instructions = @"Estás en tu perfil. Puedes actualizar tus datos personales y la contraseña. Comandos de voz disponibles:
                 • «Mis materias» - Ir a la sección de materias;
                 • «Seleccionar imagen» - Abrir el selector de archivo para foto de perfil;
                 • «Subir imagen» - Guardar la nueva foto de perfil;
@@ -46,9 +46,17 @@
         }
         else if (currentPath.Equals("/Students/Subjects"))
         {
-            instructions = @"Sección de materias. Aquí puedes consultar y gestionar tus asignaturas. Comandos de voz:
+            instructions = @"Sección de materias. Aquí puedes consultar y gestionar tus asignaturas. Comandos de voz disponibles:
                 • «Mi perfil» - Volver a tu información personal;
                 • «Abrir materia [nombre de la materia]» - Para ver la información de una materia específica;
+                • «Cerrar sesión» - Salir de tu cuenta.;";
+        }
+        else if (currentPath.Contains("/Students/Subjects/Subject"))
+        {
+            instructions = @"Sección de materia. Aquí puedes consultar información relacionada a una materia específica. Comandos de voz disponibles:
+                • «Mi perfil» - Volver a tu información personal;
+                • «Abrir fórmula [nombre de la fórmula]» - Para ver la información de una fórmula específica;
+                • «Regresar» - Volver a la lista de materias;
                 • «Cerrar sesión» - Salir de tu cuenta.;";
         }
 
