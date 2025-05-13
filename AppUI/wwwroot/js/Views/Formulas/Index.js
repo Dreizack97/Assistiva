@@ -1,4 +1,5 @@
 ﻿var dataTable
+let formulas = {}
 
 $(document).ready(async function () {
     await DataLoad()
@@ -68,6 +69,14 @@ async function DataLoad() {
                 { left: '$', right: '$', display: true }
             ],
             throwOnError: false
+        })
+    })
+
+    $('#dataTable').on('xhr.dt', function (e, settings, json, xhr) {
+        formulas = {};
+
+        json.forEach(row => {
+            formulas[RemoveAccents(row.name.toLowerCase().trim())] = row.formulaId
         })
     })
 }

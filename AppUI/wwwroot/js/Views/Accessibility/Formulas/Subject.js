@@ -5,10 +5,18 @@ async function VoiceCommands(command) {
         await SpeechSynthesis('Redirigiendo a mi perfil')
         window.location.href = "/Students/Home/Profile"
     } else if (cmd.startsWith('abir formula') || cmd.startsWith('abrir')) {
+        const formula = cmd.split(' ').slice(2).join(' ')
+        let formulaId = formulas[formula]
 
+        if (formulaId) {
+            let subjectId = $("#SubjectId").val()
+
+            await SpeechSynthesis(`Redirigiendo a ${command.split(' ').slice(2).join(' ')}`)
+            window.location.href = `/Students/Subjects/Subject/${subjectId}/Formula/${formulaId}`
+        }
     } else if (cmd.startsWith('regresar')) {
         await SpeechSynthesis('Regresando a la página anterior')
-        window.history.back()
+        window.location.href = '/Students/Subjects'
     } else if (cmd.startsWith('cerrar sesion')) {
         await SpeechSynthesis('Cerrando sesión')
         window.location.href = "/Students/Home/LogOut"
