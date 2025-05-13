@@ -4,9 +4,14 @@ async function VoiceCommands(command) {
     if (cmd.startsWith("mi perfil") || cmd.startsWith("perfil")) {
         await SpeechSynthesis('Redirigiendo a mi perfil')
         window.location.href = "/Students/Home/Profile"
-    } else if (cmd.startsWith("mis materias") || cmd.startsWith("materias")) {
-        await SpeechSynthesis('Redirigiendo a mi materias')
-        window.location.href = "/Students/Subjects/"
+    } else if (cmd.startsWith('abir materia') || cmd.startsWith('abrir')) {
+        const subejct = cmd.split(' ').slice(2).join(' ')
+        let subejctId = subjects[subejct]
+        
+        if (subejctId) {
+            await SpeechSynthesis(`Redirigiendo a ${command.split(' ').slice(2).join(' ')}`)
+            window.location.href = `/Students/Subjects/Subject/${subejctId}`
+        }
     } else if (cmd.startsWith('cerrar sesion')) {
         await SpeechSynthesis('Cerrando sesión')
         window.location.href = "/Students/Home/LogOut"
@@ -19,11 +24,11 @@ async function VoiceCommands(command) {
 }
 
 async function LoadAccesibilityLabels() {
-    const $elements = $(".main").find("h1, h2, h3, p, button, a, label")
+    const $elements = $(".main").find("h1, h2, h3, p, label, td")
 
     for (const element of $elements) {
         const $el = $(element)
-        let text = $el.attr("aria-label") || $el.text() || "Elemento sin texto"
+        let text = $el.attr("aria-label") || $el.text()
 
         $el.css("border", "2px solid red")
 
