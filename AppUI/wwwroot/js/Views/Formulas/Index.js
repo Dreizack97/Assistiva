@@ -1,4 +1,5 @@
 ﻿var dataTable
+let formulas = {}
 
 $(document).ready(async function () {
     await DataLoad()
@@ -34,14 +35,13 @@ async function DataLoad() {
                 width: '550px'
             },
             {
-                data: 'formulaId',
-                render: function (data) {
-
+                data: null,
+                render: function (data, type, row) {
                     if (area == "School") {
-                        return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Subjects/${subjectId}/Formulas/Upsert/${data}"><i class="fas fa-pencil-alt"></i></a>
+                        return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" href="/School/Subjects/${subjectId}/Formulas/Upsert/${row.formulaId}"><i class="fas fa-pencil-alt"></i></a>
                         <a class="btn btn-sm btn-danger btn-eliminar" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>`
                     } else {
-                        return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver" href="/Students/Subjects/Subject/${subjectId}/Formula/${data}"><i class="fas fa-eye"></i></a>`
+                        return `<a class="btn btn-sm btn-primary me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver" href="/Students/Subjects/Subject/${subjectId}/Formula/${row.formulaId}" aria-label="${row.name}"><i class="fas fa-eye"></i></a>`
                     }
                 },
                 orderable: false,
@@ -69,6 +69,14 @@ async function DataLoad() {
                 { left: '$', right: '$', display: true }
             ],
             throwOnError: false
+        })
+    })
+
+    $('#dataTable').on('xhr.dt', function (e, settings, json, xhr) {
+        formulas = {};
+
+        json.forEach(row => {
+            formulas[RemoveAccents(row.name.toLowerCase().trim())] = row.formulaId
         })
     })
 }

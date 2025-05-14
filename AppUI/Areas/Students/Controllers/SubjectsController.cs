@@ -4,7 +4,6 @@ using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AppUI.Areas.Students.Controllers
 {

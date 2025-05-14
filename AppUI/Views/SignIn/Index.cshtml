@@ -4,33 +4,35 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <input id="Instructions" type="hidden" value="Bienvenido a Assistiva. Puedes utilizar comandos de voz para completar el formulario:
-        Di 'Usuario' seguido de tu usuario
-        Di 'Contraseña' seguido de tu clave de acceso
-        Para iniciar sesión, di 'Enviar formulario'
-        Si olvidaste tu contraseña, di 'Olvidé mi contraseña'
-    Si necesitas asistencia, pronuncia 'Ayuda' para repetir estas instrucciones en cualquier momento." />
+        Di 'Usuario', seguido de tu usuario.
+        Di 'Contraseña', seguido de tu clave de acceso.
+        Di 'Iniciar sesión', para enviar el formulario de inicio de sesión.
+        Di 'Olvidé mi contraseña', si olvidaste tu contraseña.
+    Comandos adicionales:
+        • «Leer página» - Hacer que el lector de pantalla lea el contenido actual;
+        • «Ayuda» - Repetir estas instrucciones." />
 <h1 class="fs-4 card-title fw-bold mb-4" aria-label="Formulario, 'Iniciar sesión'">Iniciar sesión</h1>
 <form method="post" asp-controller="SignIn" asp-action="SignIn">
 	<div class="mb-3">
 		<label asp-for="@Model.Username" class="mb-2 text-muted"></label>
 		<div class="input-group">
 			<span class="input-group-text" aria-hidden="true"><i class="fas fa-user"></i></span>
-			<input asp-for="@Model.Username" class="form-control" required autofocus aria-label="Campo de texto, 'Usuario o correo electrónico'" aria-required="true" aria-labelledby="@Model.Username" aria-describedby="@Model.Username" />
+			<input asp-for="@Model.Username" class="form-control" required autofocus aria-label="Campo de texto, 'Usuario o correo electrónico'" aria-required="true" />
 		</div>
-		<span asp-validation-for="@Model.Username" class="small text-danger" role="alert" aria-live="assertive"></span>
+		<span asp-validation-for="@Model.Username" class="small text-danger" role="alert" aria-live="polite"></span>
 	</div>
 	<div class="mb-3">
 		<label asp-for="@Model.Password" class="mb-2 text-muted"></label>
 		<div class="input-group">
 			<span class="input-group-text" aria-hidden="true"><i class="fas fa-key"></i></span>
-			<input asp-for="@Model.Password" class="form-control" required aria-label="Campo seguro, 'Contraseña'" aria-required="true" aria-labelledby="@Model.Password" aria-describedby="@Model.Password" />
+			<input asp-for="@Model.Password" class="form-control" required aria-label="Campo seguro, 'Contraseña'" aria-required="true" />
 		</div>
-		<span asp-validation-for="@Model.Password" class="small text-danger" role="alert" aria-live="assertive"></span>
+		<span asp-validation-for="@Model.Password" class="small text-danger" role="alert" aria-live="polite"></span>
 	</div>
 	<div class="text-center">
 		<button id="BtnSignIn" type="submit" class="btn btn-primary" aria-label="Botón, 'Iniciar sesión'">Iniciar sesión</button>
 	</div>
 </form>
 @section Scripts {
-	<script src="~/js/Views/SignIn.js"></script>
+	<script src="~/js/Views/Accessibility/SignIn/SignIn.js"></script>
 }

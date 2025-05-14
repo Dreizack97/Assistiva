@@ -1,4 +1,6 @@
 ﻿var dataTable
+let subjects = {}
+
 
 $(document).ready(async function () {
     await DataLoad()
@@ -41,5 +43,13 @@ async function DataLoad() {
             const newTooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
             const newTooltipList = [...newTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
         }
+    })
+
+    $('#dataTable').on('xhr.dt', function (e, settings, json, xhr) {
+        subjects = {};
+
+        json.forEach(row => {
+            subjects[RemoveAccents(row.subjectName.toLowerCase().trim())] = row.subjectId
+        })
     })
 }

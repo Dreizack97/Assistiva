@@ -23,21 +23,21 @@
         <div class="col-sm-8">
             <div class="card mb-3">
                 <div class="card-header">
-                    Información
+                    <label>Información</label>
                 </div>
                 <div class="card-body">
                     <input asp-for="@Model.Content" type="hidden" />
+                    <input asp-for="@Model.SubjectId" type="hidden" />
                     <div class="row gx-3 mb-3">
                         <div class="col-sm-6">
                             <label asp-for="@Model.Name" class="small mb-1"></label>
-                            <input asp-for="@Model.Name" class="form-control form-control-sm" readonly />
-                            <span asp-validation-for="@Model.Name" class="small text-danger"></span>
+                            <input asp-for="@Model.Name" class="form-control form-control-sm" aria-label="@Model.Name" readonly />
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-sm-12">
                             <label asp-for="@Model.Description" class="small mb-1"></label>
-                            <textarea asp-for="@Model.Description" class="form-control form-control-sm" rows="5" readonly></textarea>
+                            <textarea asp-for="@Model.Description" class="form-control form-control-sm" rows="5" aria-label="@Model.Description" readonly></textarea>
                         </div>
                     </div>
                 </div>
@@ -69,4 +69,5 @@
     <script src="~/vendor/katex/katex.min.js"></script>
     <script src="~/vendor/katex/contrib/auto-render.min.js"></script>
     <script src="~/js/Views/Formulas/Formula.js"></script>
+    <script src="~/js/Views/Accessibility/Formulas/Formula.js"></script>
 }

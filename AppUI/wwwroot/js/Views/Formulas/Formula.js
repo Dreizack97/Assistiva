@@ -48,14 +48,38 @@
 
             const paragraphs = html.split(/\n{2,}/)
 
-            const formatted = paragraphs
-                .map(p => `<p class="mb-3">${p.replace(/\n/g, '<br>')}</p>`)
-                .join('')
+            // const formatted = paragraphs.map(p => {
+            //     const rawText = p
+            //         .replace(/\$\$([^$]+)\$\$/g, '$1') // Block math
+            //         .replace(/\$([^$]+)\$/g, '$1')     // Inline math
+            //         .replace(/<[^>]+>/g, '')           // Strip any HTML tags
+            //         .replace(/\n/g, ' ')               // Replace newlines with space
+            //         .trim()
+
+            //         const escapedAria = escapeForAriaLabel(rawText) 
+
+            //         return `<p class="mb-3" aria-label="${escapedAria}">${p.replace(/\n/g, '<br>')}</p>`
+            // }).join('')
+
+            const formatted = paragraphs.map(p => {
+                // Extrae y transforma fórmulas primero
+                let textWithNarration = p
+                    .replace(/\$\$([^$]+)\$\$/g, (_, expr) => '' + narrateMathExpression(expr))
+                    .replace(/\$([^$]+)\$/g, (_, expr) => '' + narrateMathExpression(expr))
+                    .replace(/<[^>]+>/g, '') // Elimina HTML
+                    .replace(/\n/g, ' ')     // Reemplaza saltos de línea
+                    .trim()
+
+                const escapedAria = escapeForAriaLabel(textWithNarration)
+
+                return `<p class="mb-3" aria-label="${escapedAria}">${p.replace(/\n/g, '<br>')}</p>`
+            }).join('')
+
 
             const cardHtml = `
                 <div class="card mb-3">
                     <div class="card-header">
-                        Explicación
+                        <label>Explicación</label>
                     </div>
                     <div class="card-body">
                         ${formatted}
@@ -83,3 +107,33 @@
         }
     })
 })
+
+function escapeForAriaLabel(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+}
+
+function narrateMathExpression(expr) {
+    return expr
+        .replace(/\\frac\s*{([^{}]+)}{([^{}]+)}/g, '$1 dividido por $2')
+        .replace(/\\times/g, ' por ')
+        .replace(/\\div/g, ' dividido ')
+        .replace(/\\cdot/g, ' multiplicado por ')
+        .replace(/\\sqrt{([^{}]+)}/g, 'raíz cuadrada de $1')
+        .replace(/\\sqrt/g, 'raíz cuadrada')
+        .replace(/\\pi/g, 'pi')
+        .replace(/\\infty/g, 'infinito')
+        .replace(/\\leq/g, 'menor o igual que')
+        .replace(/\\geq/g, 'mayor o igual que')
+        .replace(/\\neq/g, 'distinto de')
+        .replace(/\\approx/g, 'aproximadamente igual a')
+        .replace(/\\left|([^|]+)\\right\|/g, 'valor absoluto de $1')
+        .replace(/\\left\(/g, '(')
+        .replace(/\\right\)/g, ')')
+        .replace(/_/g, ' sub ')
+        .replace(/\^/g, ' a la ')
+}

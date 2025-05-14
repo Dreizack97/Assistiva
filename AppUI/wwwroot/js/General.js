@@ -1,10 +1,15 @@
 ﻿const instructions = $("#Instructions").val()
 
+const numberMap = { cero: '0', uno: '1', dos: '2', tres: '3', cuatro: '4', cinco: '5', seis: '6', siete: '7', ocho: '8', nueve: '9' }
+
+const symbolMap = { 
+    asterisco: '*', guion: '-', 'guion_bajo': '_', guionbajo: '_', punto: '.', coma: ',', arroba: '@', numeral: '#', paralelo: '|', admiracion: '!', interrogacion: '?', dolar: '$', porcentaje: '%', ampersand: '&', mas: '+'
+}
+
+let nextUpper = false
+
 $(document).ready(async function () {
     await SpeechSynthesis(instructions)
-
-    await LoadAccesibilityLabels()
-
     await InitializeSpeechRecognition()
 })
 
@@ -16,27 +21,13 @@ function SpeechSynthesis(text) {
         speech.rate = 1
         speech.pitch = 0.5
         speech.lang = "es-MX"
-
+        
         speech.onend = () => {
             resolve()
         }
 
         window.speechSynthesis.speak(speech)
     })
-}
-
-async function LoadAccesibilityLabels() {
-    const elements = document.querySelectorAll("h1, h2, h3, p, button, a, label")
-
-    for (const element of elements) {
-        let text = element.getAttribute("aria-label") || element.innerText || "Elemento sin texto"
-
-        element.style.border = "2px solid red"
-
-        await SpeechSynthesis(text)
-
-        element.style.border = ""
-    }
 }
 
 async function InitializeSpeechRecognition() {
@@ -51,12 +42,18 @@ async function InitializeSpeechRecognition() {
         recognition.start()
 
         recognition.onresult = async (event) => {
-            const last = event.results.length - 1
-            const text = event.results[last][0].transcript.trim()
+            let finalTranscript = ""
+            let interimTranscript = ""
 
-            const words = text.toLowerCase().split(" ")
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript.trim().toLowerCase()
+                } else {
+                    interimTranscript += event.results[i][0].transcript
+                }
+            }
 
-            await VoiceCommands(words)
+            await VoiceCommands(finalTranscript)
         }
 
         recognition.onerror = function (event) {
@@ -67,8 +64,10 @@ async function InitializeSpeechRecognition() {
     }
 }
 
-async function VoiceCommands(command) {
-    if (command[0] === "ayuda") {
-        await SpeechSynthesis(instructions)
-    }
+function RemoveAccents(str) {
+    return str.normalize("NFD").replace(/[̀-ͯ]/g, "")
+}
+
+function Capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1)
 }
