@@ -36,6 +36,11 @@ namespace AppUI.Controllers
             return View(new ResetPasswordModel());
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInModel user)
         {

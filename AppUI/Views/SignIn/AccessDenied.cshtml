@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Acceso denegado";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximun-scale=5.0 shrink-to-fit=no" />
+	<meta name="description" content="Plataforma inclusiva para aprender matemáticas diseñada para personas con discapacidad visual, auditiva o motora. Ofrecemos recursos adaptados,
+		herramientas accesibles y lecciones interactivas para facilitar el aprendizaje de matemáticas de manera efectiva y accesible para todos." />
+	<meta name="keywords" content="matemáticas accesibles, aprender matemáticas, discapacidad visual, discapacidad auditiva, discapacidad motora, educación inclusiva, recursos adaptados,
+		herramientas accesibles, lecciones interactivas, enseñanza inclusiva, matemáticas para todos, aprendizaje adaptativo, educación especial, matemáticas inclusivas" />
+	<meta name="author" content="Jorge Eduardo Silva Prieto, Jorge Andrés González Hernández" />
+	<title>@ViewData["Title"]</title>
+	<link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="text-dark">
+					<div class="d-flex align-items-center justify-content-center min-vh-100 px-2">
+						<div class="text-center">
+							<h1 class="display-1 fw-bold">403</h1>
+							<p class="fs-2 fw-medium mt-4">Oops! Acceso denegado</p>
+							<p class="mt-4 mb-5">La página a la que deseas ingresar no está disponible.</p>
+							<button id="btnBack" class="btn btn-light fw-semibold rounded-pill px-4 py-2">Regresar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="~/vendor/jquery/jquery.min.js"></script>
+	<script>
+		$("#btnBack").click(function(){
+			window.history.back()
+		})
+	</script>
+</body>
+</html>
