@@ -27,6 +27,7 @@
                 </div>
                 <div class="card-body">
                     <input asp-for="@Model.Content" type="hidden" />
+                    <input asp-for="@Model.SubjectId" type="hidden" />
                     <div class="row gx-3 mb-3">
                         <div class="col-sm-6">
                             <label asp-for="@Model.Name" class="small mb-1"></label>
@@ -68,4 +69,5 @@
     <script src="~/vendor/katex/katex.min.js"></script>
     <script src="~/vendor/katex/contrib/auto-render.min.js"></script>
     <script src="~/js/Views/Formulas/Formula.js"></script>
+    <script src="~/js/Views/Accessibility/Formulas/Formula.js"></script>
 }

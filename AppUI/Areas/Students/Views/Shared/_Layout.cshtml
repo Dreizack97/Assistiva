@@ -51,6 +51,13 @@
                 • «Abrir materia [nombre de la materia]» - Para ver la información de una materia específica;
                 • «Cerrar sesión» - Salir de tu cuenta.;";
         }
+        else if (currentPath.Contains("/Formula"))
+        {
+            instructions = @"Sección de fórmulas. Aquí puedes consultar información relacionada a una fórmula específica. Comandos de voz disponibles:
+                • «Mi perfil» - Volver a tu información personal;
+                • «Regresar» - Volver a la lista de fórmulas;
+                • «Cerrar sesión» - Salir de tu cuenta.;";
+        }
         else if (currentPath.Contains("/Students/Subjects/Subject"))
         {
             instructions = @"Sección de materia. Aquí puedes consultar información relacionada a una materia específica. Comandos de voz disponibles:
