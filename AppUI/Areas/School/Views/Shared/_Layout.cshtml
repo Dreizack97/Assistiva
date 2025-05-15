@@ -36,38 +36,47 @@
                         <span>Mi perfil</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a asp-area="School" asp-controller="Students" asp-action="Index" class="sidebar-link">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>Estudiantes</span>
-                    </a>
-                </li>
+                @if (User.IsInRole("1") || User.IsInRole("2") || User.IsInRole("4"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-area="School" asp-controller="Students" asp-action="Index" class="sidebar-link">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Estudiantes</span>
+                        </a>
+                    </li>
+                }
                 <li class="sidebar-item">
                     <a asp-area="School" asp-controller="Classrooms" asp-action="Index" class="sidebar-link">
                         <i class="fas fa-chalkboard-user"></i>
                         <span>Grupos</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a asp-area="School" asp-controller="Subjects" asp-action="Index" class="sidebar-link">
-                        <i class="fas fa-square-root-variable"></i>
-                        <span>Materias</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#settings" aria-expanded="false" aria-controls="settings">
-                        <i class="lni lni-cog"></i>
-                        <span>Configuraciones</span>
-                    </a>
-                    <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a asp-area="School" asp-controller="Users" asp-action="Index" class="sidebar-link">Usuarios</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a asp-area="School" asp-controller="Disabilities" asp-action="Index" class="sidebar-link">Discapacidades</a>
-                        </li>
-                    </ul>
-                </li>
+                @if (User.IsInRole("1") || User.IsInRole("2") || User.IsInRole("3"))
+                {
+                    <li class="sidebar-item">
+                        <a asp-area="School" asp-controller="Subjects" asp-action="Index" class="sidebar-link">
+                            <i class="fas fa-square-root-variable"></i>
+                            <span>Materias</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("1") || User.IsInRole("2"))
+                {
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#settings" aria-expanded="false" aria-controls="settings">
+                            <i class="lni lni-cog"></i>
+                            <span>Configuraciones</span>
+                        </a>
+                        <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a asp-area="School" asp-controller="Users" asp-action="Index" class="sidebar-link">Usuarios</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a asp-area="School" asp-controller="Disabilities" asp-action="Index" class="sidebar-link">Discapacidades</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
             </ul>
             <div class="sidebar-footer">
                 <a asp-area="School" asp-controller="Home" asp-action="LogOut" class="sidebar-link">

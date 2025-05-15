@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
+    option.AccessDeniedPath = "/SignIn/AccessDenied";
     option.LoginPath = "/SignIn/Index";
     option.SlidingExpiration = true;
     option.ExpireTimeSpan = TimeSpan.FromMinutes(30);

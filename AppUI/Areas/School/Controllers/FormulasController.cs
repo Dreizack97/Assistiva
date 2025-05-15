@@ -21,6 +21,7 @@ namespace AppUI.Areas.School.Controllers
         }
 
         [Route("/School/Subjects/{subjectId}/Formulas")]
+        [Authorize(Roles = "1, 2, 3")]
         public IActionResult Index(int subjectId)
         {
             ViewBag.SubjectId = subjectId;
@@ -29,6 +30,7 @@ namespace AppUI.Areas.School.Controllers
         }
 
         [Route("/School/Subjects/{subjectId}/Formulas/Upsert/{formulaId?}")]
+        [Authorize(Roles = "1, 2, 3")]
         public async Task<IActionResult> Upsert(int subjectId, int? formulaId)
         {
             ViewBag.SubjectId = subjectId;
@@ -38,6 +40,7 @@ namespace AppUI.Areas.School.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "1, 2, 3, 5")]
         public async Task<IActionResult> GetFormulasBySubjectId(int subjectId)
         {
             IEnumerable<FormulaListModel> formulas = _mapper.Map<IEnumerable<FormulaListModel>>(await _formulaService.GetAllBySubjectIdAsync(subjectId));
@@ -46,6 +49,7 @@ namespace AppUI.Areas.School.Controllers
 
         [HttpPost]
         [Route("/School/Subjects/{subjectId}/Formulas/Upsert/{formulaId?}")]
+        [Authorize(Roles = "1, 2, 3")]
         public async Task<IActionResult> Upsert(FormulaModel formula)
         {
             if (ModelState.IsValid)
@@ -76,6 +80,7 @@ namespace AppUI.Areas.School.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "1, 2, 3")]
         public async Task<IActionResult> Delete(int id)
         {
             try

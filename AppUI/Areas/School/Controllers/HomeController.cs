@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace AppUI.Areas.School.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "1, 2, 3, 4")]
     [Area("School")]
     public class HomeController : Controller
     {
