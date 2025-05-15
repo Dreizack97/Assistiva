@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppUI.Areas.School.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "1, 2, 3, 4")]
     [Area("School")]
     public class ClassroomStudentsController : Controller
     {

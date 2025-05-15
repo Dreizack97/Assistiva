@@ -118,3 +118,7 @@ async function Delete(id) {
         }
     })
 }
+
+function RemoveAccents(str) {
+    return str.normalize("NFD").replace(/[̀-ͯ]/g, "")
+}
