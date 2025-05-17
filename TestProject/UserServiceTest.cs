@@ -1,16 +1,11 @@
 ﻿using System.Linq.Expressions;
-using System.Reflection.Metadata;
-using System.Runtime.ConstrainedExecution;
 using BLL.Implementation;
 using BLL.Interfaces;
-using Castle.Components.DictionaryAdapter.Xml;
 using DAL.Interfaces;
 using Entity;
 using Moq;
-using NUnit.Framework.Legacy;
-using Org.BouncyCastle.Crypto.Agreement.Srp;
 
-namespace BLL.Tests
+namespace TestProject
 {
     [TestFixture]
     public class UserServiceTests
@@ -108,8 +103,8 @@ namespace BLL.Tests
         public async Task UpdateAsync_ValidUser_ReturnsTrue()
         {
             // Arrange
-            var userToUpdate = new User { UserId = 1, Username = "olduser", Email = "old@example.com" };
-            var updatedUser = new User { UserId = 1, Username = "newuser", Email = "new@example.com" };
+            User userToUpdate = new User { UserId = 1, Username = "olduser", Email = "old@example.com" };
+            User updatedUser = new User { UserId = 1, Username = "newuser", Email = "new@example.com" };
 
 
             _mockRepository.Setup(repo => repo.GetByIdAsync(userToUpdate.UserId)).ReturnsAsync(userToUpdate);
