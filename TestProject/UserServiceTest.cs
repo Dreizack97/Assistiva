@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AppUI.Controllers;
 using BLL.Implementation;
 using BLL.Interfaces;
 using DAL.Interfaces;
@@ -12,7 +13,10 @@ namespace TestProject
     {
         private Mock<IGenericRepository<User>> _mockRepository;
         private Mock<IEmailService> _mockEmailService;
+        private Mock<IUserService> _mockUserService;
+        private SignInController _signInController;
         private UserService _userService;
+
 
         [SetUp]
         public void Setup()
@@ -20,6 +24,9 @@ namespace TestProject
             _mockRepository = new Mock<IGenericRepository<User>>();
             _mockEmailService = new Mock<IEmailService>();
             _userService = new UserService(_mockRepository.Object, _mockEmailService.Object);
+
+            _mockUserService = new Mock<IUserService>();
+            _signInController = new SignInController(_mockUserService.Object);
         }
 
         [Test]
@@ -128,5 +135,28 @@ namespace TestProject
             Assert.ThrowsAsync<TaskCanceledException>(() => _userService.DisableAsync(123));
             _mockRepository.Verify(repo => repo.UpdateAsync(It.IsAny<User>()), Times.Never);
         }
+
+        [Test]
+        public async Task SignInAsync_ValidCredentials_ReturnsUser()
+        {
+            // Arrange
+            string username = "SuperAdmin";
+            string password = "password123";
+
+            _mockUserService.Setup(service => service.SignInAsync(username, password)).ReturnsAsync(new User { UserId = 1, Username = username });
+
+            // Act
+            var result = await _mockUserService.Object.SignInAsync(username, password);
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Username, Is.EqualTo(username));
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _signInController.Dispose();
+        }
     }
-}
+} 
