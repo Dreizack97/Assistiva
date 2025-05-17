@@ -31,6 +31,27 @@ namespace TestProject
             Assert.That(welcomeText.Contains("Welcome"), Is.True);
         }
 
+        [Test]
+        public void UserCanViewFormula()
+        {
+            _driver.Navigate().GoToUrl($"{_urlBase}/SignIn/Index");
+
+            _driver.FindElement(By.Id("Username")).SendKeys("JSilva000001");
+            _driver.FindElement(By.Id("Password")).SendKeys("O$62p?5B");
+            _driver.FindElement(By.CssSelector("button[type='submit']")).Click();
+
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            wait.Until(driver => driver.FindElement(By.LinkText("Mis materias")).Displayed);
+
+            _driver.FindElement(By.LinkText("Mis materias")).Click();
+
+            _driver.Navigate().GoToUrl($"{_urlBase}/Students/Subjects/Subject/1/Formula/1");
+
+            bool displayed = wait.Until(driver => driver.FindElement(By.Id("Name")).Displayed);
+            
+            Assert.That(displayed, Is.True);
+        }
+
         [TearDown]
         public void TearDown()
         {
