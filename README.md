@@ -1,4 +1,4 @@
-# Assistiva# 📘 **Manual Técnico - Assistiva**
+# Assistiva 📘 **Manual Técnico - Assistiva**
 
 **Versión:** 1.1
 **Fecha:** 2025-05-19
@@ -8,13 +8,13 @@
 
 ## 📑 Índice
 
-1. [Introducción](#introducción)
+1. [Introducción](#introduccion)
 2. [Requisitos del Sistema](#requisitos-del-sistema)
-3. [Instalación y Configuración](#instalación-y-configuración)
+3. [Instalación y Configuración](#instalacion-y-configuracion)
 4. [Arquitectura del Sistema](#arquitectura-del-sistema)
 5. [Base de Datos](#base-de-datos)
-6. [Estructura del Código](#estructura-del-código)
-7. [APIs / Servicios Web](#apis--servicios-web)
+6. [Estructura del Código](#estructura-del-codigo)
+7. [Controladores MVC](#controladores-mvc)
 8. [Seguridad](#seguridad)
 9. [Pruebas](#pruebas)
 10. [Despliegue](#despliegue)
@@ -24,6 +24,7 @@
 
 ---
 
+<a id="introduccion"></a>
 ## 1. Introducción
 
 El **Sistema Assistiva** es una plataforma web desarrollada en **ASP .NET MVC** dirigida a la enseñanza de matemáticas para personas con discapacidad. Su objetivo principal es ofrecer recursos didácticos adaptados (fórmulas, ejercicios, referencias) que faciliten el aprendizaje en función de las necesidades específicas de cada discapacidad.
@@ -36,6 +37,7 @@ El **Sistema Assistiva** es una plataforma web desarrollada en **ASP .NET MVC** 
 
 ---
 
+<a id="requisitos-del-sistema"></a>
 ## 2. Requisitos del Sistema
 
 ### Alojamiento de la plataforma web (Recomendados)
@@ -93,6 +95,7 @@ El **Sistema Assistiva** es una plataforma web desarrollada en **ASP .NET MVC** 
 
 ---
 
+<a id="instalación-y-configuracion"></a>
 ## 3. Instalación y Configuración
 
 1. Clonar el repositorio:
@@ -126,6 +129,7 @@ El **Sistema Assistiva** es una plataforma web desarrollada en **ASP .NET MVC** 
    ```
 ---
 
+<a id="arquitectura-del-sistema"></a>
 ## 4. Arquitectura del Sistema
 
 El sistema sigue una **arquitectura en capas** para separar responsabilidades y facilitar pruebas y mantenimiento:
@@ -149,6 +153,7 @@ AppUI ↔ BLL ↔ DAO ↔ DAL ↔ SQL Server
 
 ---
 
+<a id="base-de-datos"></a>
 ## 5. Base de Datos
 
 Construida para **Microsoft SQL Server**, la base de datos `Assistiva` incluye tablas clave para gestionar roles, usuarios, estudiantes, discapacidades, materias y estructuras de aulas.
@@ -168,12 +173,13 @@ Construida para **Microsoft SQL Server**, la base de datos `Assistiva` incluye t
 
 ### Diagrama entidad - relación
 
-![Diagrama entidad - relación](https://github.com/Dreizack97/Assistiva/blob/diagram-er.png)
+![Diagrama entidad - relación](https://raw.githubusercontent.com/Dreizack97/Assistiva/refs/heads/main/diagram-er.png)
 
 > Consulte el script adjunto (`Assistiva.sql`) para la creación completa de esquemas, restricciones y datos iniciales.
 
 ---
 
+<a id="estructura-del-codigo"></a>
 ## 6. Estructura del Código
 
 ```plaintext
@@ -191,6 +197,7 @@ Construida para **Microsoft SQL Server**, la base de datos `Assistiva` incluye t
 
 ---
 
+<a id="controladores-mvc"></a>
 ### 7. Controladores MVC
 
 El sistema utiliza controladores ASP.NET MVC para manejar la lógica de enrutamiento y vistas. Cada controlador está asociado a una funcionalidad específica:
@@ -309,6 +316,7 @@ Estructura basada en layout y vistas parciales para modularidad.
 
 ---
 
+<a id="seguridad"></a>
 ## 8. Seguridad
 
 * **Autenticación:** ASP.NET Core Identity.
@@ -317,6 +325,7 @@ Estructura basada en layout y vistas parciales para modularidad.
 
 ---
 
+<a id="pruebas"></a>
 ## 9. Pruebas
 
 El sistema Assistiva ha sido sometido a pruebas automáticas unitarias y de integración, así como pruebas funcionales de interfaz utilizando Selenium.
@@ -345,6 +354,7 @@ Estas pruebas aseguran la funcionalidad básica del sistema, validando tanto la 
 
 ---
 
+<a id="despliegue"></a>
 ## 10. Despliegue
 
 ### Entorno de Desarrollo
@@ -395,6 +405,7 @@ Estas pruebas aseguran la funcionalidad básica del sistema, validando tanto la 
 
 ---
 
+<a id="mantenimiento-y-soporte"></a>
 ## 11. Mantenimiento y Soporte
 
 * Repositorio en GitHub: ramas *main* (producción) y *feature* (desarrollo).
@@ -403,6 +414,7 @@ Estas pruebas aseguran la funcionalidad básica del sistema, validando tanto la 
 
 ---
 
+<a id="glosario"></a>
 ## 12. Glosario
 
 | Término                          | Definición                                                                                                                                       |
@@ -429,6 +441,7 @@ Estas pruebas aseguran la funcionalidad básica del sistema, validando tanto la 
 
 ---
 
+<a id="anexos"></a>
 ## 13. Anexos
 
 * **Script Base de Datos:** `Assistiva.sql`
