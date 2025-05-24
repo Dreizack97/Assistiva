@@ -29,7 +29,7 @@ namespace AppUI.Models
         [Required(ErrorMessage = "Introduce la fecha de nacimiento.")]
         [DisplayName("Fecha de nacimiento")]
         [DataType(DataType.Date)]
-        public DateOnly DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; } = new DateOnly(2000, 1, 1);
 
         [Required(ErrorMessage = "Intoduce el correo electrónico.")]
         [DisplayName("Correo electrónico")]
