@@ -287,6 +287,10 @@ namespace DAL.Implementation
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && sqlEx.Number == 547)
+            {
+                throw new InvalidOperationException("No se puede eliminar la entidad porque tiene registros relacionados.", ex);
+            }
             catch (DbUpdateException)
             {
                 throw;
